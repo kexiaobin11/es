@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+
+<head>
+    <meta charset="UTF-8">
+    <title>属性</title>
+    <link rel="stylesheet" type="text/css" href="/thinkphp5/public/static/bootstrap-4.4.1-dist/css/bootstrap.min.css">
+</head>
+<body class="container">
+    <div class="row mt-2">
+        <div class="col-4 offset-3">
+            <table class="table table-borderless">
+<!--                <input type="hidden" name="id" value="{$Teacher->getData('id')}" />-->
+                <tr>
+                    <td>姓名: </td>
+                    <td  value="">{$Teacher->getData('name')}</td>
+                </tr>
+                <tr>
+                    <td>用户名:</td>
+                    <td  value="">{$Teacher->getData('username')}</td>
+                </tr>
+                <tr>
+                    <td>性别:</td>
+                    <td  value=""> <select name="sex"  class="form-control col-8" >
+                        <option value="0">男</option>
+                        <option value="1" {eq name="Teacher->getData('sex')" value="1"}selected="selected"{/eq}>女</option>
+                    </select></td>
+                </tr>
+                <tr>
+                    <td>邮箱：</td>
+                    <td  value="">{$Teacher->getData('email')}</td>
+                </tr>
+            </table>
+            <a class="btn btn-info" href="">返回</a>
+        </div>
+    </div>
+</body>
+
+</html>

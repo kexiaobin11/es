@@ -1,0 +1,17 @@
+{extend name="edit"} 
+{block name="title"}
+{eq name="Course->id" value=""}添加课程{else /}编辑课程{/eq}
+{/block}
+{block name="content"}
+    {php}$action = request()->action() === 'add' ? 'save' : 'update';{/php}
+            <form action="{:url($action)}" method="post">
+        <input type="hidden" name="id" value="{$Course->getData('id')}" />
+        <label for="name">name:</label><input type="text" name="name" id="name" value="{$Course->name}"/>
+        {volist name="Course->Klasses()->select()" id="klass"}
+            <input type="checkbox" name="klass_id[]" id="klass_id_{$klass->id}" value="{$klass->id}" {eq 
+                name="Course->getIsChecked($klass)" value="true"}checked="checked"{/eq}/>
+            <label for="klass_id_{$klass->id}">{$klass->name}</label>
+        {/volist}
+        <button type="submit">submit</button>
+    </form>
+{/block}

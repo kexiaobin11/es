@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/thinkphp5/public/static/bootstrap-4.4.1-dist/css/bootstrap.min.css">
+    <title>添加数据</title>
+</head>
+<body class = "container">
+    <div class="row row mt-4">
+        <div class="col-4 offset-3"> 
+            <form action="{:url('insert')}" method="post">
+                <div class="form-group row">
+                <label  class="col-4 text-right col-form-label">名称:</label>
+                <input type="text" name="name" class="form-control  col-8" id="inputPassword"/>
+                </div>
+                <div class="form-group row">
+                <label   class="col-4 text-right col-form-label">辅导员:</label>
+                <select name="teacher_id" id="teacher"  class="form-control col-8">
+                    {volist name="teachers" id="_Teacher"}
+                     <option value="{$_Teacher->getData('id')}">{$_Teacher->getData('name')}</option>
+                    {/volist}
+                 </select>         
+                </div>
+                <div class="form-group row">
+                <input type="hidden" name="create_time" value="{:time()}" />  
+                </div> 
+                <div class="form-group row">
+                    <div class="col-8 offset-4">
+                        <button class="btn btn-primary">保存</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+{extend name="index"/}
+{block name="title"}
+教师管理
+{/block}
+
+{block name ="search"}
+{/block}
+{block name="content"} 
+            <table  class="table table-hover table-bordered">
+                <tr class="thead-light">
+                    <th>序号</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>邮箱</th>
+                    <th>用户名</th>
+                    <th>操作</th>
+                </tr>
+                {volist name="teachers" id="_Teacher"key="key"}
+                <tr>
+                    <td>{$key}</td>
+                    <td>{$_Teacher->getData('name')}</td>
+                    <td>{eq name='_Teacher->getData("sex")' value='0'}男{else /}女{/eq}</td>
+                    <td>{$_Teacher->getData('email')}</td>
+                    <td>{$_Teacher->getData('username')}</td>
+                    <th><a href="{:url('Teacher_controller/edit?id=' . $_Teacher->getData('id'))}" class="btn btn-primary">编辑</a>
+                        &nbsp;&nbsp;
+                         <a href="{:url('Teacher_controller/delete?id=' . $_Teacher->getData('id'))}" class="btn btn-danger">删除</a>
+                       
+                </tr>
+                {/volist}
+            </table>
+            {/block}
+            {block name="page"}
+            {$teachers->render()}
+        {/block}
+
+        {/block}
