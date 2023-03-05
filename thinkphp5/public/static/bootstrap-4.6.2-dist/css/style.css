@@ -1,0 +1,127 @@
+#box-m {
+    padding: 0 12px;
+    padding-top: 0px;
+    padding-right: 12px;
+    padding-bottom: 0px;
+    padding-left: 12px;
+}
+.ft-date{
+    float: left;
+    display: inline-block;
+    height: 70px;
+}
+.filter-tit {
+    padding-top: 20px;
+    height: 70px;
+    clear: both;
+    width: auto;
+    position: relative;
+    color: #312f2c;
+    background: -webkit-linear-gradient(top,#fdfdfd 50%,#fff);
+    background: -moz-linear-gradient(top,#fdfdfd 50%,#fff);
+    background: linear-gradient(to bottom,#fdfdfd 50%,#fff);
+}
+
+.filter-tit .ft-total {
+    float: right;
+    padding-right: 20px;
+    height: 70px;
+    line-height: 90px;
+    font-size: 12px;
+}
+.line {
+    height: 12px;
+    margin: 0 12px;
+    border-right: 1px solid #e7e7e7;
+    width: 1px;
+}
+.account-list-title{
+    font-size: 18px;
+    margin-right: 8px;
+    padding-left: 24px;
+    color: #0c0c0c;
+}
+
+ .number {
+    padding-left: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: Helvetica,sans-serif,Arial,tahoma,"Hiragino Sans GB",Mingliu;
+}
+.green {
+    color: #14ba89;
+}
+.orange {
+    color: #f1523a;
+}
+
+.form-controlOne{
+    display: inline-block;
+    width: auto;
+    vertical-align: middle;
+}
+.smr-sm-2{
+    margin-right: 0.5rem;
+    width: 110px;
+}
+
+.smr-sm-3{
+    margin-right: 15px;
+}
+.ft-span{
+    font-size: 13px;
+}
+
+.col-sm1{
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    max-width: 100%;
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.inforImage{
+    width:150px; 
+    height:150px;
+     border-radius:50%;
+
+}
+
+.mt-ms5{
+    margin-top: 1rem;
+}
+
+.form-mglr{
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.form-mglrs{
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.colorR{
+    color:red;
+}
+.colorG{
+    color:rgb(82, 235, 82);
+}
+.ft-date-begin{
+    padding-top: 5px;
+    font-size: 14px;
+}
+.number-ft{
+    padding-top: 10px;
+}
+.date{
+    margin-right: 20px;
+   
+}
+.margin-button{
+    margin-bottom: 10px;
+}
