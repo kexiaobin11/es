@@ -2,10 +2,10 @@
 namespace app\index\controller;
 use think\Controller;
 use think\Db;
-use app\common\model\Income;
+use app\common\model\Account;
 use think\Request;
 
-class IncomeController extends Controller{
+class AccountController extends Controller{
  
     public function index()
     {
@@ -16,20 +16,20 @@ class IncomeController extends Controller{
 
             $pageSize = 3; // 每页显示5条数据
 
-            // 实例化Income
-            $Income = new Income; 
+            // 实例化Account
+            $Account = new Account; 
 
              // 定制查询信息
              if (!empty($name)) {
-                $Income->where('name', 'like', '%' . $name . '%');
+                $Account->where('name', 'like', '%' . $name . '%');
             }
 
 
             // 调用分页
-            $income = $Income->paginate($pageSize);
+            $account = $Account->paginate($pageSize);
 
             // 向V层传数据
-            $this->assign('Income', $income);
+            $this->assign('Account', $account);
 
             // 取回打包后的数据
             $htmls = $this->fetch();
@@ -61,10 +61,10 @@ class IncomeController extends Controller{
         $id = Request::instance()->param('id/d');
 
         // 在Income表模型中获取当前记录
-        $Income = Income::get($id);
+        $Account = Account::get($id);
 
         // 将数据传给V层
-        $this->assign('Income', $Income);
+        $this->assign('Account', $Account);
 
         // 获取封装好的V层内容
         $htmls = $this->fetch();
@@ -78,17 +78,17 @@ class IncomeController extends Controller{
     public function insert(){
         $postData = $this->request->post();//接受传入的数据
         
-        $Income = new Income();//空对象
+        $Account = new Account();//空对象
        
         
-    $Income->name = $postData['name'];
-    $Income->create_time = $postData['create_time'];
+        $Account->name = $postData['name'];
+        $Account->create_time = $postData['create_time'];
    
 
-    //$Income->create = 5613
-    $Income->save();
+    //$Account->create = 5613
+    $Account->save();
     // 反馈结果
-    return $this->success('添加成功',url('income_controller/index'));
+    return $this->success('添加成功',url('account_controller/index'));
     }
 
 
@@ -102,16 +102,16 @@ class IncomeController extends Controller{
         }
 
         // 获取要删除的对象
-        $Income = Income::get($id);
+        $Account = Account::get($id);
 
         // 要删除的对象不存在
-        if (is_null($Income)) {
+        if (is_null($Account)) {
             return $this->error('不存在id为' . $id . '的类型，删除失败');
         }
 
         // 删除对象
-        if (!$Income->delete()) {
-            return $this->error('删除失败:' . $Income->getError());
+        if (!$Account->delete()) {
+            return $this->error('删除失败:' . $Account->getError());
         }
 
         // 进行跳转
@@ -124,11 +124,11 @@ class IncomeController extends Controller{
         $income = Request::instance()->post();
 
         // 将数据存入Income表
-        $Income = new Income();
+        $Account = new Account();
 
         // 依据状态定制提示信息
-        if (false === $Income->validate(true)->isUpdate(true)->save($income)) {
-            return $this->error('更新失败' . $Income->getError());
+        if (false === $Account->validate(true)->isUpdate(true)->save($income)) {
+            return $this->error('更新失败' . $Account->getError());
         }
 
         return $this->success('操作成功', url('index'));

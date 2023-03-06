@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/es/thinkphp5/public/static/bootstrap-4.6.2-dist/css/style.css"  rel="stylesheet">
+    <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="/es/thinkphp5/public/static/bootstrap-4.6.2-dist/css/bootstrap.min.css">
 </head>
 <body>
@@ -22,18 +23,18 @@
 
                 <div class="d-flex align-items-center">
                     <div class="mx-auto"> 
-                        <h4 >编辑类型</h4>
+                        <h4 >增加账户</h4>
                     </div>     
                   </div>  
                 <br>
                  <div class="form-mglr"> 
-                    <form action="{:url('update')}" method="post">
+                  <form action="insert" method="post">
                         <div class="form-group">
-                          <label>类型:</label>
-                          <input type="hidden" name="id" value="{$Income->getData('id')}" />
-                          <input type="text"   class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="name" value="{$Income->getData('name')}" />
+                          <label>账户:</label>
+                          <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                          <input type="hidden" name="create_time" value="{:time()}" /> 
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block">保存</button>
+                        <button type="submit" class="btn btn-primary btn-block" >保存</button>
                       </form>
                  </div>
                 </div>

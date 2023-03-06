@@ -8,7 +8,7 @@
     <link href="/es/thinkphp5/public/static/bootstrap-4.6.2-dist/css/style.css"  rel="stylesheet">
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="/es/thinkphp5/public/static/bootstrap-4.6.2-dist/css/bootstrap.min.css">
-    <title>Document</title>
+    <title>支出管理</title>
 </head>
 <body>
     <section class="vh-100" style="background-color: #508bfc;">
@@ -24,7 +24,7 @@
                 <br>   
                 <div class="d-flex align-items-center">
                     <div class="mx-auto"> 
-                        <h4 >收入管理</h4>
+                        <h4 >支出管理</h4>
                     </div>     
                   </div>  
                   <br>   
@@ -38,7 +38,7 @@
                       </div>
                       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">查询</button>
                     </form>
-                    <a href="{:url('income_controller/add')}" class="btn btn-primary float-right">添加</a>
+                    <a href="{:url('pay_controller/add')}" class="btn btn-primary float-right">添加</a>
                 </nav>
                 <!-- form -->
                   <div class="col mt-4">
@@ -63,7 +63,7 @@
                         </tbody>
                         {/volist}
                     </table>
-                    当前页数为{$Income->count()}
+                    
                     {$Pay->render()}
                 </div>
                 </div>
