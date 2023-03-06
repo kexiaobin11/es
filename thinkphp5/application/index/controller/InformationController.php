@@ -4,14 +4,7 @@ use think\Controller;
 use app\common\model\User;
 use think\Request;
 class InformationController extends Controller{
-    private function saveUser(User $Teacher,$isUpdate = false){
-        $Teacher->name = Request::instance()->post('name');
-
-        $Teacher->pr = input('post.sex/d');
-        $Teacher->email = input('post.email');
-        // 更新或保存
-        return $Teacher->validate(true)->save();
-    }
+   
     public function commonSession(){
         $id = session('userId');
          return User::get($id);
@@ -30,7 +23,7 @@ class InformationController extends Controller{
         $id = Request::instance()->post('id/d');
         $User =User::get($id);
         $User->name = input('name');
-        $User->pr=input('pr/d');
+        $User->permissions=input('permissions/d');
       if($User->validate(true)->save()){
         $this->success('updata success',url('index'));
       }else{

@@ -50,21 +50,21 @@
                             <th scope="col">操作</th>
                         </tr>
                         </thead>
-                        {volist name="Income" id="incomes" key="key"}
+                        {volist name="Pay" id="pay" key="key"}
                         <tbody>    
                         <tr>
                           <td>{$key}</td>
-                            <td>{$incomes->getData('name')}</td>
+                            <td>{$pay->getData('name')}</td>
                             <td>
-                                <a type="button"  class="btn btn-primary" href="{:url('edit?id=' . $incomes->getData('id'))}">编辑</a>&nbsp;&nbsp;
-                                <a  type="button" class="btn btn-danger" href="delete?id={$incomes->getData('id')}">删除</a>
+                                <a type="button"  class="btn btn-primary" href="{:url('edit?id=' . $pay->getData('id'))}">编辑</a>&nbsp;&nbsp;
+                                <a  type="button" class="btn btn-danger" href="delete?id={$pay->getData('id')}">删除</a>
                             </td>
                             </tr>
                         </tbody>
                         {/volist}
                     </table>
                     当前页数为{$Income->count()}
-                    {$Income->render()}
+                    {$Pay->render()}
                 </div>
                 </div>
               </div>
