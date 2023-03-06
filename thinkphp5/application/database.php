@@ -21,7 +21,7 @@ return [
     // 密码
     'password'       => '123qwe',
     // 端口
-    'hostport'       => '3316',
+    'hostport'       => '',
     // 连接dsn
     'dsn'            => '',
     // 数据库连接参数
