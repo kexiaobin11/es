@@ -2,7 +2,7 @@
 namespace app\common\validate;
 use think\Validate;     // 内置验证类
 
-class Pay extends Validate
+class Account extends Validate
 {
     protected $rule = [
        

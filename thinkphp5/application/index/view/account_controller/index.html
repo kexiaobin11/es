@@ -8,7 +8,7 @@
     <link href="/es/thinkphp5/public/static/bootstrap-4.6.2-dist/css/style.css"  rel="stylesheet">
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="/es/thinkphp5/public/static/bootstrap-4.6.2-dist/css/bootstrap.min.css">
-    <title>收入管理</title>
+    <title>账户管理</title>
 </head>
 <body>
     <section class="vh-100" style="background-color: #508bfc;">
@@ -24,7 +24,7 @@
                 <br>   
                 <div class="d-flex align-items-center">
                     <div class="mx-auto"> 
-                        <h4 >收入管理</h4>
+                        <h4 >账户管理</h4>
                     </div>     
                   </div>  
                   <br>   
@@ -38,7 +38,7 @@
                       </div>
                       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">查询</button>
                     </form>
-                    <a href="{:url('income_controller/add')}" class="btn btn-primary float-right">添加</a>
+                    <a href="{:url('account_controller/add')}" class="btn btn-primary float-right">添加</a>
                 </nav>
                 <!-- form -->
                   <div class="col mt-4">
@@ -50,21 +50,21 @@
                             <th scope="col">操作</th>
                         </tr>
                         </thead>
-                        {volist name="Income" id="incomes" key="key"}
+                        {volist name="Account" id="account" key="key"}
                         <tbody>    
                         <tr>
                           <td>{$key}</td>
-                            <td>{$incomes->getData('name')}</td>
+                            <td>{$account->getData('name')}</td>
                             <td>
-                                <a type="button"  class="btn btn-primary" href="{:url('edit?id=' . $incomes->getData('id'))}">编辑</a>&nbsp;&nbsp;
-                                <a  type="button" class="btn btn-danger" href="delete?id={$incomes->getData('id')}">删除</a>
+                                <a type="button"  class="btn btn-primary" href="{:url('edit?id=' . $account->getData('id'))}">编辑</a>&nbsp;&nbsp;
+                                <a  type="button" class="btn btn-danger" href="delete?id={$account->getData('id')}">删除</a>
                             </td>
                             </tr>
                         </tbody>
                         {/volist}
                     </table>
                   
-                    {$Income->render()}
+                    {$Account->render()}
                 </div>
                 </div>
               </div>
