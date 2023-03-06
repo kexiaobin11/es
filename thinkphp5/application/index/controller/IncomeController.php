@@ -118,7 +118,7 @@ class IncomeController extends Controller{
 
         // 依据状态定制提示信息
         if (false === $Income->validate(true)->isUpdate(true)->save($income)) {
-            return $this->error('更新失败' . $Teacher->getError());
+            return $this->error('更新失败' . $income->getError());
         }
 
         return $this->success('操作成功', url('index'));
