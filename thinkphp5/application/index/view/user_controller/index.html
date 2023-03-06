@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/thinkphp5/public/static/bootstrap-4.6.2-dist/css/style.css"  rel="stylesheet">
+    <link href="/es/thinkphp5/public/static/bootstrap-4.6.2-dist/css/style.css"  rel="stylesheet">
     <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="/thinkphp5/public/static/bootstrap-4.6.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/es/thinkphp5/public/static/bootstrap-4.6.2-dist/css/bootstrap.min.css">
     <title>Document</title>
 </head>
 <body>
@@ -17,8 +17,7 @@
               <div class="card shadow-2-strong" style="border-radius: 1rem;height: 700px;">
             <!-- return -->
                 <div class="form-row  mt-ms5">   
-                    <a href="system.html" class="btn btn-primary float-left" style="margin-left: 10px;">返回</a>
-                    
+                    <a href="{:url('system_controller/index')} " class="btn btn-primary float-left" style="margin-left: 10px;">返回</a>      
                 </div>
                 <br>   
                 <div class="d-flex align-items-center">
@@ -50,19 +49,22 @@
                         <tbody>
                         <tr>
                             <th scope="row">{$user->getData('name')}</th>
-                            <td>{eq name="user->getData('pr')" value="0"}用户{/eq}
-                              {eq name="user->getData('pr')" value="1"}管理员{/eq}
+                            <td>{eq name="user->getData('permissions')" value="0"}用户{/eq}
+                              {eq name="user->getData('permissions')" value="1"}管理员{/eq}
                             </td>
                             <td>
-                              <a href="{:url('add')}" type="button" class="btn-sm btn-primary">编辑</a>
-                              <a type="button" class="btn-sm btn-danger">删除</a>
+                              <a type="button"  class="btn btn-primary" href="{:url('edit?id=' . $user->getData('id'))}">编辑</a>&nbsp;&nbsp;
+                              <a  type="button" class="btn btn-danger" href="{:url('delete?id=' . $user->getData('id'))}">删除</a>
                             </td>
                         </tr>    
                         </tbody>
                         {/volist}
                     </table>
-                    
+                    <div>
+                      {$Users->render()}
+                    </div>
                 </div>
+              
                 </div>
               </div>
             </div>

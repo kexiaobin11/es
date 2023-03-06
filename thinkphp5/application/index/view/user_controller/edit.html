@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="bootstrap-4.6.2-dist/css/style.css"  rel="stylesheet">
+    <link href="/es/thinkphp5/public/static/bootstrap-4.6.2-dist/css/style.css"  rel="stylesheet">
     <!-- CSS -->
-    <link href="bootstrap-4.6.2-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/es/thinkphp5/public/static/bootstrap-4.6.2-dist/css/bootstrap.min.css">
     <title>Document</title>
 </head>
 <body>
@@ -17,41 +17,50 @@
               <div class="card shadow-2-strong" style="border-radius: 1rem;height: 700px;">
             <!-- return -->
                 <div class="form-row  mt-ms5">   
-                    <a href="mbmg.html" class="btn btn-primary float-lef" style="margin-left: 10px;">返回</a>
+                  <a href="{:url('index')} " class="btn btn-primary float-left" style="margin-left: 10px;">返回</a>      
                 </div>
                 <br>   
                 <div class="d-flex align-items-center">
                     <div class="mx-auto"> 
-                        <h4 >添加成员</h4>
+                        <h4 >编辑信息</h4>
                     </div>     
                   </div>  
                   <br>   
-                  <form>
+                  <form action="{:url('update')}" method="post">
                     <div class="form-row"  style="margin-left: 10px; margin-right: 10px;">
+                      <input type="hidden" name="id" value="{$User->getData('id')}"/>
                         <div class="col-md-6 mb-3">
-                            <label for="validationServer01">名字</label>
-                            <input type="text" class="form-control " id="validationServer01" value="Mark" required>
-                            
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="validationServer02">用户名</label>
-                            <input type="text" class="form-control " id="validationServer02" value="Otto" required>
-                            
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="validationServer02"> 密码</label>
-                            <input type="text" class="form-control" id="validationServer02" value="默认密码123" readonly>
-                        </div>
+                            <label for="validationServer01">姓名</label>
+                            <input type="text" class="form-control " name ="name" value="{$User->getData('name')}"/>      
+                        </div>                     
                         <div class="col-md-6 mb-3">
                             <label for="validationServer04">权限</label>
-                            <select class="custom-select" id="validationServer04"  required>
-                                <option selected disabled value="">用户</option>
-                                <option>管理员</option>
+                            <select class="custom-select"  name="permissions"  required>
+                                <option selected disabled value="User->getData('permissions')" >
+                                  <?php
+                                    if($User->getData('permissions')===1){
+                                      echo '管理员';
+                                    }else{
+                                      echo '用户';
+                                    }
+                                    ?>      
+                                </option>
+                                <option value="0">用户</option>
+                                <option value="1">管理员</option>
                             </select>
                         </div>
-                        <!-- <input type="button" class="btn btn-primary btn-lg btn-block" onclick="window.open('./information.html')"value="添加"> -->
-                        <a href="mbmg.html" class="btn btn-primary btn-lg btn-block">添加</a>
-                </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="message-text">新密码：</label>
+                          <input type='password' name="password1" class="form-control" required placeholder="长度为: 6-18">
+                          <div style="display: inline" id="tip2"></div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="message-text">确认密码：</label>
+                        <input type='password' name="password2" class="form-control" required placeholder="请再次输入新密码">
+                        <div style="display: inline" id="tip3"></div>
+                      </div>                
+                      <button class="btn btn-primary btn-lg btn-block" type="submit">修改</button>  
+                </div>   
             
                 </form>   
                 </div>
