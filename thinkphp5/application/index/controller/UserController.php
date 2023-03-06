@@ -7,18 +7,96 @@ use app\index\controller\IndexController;
 
 class UserController extends Controller{
     public function index(){
+        try {
         $name = Request::instance()->get('name');
-        var_dump($name);
+        $pageSize = 5;
         $User = new User;
-        $users = $User->select();
-        $this->assign('Users',$users);
-        return $this->fetch();   
-    }
+        if(!empty($name)){
+            $User->where('name','like','%' . $name .'%');
+        }
+        $Users = $User->paginate($pageSize,false,[
+            'query'=>[
+                'name'=>$name
+            ],
+            ]);
+        $this->assign('Users',$Users);
+         return $this->fetch();   
+    }catch (\think\Exception\HttpResponseException $e) {
+        throw $e;
+    // 获取到正常的异常时，输出异常
+    } catch (\Exception $e) {
+        return $e->getMessage();
+    } 
+}
+
 
     public function add(){
         return $this->fetch();
     }
 
+    public function save(){
+     $User = new User;
+     $User->permissions= Request::instance()->post('permissions/d');
+     $User->username = Request::instance()->post('username');
+     $User->name = Request::instance()->post('name');
+     $User->password='123456';
+      if($User->validate()->save()){
+        return $this->success('add succuss',url('index'));
+      }else{
+        return $this->error('add error',url('add'));
+      }
+    }
+    public function edit()
+    {
+  
+        $id = Request::instance()->param('id/d');
+        $User = User::get($id);
+        $this->assign('User', $User);
+        $htmls = $this->fetch();       
+        return $htmls;
+    }
+    public function update(){
+        $id =  Request::instance()->post('id/d');
+        $User = User::get($id);
+        $User->permissions= Request::instance()->post('permissions/d');
+        $User->name = Request::instance()->post('name');
+        $password1 =  Request::instance()->post('password1');
+        $password2 =  Request::instance()->post('password2');
+        if($password1===$password2){
+            $User->password =$password1;
+            if($User->validate()->save()){
+                return $this->success('updata success',url('index')); 
+            }else{
+                return $this->error('updata success',url('edit')); 
+            }  
+        }else{
+            return $this->error('password error',url('edit')); 
+        }
 
+    }
+    public function delete()
+    {
+        // 获取pathinfo传入的ID值.
+        $id = Request::instance()->param('id/d'); // “/d”表示将数值转化为“整形”
 
+        if (is_null($id) || 0 === $id) {
+            return $this->error('未获取到ID信息');
+        }
+
+        // 获取要删除的对象
+        $User= User::get($id);
+
+        // 要删除的对象不存在
+        if (is_null($User)) {
+            return $this->error('不存在id为' . $id . '的类型，删除失败');
+        }
+
+        // 删除对象
+        if (!$User->delete()) {
+            return $this->error('删除失败:' . $User->getError());
+        }
+
+        // 进行跳转
+        return $this->success('删除成功', url('index'));
+    }
 }

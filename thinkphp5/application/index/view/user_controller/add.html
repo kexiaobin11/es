@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="bootstrap-4.6.2-dist/css/style.css"  rel="stylesheet">
+    <link href="/es/thinkphp5/public/static/bootstrap-4.6.2-dist/css/style.css"  rel="stylesheet">
     <!-- CSS -->
-    <link href="bootstrap-4.6.2-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/es/thinkphp5/public/static/bootstrap-4.6.2-dist/css/bootstrap.min.css">
     <title>Document</title>
 </head>
 <body>
@@ -17,7 +17,7 @@
               <div class="card shadow-2-strong" style="border-radius: 1rem;height: 700px;">
             <!-- return -->
                 <div class="form-row  mt-ms5">   
-                    <a href="mbmg.html" class="btn btn-primary float-lef" style="margin-left: 10px;">返回</a>
+                  <a href="{:url('system_controller/index')} " class="btn btn-primary float-left" style="margin-left: 10px;">返回</a>      
                 </div>
                 <br>   
                 <div class="d-flex align-items-center">
@@ -26,31 +26,26 @@
                     </div>     
                   </div>  
                   <br>   
-                  <form>
+                  <form action="{:url('save')}" method="post">
                     <div class="form-row"  style="margin-left: 10px; margin-right: 10px;">
                         <div class="col-md-6 mb-3">
                             <label for="validationServer01">名字</label>
-                            <input type="text" class="form-control " id="validationServer01" value="Mark" required>
+                            <input type="text" class="form-control " name="name" required>
                             
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="validationServer02">用户名</label>
-                            <input type="text" class="form-control " id="validationServer02" value="Otto" required>
+                            <input type="text" class="form-control" name="username"  value="" required>
                             
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="validationServer02"> 密码</label>
-                            <input type="text" class="form-control" id="validationServer02" value="默认密码123" readonly>
-                        </div>
-                        <div class="col-md-6 mb-3">
                             <label for="validationServer04">权限</label>
-                            <select class="custom-select" id="validationServer04"  required>
-                                <option selected disabled value="">用户</option>
-                                <option>管理员</option>
+                            <select class="custom-select" id="validationServer04" name="permissions" required>
+                                <option selected  value="0">用户</option>
+                                <option  value="1">管理员</option>
                             </select>
                         </div>
-                        <!-- <input type="button" class="btn btn-primary btn-lg btn-block" onclick="window.open('./information.html')"value="添加"> -->
-                        <a href="mbmg.html" class="btn btn-primary btn-lg btn-block">添加</a>
+                        <button class="btn btn-primary btn-lg btn-block" type="submit">添加</button>
                 </div>
             
                 </form>   
