@@ -3,6 +3,17 @@ namespace app\common\model;
 use think\Model;
 use think\Request;
 class User extends Model{
+
+    public static $sessionKey = "yunzhi_user";
+    
+    static public function logOut()
+    {
+        session('userId',null);
+
+        return true;
+    }
+
+
     static public function login($username,$password){
         $map = array('username' => $username);
 
@@ -31,6 +42,7 @@ class User extends Model{
             return false;
         }
     }
+    
     static public function encryptPassword($password)
     {
         
@@ -42,27 +54,36 @@ class User extends Model{
       return sha1(md5($password) . 'mengyunzhi');
      }
 
-        static public function logOut()
+  
+    static public function isLogin()
+    {
+        $userId = session('userId');       
+        if(isset($userId)) 
         {
-            session('userId',null);
-
             return true;
         }
-
-        static public function isLogin()
+        else
         {
-            $userId = session('userId');
-            
-            if(isset($userId)) 
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-
-            }
+            return false;
 
         }
+
+    }
+    
+    /**
+     * 
+     * 判断用户是否已经登录
+     * 
+     * */
+    // static function isLogin() {
+    //     var_dump(isset($_SESSION[self::$sessionKey]));
+        
+    //     if (isset($_SESSION[self::$sessionKey])) {
+    //         return true;
+    //     } else {
+    //         return true;
+    //     }
+    // }
+
 
 }
