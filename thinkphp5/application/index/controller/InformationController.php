@@ -9,11 +9,23 @@ class InformationController extends Controller{
         $id = session('userId');
          return User::get($id);
     }
+
+    /**
+     * 登录页面
+     */
     public function index(){
-       $User = $this->commonSession();
-       $this->assign('user',$User);
-       return $this->fetch();
+
+      if(User::isLogin()){
+        $User = $this->commonSession();
+        $this->assign('user',$User);
+        return $this->fetch();
+      }
+      else{
+        return $this->error('请登录后在访问',url('login_controller/index'));      
+      }
     }
+
+
     public function edit(){
         $User = $this->commonSession();
         $this->assign('user',$User);
@@ -30,6 +42,7 @@ class InformationController extends Controller{
         $this->error('updata error',url('edit'));
       } 
     }   
+
     public function updatapassword(){
         $id = session('userId');
         $User = User::get($id);

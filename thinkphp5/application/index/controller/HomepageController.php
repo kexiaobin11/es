@@ -16,28 +16,18 @@ class HomepageController extends Controller{
 
    
 
-       if(User::isLogin())
-       {
-        $id = session('userId');
-
-        $User = User::get($id);
+       if(User::isLogin()){
+            $id = session('userId');
+            $User = User::get($id);
+            session('perId',$User->getData('permissions'));
+            $perId = session('perId');
         
- 
-        session('perId',$User->getData('permissions'));
- 
-        $perId = session('perId');
-
-        
-        $this->assign('perId',$perId);
-
-        $this->assign('sum',$sum);
-
-        return $this->fetch();
-        
+            $this->assign('perId',$perId);
+            $this->assign('sum',$sum);
+            return $this->fetch();       
        }
-       else
-       {
-        return $this->error('未登录',url('login_controller/index'));
+       else{
+            return $this->error('请登录后在访问',url('login_controller/index'));
        }
 
       

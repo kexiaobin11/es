@@ -45,6 +45,7 @@ class PayController extends Controller{
             return $e->getMessage();
         } 
     }
+    
     public function add(){
         
         return $this->fetch();
