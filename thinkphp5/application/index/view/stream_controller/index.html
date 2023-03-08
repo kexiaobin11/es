@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/es/thinkphp5/public/static/bootstrap-4.6.2-dist/css/style.css"  rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="/es/thinkphp5/public/static/bootstrap-4.6.2-dist/css/bootstrap.min.css">
+    <title>Document</title>
+</head>
+<body>
+    <section class="vh-100" style="background-color: #508bfc;">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center ">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+              <div class="card shadow-2-strong" style="border-radius: 1rem; height: 800px;">
+                <!-- 导航 -->
+                <nav>
+        <ul class="nav nav-pills">   
+          <li class="nav-item">
+            <a class="nav-link" href="{:url('homepage_controller/index')}">主页</a>
+          </li>
+      
+          <li class="nav-item">
+            <a class="nav-link" href="{:url('information_controller/index')}">个人信息</a>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="{:url('system_controller/index')}">系统管理</a>
+          </li>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="{:url('Login_controller/index')}">退出账户</a>
+        </li>
+        </ul>
+			</nav>    
+              <!-- 账户清单 -->
+                        <div class="filter-tit">
+                            <ul class="nav float-left" >
+                                <li class="account-list-title ">  
+                                   帐目清单
+                                </li>
+                                <li class="ft-date-begin">
+                                 2023-03-01
+                                </li>
+                                <li class="ft-date-begin">
+                                  &nbsp; ~&nbsp;
+                                 </li>
+                                <li class="ft-date-begin">
+                                  2023-03-01
+                                 </li>
+                            </ul>
+                            <ul class="nav float-right">
+                              <li class="nav-item ">
+                                  <span class="ft-span">总收入</span>
+                                  <span class="green number">-200</span>
+                                  <span class="line"></span>
+                              </li>
+                              <li class="nav-item">
+                                <span class="ft-span">总支出</span>
+                                  <span class="orange number">+200</span>
+                                  <span class="line"></span>
+                              </li>
+                            </ul>
+                        </div>
+      <!-- 日期和总支出收入 -->
+                    <div class="margin-button">
+                    
+                    </div>
+                    <div>
+                        <nav class="navbar navbar-light bg-light">
+                            <form class="form-inline">
+                              <form action="">
+                                <select id="" class="form-control smr-sm-3" style="width: 100px;">
+                                  <option value="0" selected>今天</option>
+                                  <option value="1">昨天</option>
+                                  <option alue="2">前天</option>
+                                  <option alue="3">前前天</option>
+                              </select>
+
+                              <input name="remark" type="text" class="form-control smr-sm-2 w-25 p-3 "  placeholder="备注..." value={:input('get.remark')}>
+
+                              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                            </form>
+                        </nav>
+                    </div>
+                    <div>
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">分类</th>
+                                <th scope="col">收 | 支</th>
+                                <th scope="col">金额</th>
+                                <th scope="col">备注</th>
+                                <th scope="col">操作</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+
+                              {volist name="streams" id="stream" key = "key"}
+
+                              <tr>
+                               <td>
+                                
+                                {eq name="stream->getData('inandex')" value="1"}
+                                  {$stream->Income['name']}{else /}{$stream->Pay['name']}{/eq}
+                               </td>
+
+                                <td >{eq name="stream->getData('inandex')" value="1"}<span class="orange">{$stream->inandex}</span>
+                                 {else /}<span class="green">{$stream->inandex}{/eq}</td>
+
+                                <td>{eq name="stream->getData('inandex')" value="1"}
+                                  <span class="orange text-center">{$stream->getData('money')}</span>{else /}
+                                  <span class="green text-center">-{$stream->getData('money')}</span>{/eq}</td>
+                                <td>{$stream->getData('remark')}</td>
+                                <td>
+                                  <a class="btn-sm btn-primary" href="{:url('stream_controller/edit?id=' . $stream->getData('id'))}">编辑</a>&nbsp;
+                                  <a  class="btn-sm btn-danger" href="{:url('stream_controller/delete?id=' . $stream->getData('id'))}">删除</a>
+                                </td>
+                              </tr>
+                              {/volist}
+                            </tbody>
+                          </table>
+                    </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </section>
+</body>
+</html>

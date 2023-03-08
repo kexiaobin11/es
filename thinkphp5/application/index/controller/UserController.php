@@ -9,9 +9,13 @@ class UserController extends Controller{
     public function index(){
         try {
         $name = Request::instance()->get('name');
+
         $pageSize = 5;
+
         $User = new User;
-        if(!empty($name)){
+
+        if(!empty($name))
+        {
             $User->where('name','like','%' . $name .'%');
         }
         $Users = $User->paginate($pageSize,false,[
@@ -19,12 +23,19 @@ class UserController extends Controller{
                 'name'=>$name
             ],
             ]);
-        $this->assign('Users',$Users);
-         return $this->fetch();   
-    }catch (\think\Exception\HttpResponseException $e) {
+
+         $this->assign('Users',$Users);
+
+         return $this->fetch();  
+
+    }
+    catch (\think\Exception\HttpResponseException $e)
+     {
         throw $e;
     // 获取到正常的异常时，输出异常
-    } catch (\Exception $e) {
+    } 
+    catch (\Exception $e) 
+    {
         return $e->getMessage();
     } 
 }
@@ -34,42 +45,75 @@ class UserController extends Controller{
         return $this->fetch();
     }
 
-    public function save(){
+    public function save()
+    {
      $User = new User;
+
      $User->permissions= Request::instance()->post('permissions/d');
+
      $User->username = Request::instance()->post('username');
+
      $User->name = Request::instance()->post('name');
+
      $User->password='123456';
-      if($User->validate()->save()){
+
+      if($User->validate()->save())
+      {
+
         return $this->success('add succuss',url('index'));
-      }else{
+
+      }
+      else
+      {
         return $this->error('add error',url('add'));
       }
     }
+
+
     public function edit()
     {
   
         $id = Request::instance()->param('id/d');
+
         $User = User::get($id);
+
         $this->assign('User', $User);
-        $htmls = $this->fetch();       
+
+        $htmls = $this->fetch(); 
+
         return $htmls;
     }
-    public function update(){
+
+
+    public function update()
+    {
         $id =  Request::instance()->post('id/d');
+
         $User = User::get($id);
+
         $User->permissions= Request::instance()->post('permissions/d');
+
         $User->name = Request::instance()->post('name');
+
         $password1 =  Request::instance()->post('password1');
+
         $password2 =  Request::instance()->post('password2');
-        if($password1===$password2){
+
+        if($password1===$password2)
+        {
             $User->password =$password1;
-            if($User->validate()->save()){
-                return $this->success('updata success',url('index')); 
-            }else{
+
+            if($User->validate()->save())
+            {
+                return $this->success('updata success',url('index'));
+            }
+            else
+            {
                 return $this->error('updata success',url('edit')); 
             }  
-        }else{
+        }
+        else
+        {
             return $this->error('password error',url('edit')); 
         }
 
@@ -87,12 +131,14 @@ class UserController extends Controller{
         $User= User::get($id);
 
         // 要删除的对象不存在
-        if (is_null($User)) {
+        if (is_null($User)) 
+        {
             return $this->error('不存在id为' . $id . '的类型，删除失败');
         }
 
         // 删除对象
-        if (!$User->delete()) {
+        if (!$User->delete()) 
+        {
             return $this->error('删除失败:' . $User->getError());
         }
 

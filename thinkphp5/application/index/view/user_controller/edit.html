@@ -30,23 +30,15 @@
                     <div class="form-row"  style="margin-left: 10px; margin-right: 10px;">
                       <input type="hidden" name="id" value="{$User->getData('id')}"/>
                         <div class="col-md-6 mb-3">
-                            <label for="validationServer01">姓名</label>
+                            <label >姓名</label>
                             <input type="text" class="form-control " name ="name" value="{$User->getData('name')}"/>      
                         </div>                     
-                        <div class="col-md-6 mb-3">
-                            <label for="validationServer04">权限</label>
-                            <select class="custom-select"  name="permissions"  required>
-                                <option selected disabled value="User->getData('permissions')" >
-                                  <?php
-                                    if($User->getData('permissions')===1){
-                                      echo '管理员';
-                                    }else{
-                                      echo '用户';
-                                    }
-                                    ?>      
-                                </option>
-                                <option value="0">用户</option>
-                                <option value="1">管理员</option>
+                        <div class="col-md-6">
+                            <label>权限</label>
+                                <select name="permissions"  class="form-control" >
+                                  <option value="0">用户</option>
+                                  <option value="1" {eq name="User->getData('permissions')" value="1"}selected="selected"{/eq}>管理员</option>
+                              </select>
                             </select>
                         </div>
                         <div class="col-md-6 mb-3">
