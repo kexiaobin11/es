@@ -17,6 +17,15 @@ class InformationController extends Controller{
 
       if(User::isLogin()){
         $User = $this->commonSession();
+        //var_dump($User);
+		
+        $id = session('userId');//判断用户权限，用户则输出“系统管理”菜单，用户则相反,请勿删除换行
+        $user = User::get($id);
+        session('perId',$user->getData('permissions'));
+        $perId = session('perId');
+        $this->assign('perId',$perId);
+
+		
         $this->assign('user',$User);
         return $this->fetch();
       }

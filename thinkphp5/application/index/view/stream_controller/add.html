@@ -24,10 +24,11 @@
                   
                       <li class="nav-item">
                         <a class="nav-link" href="{:url('information_controller/index')}">个人信息</a>
-                    
-                      <li class="nav-item">
-                        <a class="nav-link " href="system.html">系统管理</a>
                       </li>
+                        {eq name="perId" value="1"} <li class="nav-item">
+                          <a class="nav-link " href="{:url('system_controller/index')}">系统管理</a>
+                        {/eq}
+                      </li>  
                     </li>
                     <li class="nav-item">
                       <a class="nav-link " href="{:url('Login_controller/index')}">退出账户</a>
