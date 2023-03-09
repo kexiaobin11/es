@@ -6,6 +6,7 @@ use app\common\model\Income;
 use app\common\model\Pay;
 use think\Controller;
 use think\Request;
+use app\common\model\User;
 class StreamController extends Controller{
 
     public function saveStream(Stream $Stream){
@@ -28,11 +29,14 @@ class StreamController extends Controller{
     public function index(){
         try {
 
+        $id = session('userId');//判断用户权限，用户则输出“系统管理”菜单，用户则相反，请勿删除换行
+        $user = User::get($id);
+        session('perId',$user->getData('permissions'));
+        $perId = session('perId');
+        $this->assign('perId',$perId);
+
         $remark = Request::instance()->get('remark');
-
-
         $pageSize = 5;
-
         $Stream = new Stream;
 
         if(!empty($remark))
@@ -67,12 +71,15 @@ class StreamController extends Controller{
     public function add()
     {
         $Account = Account::select();
-
         $Income =Income::select();
-
         $this->assign('Account', $Account);
-
         $this->assign('Income', $Income);
+
+        $id = session('userId');//判断用户权限，用户则输出“系统管理”菜单，用户则相反，请勿删除换行
+        $user = User::get($id);
+        session('perId',$user->getData('permissions'));
+        $perId = session('perId');
+        $this->assign('perId',$perId);
 
         return $this->fetch();
 
@@ -93,10 +100,14 @@ class StreamController extends Controller{
     public function addpay()
     {
 
+        $id = session('userId');//判断用户权限，用户则输出“系统管理”菜单，用户则相反，请勿删除换行
+        $user = User::get($id);
+        session('perId',$user->getData('permissions'));
+        $perId = session('perId');
+        $this->assign('perId',$perId);
+
         $Account = Account::select();
-
-        $Pay = Pay::select();
-
+        $Pay = Pay::select();      
         if(is_null($Pay) && is_null( $Account))
         {
             return $this->error('error ',url('homepage_controller/index'));
@@ -104,17 +115,10 @@ class StreamController extends Controller{
         else
         { 
             $this->assign('Account', $Account);
-
             $this->assign('Pay',  $Pay);
-            
             return $this->fetch();
 
-        }
-
-       
-
-      
-
+        }   
     }
 
     public function delete()

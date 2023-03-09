@@ -4,12 +4,11 @@ use think\Model;
 use think\Request;
 class User extends Model{
 
-    public static $sessionKey = "yunzhi_user";
+    //public static $sessionKey = "yunzhi_user";
     
     static public function logOut()
     {
         session('userId',null);
-
         return true;
     }
 
