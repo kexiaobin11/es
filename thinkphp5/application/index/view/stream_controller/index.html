@@ -20,17 +20,17 @@
         <ul class="nav nav-pills">   
           <li class="nav-item">
             <a class="nav-link" href="{:url('homepage_controller/index')}">主页</a>
-          </li>    
+          </li>
+      
           <li class="nav-item">
             <a class="nav-link" href="{:url('information_controller/index')}">个人信息</a>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="{:url('system_controller/index')}">系统管理</a>
           </li>
-            {eq name="perId" value="1"} <li class="nav-item">
-              <a class="nav-link " href="{:url('system_controller/index')}">系统管理</a>
-            {/eq}
-        </li>  
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="{:url('Login_controller/index')}">退出账户</a>
+          <a class="nav-link " href="{:url('Login_controller/LogOut')}">退出账户</a>
         </li>
         </ul>
 			</nav>    
@@ -53,12 +53,12 @@
                             <ul class="nav float-right">
                               <li class="nav-item ">
                                   <span class="ft-span">总收入</span>
-                                  <span class="green number">-200</span>
+                                  <span class="green number">-{$pays}</span>
                                   <span class="line"></span>
                               </li>
                               <li class="nav-item">
                                 <span class="ft-span">总支出</span>
-                                  <span class="orange number">+200</span>
+                                  <span class="orange number">+{$incomes}</span>
                                   <span class="line"></span>
                               </li>
                             </ul>
@@ -70,16 +70,31 @@
                     <div>
                         <nav class="navbar navbar-light bg-light">
                             <form class="form-inline">
-                              <form action="">
-                                <select id="" class="form-control smr-sm-3" style="width: 100px;">
-                                  <option value="0" selected>今天</option>
-                                  <option value="1">昨天</option>
-                                  <option alue="2">前天</option>
-                                  <option alue="3">前前天</option>
+                              <form action="{:url('index')}" method="get">
+                            
+                                <select name="date" class="form-control smr-sm-3" style="width: 100px;">
+                                  {eq name="$tid" value = "0"}
+                                <option value="today" {eq name="$date" value="today"} selected="selected" {/eq}>今天</option>
+                                <option value="yesterday"  {eq name="$date" value="yesterday"} selected="selected" {/eq}>昨天</option>    
+                                {/eq}
+
+                                {eq name="$tid" value = "1"}
+                                <option value="week" {eq name="$date" value="week"} selected="selected" {/eq}>本周</option>
+                                <option value="last week"  {eq name="$date" value="last week"} selected="selected" {/eq}>上周</option>    
+                                {/eq}
+
+                                {eq name="$tid" value = "2"}
+                                <option value="month" {eq name="$date" value="month"} selected="selected" {/eq}>本月</option>
+                                <option value="last month"  {eq name="$date" value="last month"} selected="selected" {/eq}>上个月</option>       
+                                {/eq}
+
+                                {eq name="$tid" value = "3"}
+                                <option value="year" {eq name="$date" value="year"} selected="selected" {/eq}>今年</option>
+                                <option value="last year"  {eq name="$date" value="last year"} selected="selected" {/eq}>去年</option>    
+                                {/eq}
+
                               </select>
-
                               <input name="remark" type="text" class="form-control smr-sm-2 w-25 p-3 "  placeholder="备注..." value={:input('get.remark')}>
-
                               <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                             </form>
                         </nav>
@@ -98,10 +113,8 @@
                             <tbody>
 
                               {volist name="streams" id="stream" key = "key"}
-
                               <tr>
-                               <td>
-                                
+                               <td>                                
                                 {eq name="stream->getData('inandex')" value="1"}
                                   {$stream->Income['name']}{else /}{$stream->Pay['name']}{/eq}
                                </td>
@@ -111,16 +124,19 @@
 
                                 <td>{eq name="stream->getData('inandex')" value="1"}
                                   <span class="orange text-center">{$stream->getData('money')}</span>{else /}
-                                  <span class="green text-center">-{$stream->getData('money')}</span>{/eq}</td>
+                                  <span class="green text-center">{$stream->getData('money')}</span>{/eq}</td>
                                 <td>{$stream->getData('remark')}</td>
                                 <td>
-                                  <a class="btn-sm btn-primary" href="{:url('stream_controller/edit?id=' . $stream->getData('id'))}">编辑</a>&nbsp;
+                                  <a class="btn-sm btn-primary" href="{:url('stream_controller/edit?id=' . $stream->getData('id'))}">编辑</a>
                                   <a  class="btn-sm btn-danger" href="{:url('stream_controller/delete?id=' . $stream->getData('id'))}">删除</a>
                                 </td>
                               </tr>
                               {/volist}
                             </tbody>
                           </table>
+                          {$streams->render()}
+                       
+                       
                     </div>
             </div>
             </div>
