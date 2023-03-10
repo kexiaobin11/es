@@ -12,7 +12,10 @@ class IncomeController extends Controller{
         try {
              // 获取查询信息
              $name = Request::instance()->get('name');
+
              echo $name;
+
+             
 
             $pageSize = 3; // 每页显示5条数据
 
@@ -97,7 +100,8 @@ class IncomeController extends Controller{
         // 获取pathinfo传入的ID值.
         $id = Request::instance()->param('id/d'); // “/d”表示将数值转化为“整形”
 
-        if (is_null($id) || 0 === $id) {
+        if (is_null($id) || 0 === $id)
+        {
             return $this->error('未获取到ID信息');
         }
 
@@ -105,12 +109,14 @@ class IncomeController extends Controller{
         $Income = Income::get($id);
 
         // 要删除的对象不存在
-        if (is_null($Income)) {
+        if (is_null($Income)) 
+        {
             return $this->error('不存在id为' . $id . '的类型，删除失败');
         }
 
         // 删除对象
-        if (!$Income->delete()) {
+        if (!$Income->delete()) 
+        {
             return $this->error('删除失败:' . $Income->getError());
         }
 

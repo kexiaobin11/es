@@ -28,6 +28,13 @@ class Stream extends Model{
 
     }
 
+    protected $dateFormat = 'Y年m月d日';
+
+    protected $type = [
+        
+        'create_time' => 'datetime',
+    ];
+
     // 收入类型
   public function Income()
   {

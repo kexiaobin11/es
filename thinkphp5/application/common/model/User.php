@@ -45,6 +45,7 @@ class User extends Model{
         static public function logOut()
         {
             session('userId',null);
+            
 
             return true;
         }

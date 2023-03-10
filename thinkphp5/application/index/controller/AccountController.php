@@ -127,7 +127,8 @@ class AccountController extends Controller{
         $Account = new Account();
 
         // 依据状态定制提示信息
-        if (false === $Account->validate(true)->isUpdate(true)->save($income)) {
+        if (false === $Account->validate(true)->isUpdate(true)->save($income)) 
+        {
             return $this->error('更新失败' . $Account->getError());
         }
 

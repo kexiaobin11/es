@@ -38,14 +38,30 @@
              
                     <form class="form-mglr" action="{:url('stream_controller/save')}" method="post">
                         <div class="form-row" col-md-4>
+                          
+                           {eq name ="$aid" value = "1"}
                             <input type="hidden" name="inandex" value="1"/>
                             <input type="hidden" name="pay_id" value="0"/>
+                            {else /}  
+                             <input type="hidden" name="inandex" value="0"/>
+                            <input type="hidden" name="income_id" value="0"/>
+                            {/eq}
+
                             <div class="form-group col-md-4">    
+                              {eq name ="$aid" value = "1"}
                                 <select name="income_id" id="income"  class="form-control">
                                     {volist name="Income" id="income"}
                                      <option value="{$income->getData('id')}">{$income->getData('name')}</option>
                                     {/volist}
-                                 </select>
+                                 </select> 
+                                 {else /}
+                                 <select name="pay_id" id="pay"  class="form-control">
+                                  {volist name="Pay" id="pay"}
+                                   <option value="{$pay->getData('id')}">{$pay->getData('name')}</option>
+                                  {/volist}
+                               </select>
+                               {/eq}
+
                             </div>
                             <div class="form-group col-md-4">       
                                 <select name="account_id" id="account"  class="form-control">

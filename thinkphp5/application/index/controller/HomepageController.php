@@ -14,9 +14,28 @@ class HomepageController extends Controller{
 
        $sum =  $income - $pay;
 
+
+       $incomey = $Stream->whereTime('update_time', 'yesterday')->where('inandex','=','1')->sum('money');
    
+       $payy = $Stream->whereTime('update_time', 'yesterday')->where('inandex','=','0')->sum('money');
+
+
+       
+       $incomew = $Stream->whereTime('update_time', 'week')->where('inandex','=','1')->sum('money');
+   
+       $payw = $Stream->whereTime('update_time', 'week')->where('inandex','=','0')->sum('money');
+
+       $incomem = $Stream->whereTime('update_time', 'month')->where('inandex','=','1')->sum('money');
+   
+       $paym = $Stream->whereTime('update_time', 'month')->where('inandex','=','0')->sum('money');
+
+       $incomeyear = $Stream->whereTime('update_time', 'year')->where('inandex','=','1')->sum('money');
+   
+       $payyear = $Stream->whereTime('update_time', 'year')->where('inandex','=','0')->sum('money');
+
 
        if(User::isLogin())
+       
        {
         $id = session('userId');
 
@@ -26,9 +45,25 @@ class HomepageController extends Controller{
         session('perId',$User->getData('permissions'));
  
         $perId = session('perId');
-
+        
         
         $this->assign('perId',$perId);
+
+        $this->assign('incomew', $incomew);
+
+        $this->assign('payw',$payw);
+
+        $this->assign('incomey', $incomey);
+
+        $this->assign('payy',$payy);
+
+        $this->assign('incomeyear', $incomeyear);
+
+        $this->assign('payyear',$payyear);
+
+        $this->assign('incomem', $incomem);
+
+        $this->assign('paym',$paym);
 
         $this->assign('sum',$sum);
 
