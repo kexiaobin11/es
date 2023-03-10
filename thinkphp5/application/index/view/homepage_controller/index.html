@@ -24,21 +24,22 @@
                     <li class="nav-item">
                       <a class="nav-link" href="{:url('information_controller/index')}">个人信息</a>
                       </li>
-                        {eq name="perId" value="1"} <li class="nav-item">
-                          <a class="nav-link " href="{:url('system_controller/index')}">系统管理</a>
-                        {/eq}
-                      </li>                                     
+                      {eq name="perId" value="1"} <li class="nav-item">
+                        <a class="nav-link " href="{:url('system_controller/index')}">系统管理</a>
+                      </li>{/eq}
+                       
+       
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link " href="{:url('Login_controller/logOut')}">退出账户</a>
+                    <a class="nav-link " href="{:url('Login_controller/index')}">退出账户</a>
                   </li>
                   </ul>
               </nav>
             
                 <div class="row" style="margin-left: 10px;margin-right: 10px;">
                       &nbsp;&nbsp; 
-                      <a href="{:url('stream_controller/add')}" class="col-sm btn btn-primary btn-lg smr-sm-3">收入</a>&nbsp;&nbsp;
-                      <a href="{:url('stream_controller/addPay')}" class="col-sm btn btn-danger btn-lg smr-sm-3">支出</a>&nbsp;&nbsp;
+                      <a href="{:url('stream_controller/add?aid=1') }" class="col-sm btn btn-primary btn-lg smr-sm-3">收入</a>&nbsp;&nbsp;
+                      <a href="{:url('stream_controller/add?aid=0')}" class="col-sm btn btn-danger btn-lg smr-sm-3">支出</a>&nbsp;&nbsp;
                   </div>
 
                     <div class="jumbotron form-mglr" style="border-radius: 20px; background-image:url(/es/thinkphp5/public/static/bootstrap-4.6.2-dist/images/350.jpeg);">
@@ -61,17 +62,17 @@
                         <tbody>
                           <tr>
                             <th scope="row">收入</th>
-                            <td ><a href="{:url('stream_controller/index')}" class="colorR">0.00</a></td>
-                            <td ><a href="{:url('stream_controller/index')}" class="colorR">0.00</a></td>
-                            <td ><a href="{:url('stream_controller/index')}" class="colorR">5000</a></td>
-                            <td ><a href="{:url('stream_controller/index')}" class="colorR">30000</a></td>
+                            <td ><a href="{:url('stream_controller/index?tid=0')}" class="colorR">{$incomey}</a></td>
+                            <td ><a href="{:url('stream_controller/index?tid=1')}" class="colorR">{$incomew}</a></td>
+                            <td ><a href="{:url('stream_controller/index?tid=2')}" class="colorR">{$incomem}</a></td>
+                            <td ><a href="{:url('stream_controller/index?tid=3')}" class="colorR">{$incomeyear}</a></td>
                           </tr>
                           <tr>
                             <th scope="row">支出</th> 
-                            <td ><a href="{:url('stream_controller/index')}" class="colorG">0.00</a></td>
-                            <td ><a href="{:url('stream_controller/index')}" class="colorG">0.00</a></td>
-                            <td ><a href="{:url('stream_controller/index')}" class="colorG">300</a></td>
-                            <td ><a href="{:url('stream_controller/index')}" class="colorG">1000</a></td>
+                            <td ><a href="{:url('stream_controller/index?tid=0')}" class="colorG">{$payy}</a></td>
+                            <td ><a href="{:url('stream_controller/index?tid=1')}" class="colorG">{$payw}</a></td>
+                            <td ><a href="{:url('stream_controller/index?tid=2')}" class="colorG">{$paym}</a></td>
+                            <td ><a href="{:url('stream_controller/index?tid=3')}" class="colorG">{$payyear}</a></td>
                           </tr>
                         </tbody>
                       </table>
