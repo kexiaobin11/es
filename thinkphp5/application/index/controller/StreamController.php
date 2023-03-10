@@ -6,7 +6,7 @@ use app\common\model\Income;
 use app\common\model\Pay;
 use think\Controller;
 use think\Request;
-use app\common\model\User;
+use think\Db;
 class StreamController extends Controller{
 
     public function saveStream(Stream $Stream){
@@ -19,7 +19,7 @@ class StreamController extends Controller{
         
         $Stream->account_id = Request::instance()->post('account_id/d');
 
-        $Stream->money = Request::instance()->post('money/d');
+        $Stream->money = Request::instance()->post('money/f');
 
         $Stream->remark = Request::instance()->post('remark');
         
@@ -27,104 +27,162 @@ class StreamController extends Controller{
     }
 
     public function index(){
-        try {
 
-        $id = session('userId');//判断用户权限，用户则输出“系统管理”菜单，用户则相反，请勿删除换行
-        $user = User::get($id);
-        session('perId',$user->getData('permissions'));
-        $perId = session('perId');
-        $this->assign('perId',$perId);
+            $tid = Request::instance()->param('tid/d');
 
-        $remark = Request::instance()->get('remark');
-        $pageSize = 5;
-        $Stream = new Stream;
+            $date = Request::instance()->get('date');
 
-        if(!empty($remark))
-        {
-
-            $Stream->where('remark','like','%' . $remark .'%');
-            
-        }
-        $Streams = $Stream->paginate($pageSize,false,[
-            'query'=>[
-                'remark'=>$remark
-            ],
-            ]);
-
-            $this->assign('streams', $Streams);
-       
-            return $this->fetch();  
+            if(!isset($tid))
+            {
+                $this->error('error',url('homepage_controller/index'));
             }
 
-    catch (\think\Exception\HttpResponseException $e) 
-    {
-        throw $e;
-    // 获取到正常的异常时，输出异常
-    } 
-    catch (\Exception $e) 
-    {
-        return $e->getMessage();
-    } 
+            if($tid === 0)
+            {
+                    
+            if(!isset($date))
+             {
+                $date = 'yesterday';
+             } 
+
+            }
+            elseif($tid === 1)
+            {
+                if(!isset($date))
+                {
+                   $date = 'week';
+                } 
+            }
+            elseif($tid === 2)
+            {
+                if(!isset($date))
+                {
+                   $date = 'month';
+                } 
+            }
+            elseif($tid === 3)
+            {
+                if(!isset($date))
+                {
+                   $date = 'year';
+                } 
+            }
+
+            $this->assign('tid',$tid);
+
+            $Stream = new Stream;
+
+
+
+            $pageSize = 5;
+
+          
+            $income = $Stream->whereTime('update_time', $date)->where('inandex','=','1')->sum('money');
+
+            $pay= $Stream->whereTime('update_time', $date)->where('inandex','=','0')->sum('money');
+           
+            
+            $remark = Request::instance()->get('remark');
+
+            if(!empty($remark))
+            {
+    
+                $Stream->whereTime('update_time',$date)->where('remark','like','%' . $remark .'%');
+                
+            }
+
+            $Streams = $Stream->whereTime('update_time',$date)->paginate($pageSize,false,[
+                'query'=>[
+                    'remark'=>$remark,
+                    'date'=>$date
+                  
+                ],
+                ]);
+
+             $this->assign('incomes', $income);
+
+             $this->assign('pays',  $pay);
+
+            $this->assign('streams', $Streams);
+
+            $this->assign('date', $date);
+
+           return $this->fetch();  
+        
+        
+       
 }
 
 
-    public function add()
+
+       
+
+
+public function add()
     {
         $Account = Account::select();
-        $Income =Income::select();
+
+       
+        $aid = Request::instance()->param('aid/d');
+
+        $this->assign('aid',  $aid);
+
+      
+        if(!isset($aid) && is_null( $Account))
+        {
+            $this->error('error',url('homepage_controller/index'));
+        }
+
         $this->assign('Account', $Account);
-        $this->assign('Income', $Income);
 
-        $id = session('userId');//判断用户权限，用户则输出“系统管理”菜单，用户则相反，请勿删除换行
-        $user = User::get($id);
-        session('perId',$user->getData('permissions'));
-        $perId = session('perId');
-        $this->assign('perId',$perId);
+        $this->assign('aid',  $aid);
 
-        return $this->fetch();
+        if($aid === 1)
+        {
 
-    }
+            $Income =Income::select();
+            if(is_null($Income))
+            {
+                return $this->error('error ',url('homepage_controller/index'));
+            }
+
+            $this->assign('Income',  $Income);
+     
+        }
+        else
+        {
+            $Pay = Pay::select();
+
+            if(is_null($Pay))
+            {
+                return $this->error('error ',url('homepage_controller/index'));
+              
+            }
+               $this->assign('Pay',$Pay);
+
+            }
+            return $this->fetch();
+        }
+       
 
 
     public function save()
     {
-        $Stream = new Stream;
+         $Stream = new Stream;
 
         if(!$this->saveStream($Stream))
         {
             return $this->error('数据添加错误：' . $Stream->getError());
         }
-        return $this->success('操作成功', url('index'));
+        return $this->success('操作成功', url('homepage_controller/index'));
     }
 
-    public function addpay()
-    {
-
-        $id = session('userId');//判断用户权限，用户则输出“系统管理”菜单，用户则相反，请勿删除换行
-        $user = User::get($id);
-        session('perId',$user->getData('permissions'));
-        $perId = session('perId');
-        $this->assign('perId',$perId);
-
-        $Account = Account::select();
-        $Pay = Pay::select();      
-        if(is_null($Pay) && is_null( $Account))
-        {
-            return $this->error('error ',url('homepage_controller/index'));
-        }
-        else
-        { 
-            $this->assign('Account', $Account);
-            $this->assign('Pay',  $Pay);
-            return $this->fetch();
-
-        }   
-    }
 
     public function delete()
     {
         // 获取pathinfo传入的ID值.
         $id = Request::instance()->param('id/d'); // “/d”表示将数值转化为“整形”
+
 
         if (is_null($id) || 0 === $id) 
         {
@@ -145,9 +203,8 @@ class StreamController extends Controller{
         {
             return $this->error('删除失败:' . $Stream->getError());
         }
-
-        // 进行跳转
-        return $this->success('删除成功', url('index'));
+        
+        return $this->success('删除成功');
     }
 
     public function edit()
@@ -172,6 +229,25 @@ class StreamController extends Controller{
 
 
 
+    }
+
+    public function update()
+    {
+      $id = Request::instance()->post('id/d');
+
+       $Stream = Stream::get($id);
+
+
+      if($this->saveStream($Stream))
+      {
+        return $this->success('修改成功',url('index'));
+      }
+      else
+      {
+        return $this->success('修改失败',url('edit'));
+      }
+
+      
     }
 
 }
