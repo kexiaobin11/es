@@ -74,7 +74,7 @@ class StreamController extends Controller{
 
 
 
-            $pageSize = 5;
+            $pageSize = 6;
 
           
             $income = $Stream->whereTime('update_time', $date)->where('inandex','=','1')->sum('money');
