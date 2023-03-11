@@ -5,8 +5,6 @@ use think\Validate;     // 内置验证类
 class Account extends Validate
 {
     protected $rule = [
-       
-        'name'  => 'require|length:2,25',
-       
+        'name'  => 'require|length:2,25',    
     ];
 }

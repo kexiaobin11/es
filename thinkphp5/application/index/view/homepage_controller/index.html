@@ -12,78 +12,71 @@
 <body>
     <section class="vh-200" style="background-color: #508bfc;">
         <div class="container py-5 h-100">
-          <div class="row d-flex justify-content-center align-items-center ">
-            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-              <div class="card shadow-2-strong" style="border-radius: 1rem; height: 800px;">   
-                <nav>
-                  <ul class="nav nav-pills">   
-                    <li class="nav-item">
-                      <a class="nav-link" href="{:url('homepage_controller/index')}">主页</a>
-                    </li>
-                
-                    <li class="nav-item">
-                      <a class="nav-link" href="{:url('information_controller/index')}">个人信息</a>
-                      </li>
-                        {eq name="perId" value="1"} <li class="nav-item">
-                          <a class="nav-link " href="{:url('system_controller/index')}">系统管理</a>
-                        {/eq}
-                      </li>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link " href="{:url('login_controller/logOut')}">退出账户</a>
-                  </li>
-                  </ul>
-              </nav>
-            
-                <div class="row" style="margin-left: 10px;margin-right: 10px;">
-                      &nbsp;&nbsp; 
-                      <a href="{:url('stream_controller/add?aid=1') }" class="col-sm btn btn-primary btn-lg smr-sm-3">收入</a>&nbsp;&nbsp;
-                      <a href="{:url('stream_controller/add?aid=0')}" class="col-sm btn btn-danger btn-lg smr-sm-3">支出</a>&nbsp;&nbsp;
-                  </div>
-
-                    <div class="jumbotron form-mglr" style="border-radius: 20px; background-image:url(/es/thinkphp5/public/static/bootstrap-4.6.2-dist/images/350.jpeg);">
-                     <p class="lead" style="color: white;">净资产</p>
-                     <h1 class="display-4 " style="color: white;" >{$sum}</h1>
-                  </div>
-                  <div class="form-mglrs">
-                    <h4>收支表</h4>
-                    <br>
-                    <table class="table">
-                        <thead>
-                          <tr>
-                            <th scope="col"></th>
-                            <th scope="col">昨天</th>
-                            <th scope="col">本周</th>
-                            <th scope="col">本月</th>
-                            <th scope="col">本年</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <th scope="row">收入</th>
-                            <td ><a href="{:url('stream_controller/index?tid=0')}" class="colorR">{$incomey}</a></td>
-                            <td ><a href="{:url('stream_controller/index?tid=1')}" class="colorR">{$incomew}</a></td>
-                            <td ><a href="{:url('stream_controller/index?tid=2')}" class="colorR">{$incomem}</a></td>
-                            <td ><a href="{:url('stream_controller/index?tid=3')}" class="colorR">{$incomeyear}</a></td>
-                          </tr>
-                          <tr>
-                            <th scope="row">支出</th> 
-                            <td ><a href="{:url('stream_controller/index?tid=0')}" class="colorG">{$payy}</a></td>
-                            <td ><a href="{:url('stream_controller/index?tid=1')}" class="colorG">{$payw}</a></td>
-                            <td ><a href="{:url('stream_controller/index?tid=2')}" class="colorG">{$paym}</a></td>
-                            <td ><a href="{:url('stream_controller/index?tid=3')}" class="colorG">{$payyear}</a></td>
-                          </tr>
-                        </tbody>
-                      </table>
-                  </div>
-                   
-              </div>
-               </div>
-              
+            <div class="row d-flex justify-content-center align-items-center ">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card shadow-2-strong" style="border-radius: 1rem; height: 800px;">   
+                        <nav>
+                            <ul class="nav nav-pills">   
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{:url('homepage_controller/index')}">主页</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{:url('information_controller/index')}">个人信息</a>
+                                </li>
+                                {eq name="role" value="1"}
+                                    <li class="nav-item">
+                                        <a class="nav-link " href="{:url('system_controller/index')}">系统管理</a>
+                                    </li>
+                                {/eq}
+                                <li class="nav-item">
+                                    <a class="nav-link " href="{:url('login_controller/logOut')}">退出账户</a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="row" style="margin-left: 10px;margin-right: 10px;">
+                            &nbsp;&nbsp; 
+                            <a href="{:url('stream_controller/add?aid=1') }" class="col-sm btn btn-primary btn-lg smr-sm-3">收入</a>&nbsp;&nbsp;
+                            <a href="{:url('stream_controller/add?aid=0')}" class="col-sm btn btn-danger btn-lg smr-sm-3">支出</a>&nbsp;&nbsp;
+                        </div>
+                        <div class="jumbotron form-mglr" style="border-radius: 20px; background-image:url(/es/thinkphp5/public/static/bootstrap-4.6.2-dist/images/350.jpeg);">
+                            <p class="lead" style="color: white;">净资产</p>
+                            <h1 class="display-4 " style="color: white;" >{$sum}</h1>
+                        </div>
+                        <div class="form-mglrs">
+                            <h4>收支表</h4>
+                            <br>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col">昨天</th>
+                                            <th scope="col">本周</th>
+                                            <th scope="col">本月</th>
+                                            <th scope="col">本年</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">收入</th>
+                                            <td ><a href="{:url('stream_controller/index?tid=0')}" class="colorR">{$incomey}</a></td>
+                                            <td ><a href="{:url('stream_controller/index?tid=1')}" class="colorR">{$incomew}</a></td>
+                                            <td ><a href="{:url('stream_controller/index?tid=2')}" class="colorR">{$incomem}</a></td>
+                                            <td ><a href="{:url('stream_controller/index?tid=3')}" class="colorR">{$incomeyear}</a></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">支出</th> 
+                                            <td ><a href="{:url('stream_controller/index?tid=0')}" class="colorG">{$payy}</a></td>
+                                            <td ><a href="{:url('stream_controller/index?tid=1')}" class="colorG">{$payw}</a></td>
+                                            <td ><a href="{:url('stream_controller/index?tid=2')}" class="colorG">{$paym}</a></td>
+                                            <td ><a href="{:url('stream_controller/index?tid=3')}" class="colorG">{$payyear}</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-            </div>
-          </div>
         </div>
-      </section>
+    </section>
 </body>
 </html>
