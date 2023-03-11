@@ -9,6 +9,7 @@ class User extends Model{
     static public function logOut()
     {
         session('userId',null);
+        
         return true;
     }
 
@@ -56,7 +57,7 @@ class User extends Model{
   
     static public function isLogin()
     {
-        $userId = session('userId');       
+        $userId = session('userId');     
         if(isset($userId)) 
         {
             return true;
@@ -70,19 +71,20 @@ class User extends Model{
     }
     
     /**
-     * 
-     * 判断用户是否已经登录
-     * 
-     * */
-    // static function isLogin() {
-    //     var_dump(isset($_SESSION[self::$sessionKey]));
-        
-    //     if (isset($_SESSION[self::$sessionKey])) {
-    //         return true;
-    //     } else {
-    //         return true;
-    //     }
-    // }
+     * 判断用户角色
+     * @return 1 管理员 
+     * @return 0 用户 
+     */
+    static public function role(){
+
+         //在数据库中第几个用户
+         $id = session('userId');
+         //获取$id的a全部数据
+         $User = User::get($id);
+         session('perId',$User->getData('permissions'));
+         $perId = session('perId');
+         return $perId;
+    }
 
 
 }
