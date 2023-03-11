@@ -25,8 +25,10 @@ class LoginController extends Controller{
 
     public function logOut()
     {
+        
         if(User::logOut())
         {
+            //session()
             return $this->success('exit success',url('index'));
         }
     }

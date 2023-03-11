@@ -6,10 +6,8 @@ use app\common\model\User;
 class SystemController extends Controller{
     public function index()
     {
-        $id = session('userId');
-        $user = User::get($id);
-        //var_dump($user->getData('permissions'));
-        $role = $user->getData('permissions'); //role：权限
+        
+        $role = User:: role(); //role：角色
         if(User::isLogin()){
             if($role){//如果是1，则是管理员；0就是用户，不可访问
               

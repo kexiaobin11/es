@@ -4,39 +4,51 @@ use think\Controller;
 use think\Db;
 use app\common\model\Income;
 use think\Request;
+use app\common\model\User;
 
 class IncomeController extends Controller{
  
     public function index()
     {
         try {
-             // 获取查询信息
-             $name = Request::instance()->get('name');
-             echo $name;
 
-            $pageSize = 3; // 每页显示5条数据
+            $role = User:: role(); //role：角色
+            if(User::isLogin()){
+                if($role){//如果是1，则是管理员；0就是用户，不可访问
+                    // 获取查询信息
+                    $name = Request::instance()->get('name');
+                    echo $name;
 
-            // 实例化Income
-            $Income = new Income; 
+                    $pageSize = 3; // 每页显示5条数据
 
-             // 定制查询信息
-             if (!empty($name)) {
-                $Income->where('name', 'like', '%' . $name . '%');
+                    // 实例化Income
+                    $Income = new Income; 
+
+                    // 定制查询信息
+                    if (!empty($name)) {
+                        $Income->where('name', 'like', '%' . $name . '%');
+                    }
+
+                    // 调用分页
+                    $income = $Income->paginate($pageSize);
+
+                    // 向V层传数据
+                    $this->assign('Income', $income);
+
+                    // 取回打包后的数据
+                    $htmls = $this->fetch();
+
+                    // 将数据返回给用户
+                    return $htmls;
+                }
+                else{
+                    return $this->error('你的权限不够',url('homepage_controller/index')); 
+                }
             }
-
-
-            // 调用分页
-            $income = $Income->paginate($pageSize);
-
-            // 向V层传数据
-            $this->assign('Income', $income);
-
-            // 取回打包后的数据
-            $htmls = $this->fetch();
-
-            // 将数据返回给用户
-            return $htmls;
-
+            else{
+                return $this->error('请登录后在访问',url('login_controller/index'));      
+            }
+            
         // 获取到ThinkPHP的内置异常时，直接向上抛出，交给ThinkPHP处理
         } catch (\think\Exception\HttpResponseException $e) {
             throw $e;
@@ -45,7 +57,6 @@ class IncomeController extends Controller{
         } catch (\Exception $e) {
             return $e->getMessage();
         } 
-
     }
 
 

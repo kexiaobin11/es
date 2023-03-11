@@ -8,37 +8,50 @@ use app\index\controller\IndexController;
 class UserController extends Controller{
     public function index(){
         try {
-        $name = Request::instance()->get('name');
+            $role = User:: role(); //role：角色
+            if(User::isLogin()){
+                if($role){
+                    //如果是1，则是管理员；0就是用户，不可访问
+                    
+                    $name = Request::instance()->get('name');
 
-        $pageSize = 5;
-
-        $User = new User;
-
-        if(!empty($name))
-        {
-            $User->where('name','like','%' . $name .'%');
+                    $pageSize = 5;
+            
+                    $User = new User;
+            
+                    if(!empty($name))
+                    {
+                        $User->where('name','like','%' . $name .'%');
+                    }
+                    $Users = $User->paginate($pageSize,false,[
+                        'query'=>[
+                            'name'=>$name
+                        ],
+                        ]);
+            
+                     $this->assign('Users',$Users);
+            
+                     return $this->fetch();   
+                }
+                else{
+                    return $this->error('你的权限不够',url('homepage_controller/index')); 
+                }
+            }
+            else{
+                return $this->error('请登录后在访问',url('login_controller/index'));      
+            }
+                    
         }
-        $Users = $User->paginate($pageSize,false,[
-            'query'=>[
-                'name'=>$name
-            ],
-            ]);
-
-         $this->assign('Users',$Users);
-
-         return $this->fetch();  
-
+        catch (\think\Exception\HttpResponseException $e)
+        {
+            throw $e;
+        // 获取到正常的异常时，输出异常
+        } 
+        catch (\Exception $e) 
+        {
+            return $e->getMessage();
+        } 
     }
-    catch (\think\Exception\HttpResponseException $e)
-     {
-        throw $e;
-    // 获取到正常的异常时，输出异常
-    } 
-    catch (\Exception $e) 
-    {
-        return $e->getMessage();
-    } 
-}
 
 
     public function add(){

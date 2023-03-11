@@ -18,8 +18,6 @@ class HomepageController extends Controller{
        $incomey = $Stream->whereTime('update_time', 'yesterday')->where('inandex','=','1')->sum('money');
    
        $payy = $Stream->whereTime('update_time', 'yesterday')->where('inandex','=','0')->sum('money');
-
-
        
        $incomew = $Stream->whereTime('update_time', 'week')->where('inandex','=','1')->sum('money');
    
@@ -37,14 +35,8 @@ class HomepageController extends Controller{
        if(User::isLogin())
        
        {
-        $id = session('userId');
-
-        $User = User::get($id);
-        
- 
-        session('perId',$User->getData('permissions'));
- 
-        $perId = session('perId');
+       
+        $perId = User::role();
         
         
         $this->assign('perId',$perId);
@@ -72,9 +64,7 @@ class HomepageController extends Controller{
        }
        else
        {
-        return $this->error('未登录',url('login_controller/index'));
+        return $this->error('请登录在访问',url('login_controller/index'));
        }
-
-      
     }
 }

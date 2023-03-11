@@ -4,6 +4,7 @@ use app\common\model\Stream;
 use app\common\model\Account;
 use app\common\model\Income;
 use app\common\model\Pay;
+use app\common\model\User;
 use think\Controller;
 use think\Request;
 use think\Db;
@@ -27,6 +28,12 @@ class StreamController extends Controller{
     }
 
     public function index(){
+        
+        if(User::isLogin()){
+
+            //表单传值
+            $perId = User::role();
+            $this->assign('perId',$perId);
 
             $tid = Request::instance()->param('tid/d');
 
@@ -41,30 +48,30 @@ class StreamController extends Controller{
             {
                     
             if(!isset($date))
-             {
+                {
                 $date = 'yesterday';
-             } 
+                } 
 
             }
             elseif($tid === 1)
             {
                 if(!isset($date))
                 {
-                   $date = 'week';
+                    $date = 'week';
                 } 
             }
             elseif($tid === 2)
             {
                 if(!isset($date))
                 {
-                   $date = 'month';
+                    $date = 'month';
                 } 
             }
             elseif($tid === 3)
             {
                 if(!isset($date))
                 {
-                   $date = 'year';
+                    $date = 'year';
                 } 
             }
 
@@ -72,21 +79,18 @@ class StreamController extends Controller{
 
             $Stream = new Stream;
 
-
-
             $pageSize = 6;
-
-          
+            
             $income = $Stream->whereTime('update_time', $date)->where('inandex','=','1')->sum('money');
 
             $pay= $Stream->whereTime('update_time', $date)->where('inandex','=','0')->sum('money');
-           
+            
             
             $remark = Request::instance()->get('remark');
 
             if(!empty($remark))
             {
-    
+
                 $Stream->whereTime('update_time',$date)->where('remark','like','%' . $remark .'%');
                 
             }
@@ -95,74 +99,86 @@ class StreamController extends Controller{
                 'query'=>[
                     'remark'=>$remark,
                     'date'=>$date
-                  
+                    
                 ],
                 ]);
 
-             $this->assign('incomes', $income);
+            $this->assign('incomes', $income);
 
-             $this->assign('pays',  $pay);
+            $this->assign('pays',  $pay);
 
             $this->assign('streams', $Streams);
 
             $this->assign('date', $date);
 
-           return $this->fetch();  
-        
-        
-       
-}
+            return $this->fetch();  
+
+        }
+        else{
+            
+            return $this->error('请登录后在访问',url('login_controller/index')); 
+
+        }
+    }
 
 
-
-       
 
 
 public function add()
     {
-        $Account = Account::select();
+        if(User::isLogin()){
 
-       
-        $aid = Request::instance()->param('aid/d');
+            //表单传值
+            $perId = User::role();
+            $this->assign('perId',$perId);
 
-        $this->assign('aid',  $aid);
+            $Account = Account::select();
 
-      
-        if(!isset($aid) && is_null( $Account))
-        {
-            $this->error('error',url('homepage_controller/index'));
-        }
+            $aid = Request::instance()->param('aid/d');
 
-        $this->assign('Account', $Account);
-
-        $this->assign('aid',  $aid);
-
-        if($aid === 1)
-        {
-
-            $Income =Income::select();
-            if(is_null($Income))
+            $this->assign('aid',  $aid);
+        
+            if(!isset($aid) && is_null( $Account))
             {
-                return $this->error('error ',url('homepage_controller/index'));
+                $this->error('error',url('homepage_controller/index'));
             }
 
-            $this->assign('Income',  $Income);
-     
-        }
-        else
-        {
-            $Pay = Pay::select();
+            $this->assign('Account', $Account);
 
-            if(is_null($Pay))
+            $this->assign('aid',  $aid);
+
+            if($aid === 1)
             {
-                return $this->error('error ',url('homepage_controller/index'));
-              
+
+                $Income =Income::select();
+                if(is_null($Income))
+                {
+                    return $this->error('error ',url('homepage_controller/index'));
+                }
+
+                $this->assign('Income',  $Income);
+        
             }
-               $this->assign('Pay',$Pay);
+            else
+            {
+                $Pay = Pay::select();
+
+                if(is_null($Pay))
+                {
+                    return $this->error('error ',url('homepage_controller/index'));
+                
+                }
+                $this->assign('Pay',$Pay);
+
+                }
+                return $this->fetch();
 
             }
-            return $this->fetch();
+        else{
+            return $this->error('请登录后在访问',url('login_controller/index')); 
         }
+         
+    }
        
 
 
