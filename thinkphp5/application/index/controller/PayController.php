@@ -18,7 +18,7 @@ class PayController extends Controller{
                 {
                     // 获取查询信息
                     $name = Request::instance()->get('name');
-                    echo $name;
+                  
                     $pageSize = 3; // 每页显示5条数据
                     // 实例化Income
                     $Pay = new Pay; 

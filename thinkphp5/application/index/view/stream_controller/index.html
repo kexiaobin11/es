@@ -24,7 +24,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{:url('information_controller/index')}">个人信息</a>
                             </li>
-                            {eq name="role" value="1"} 
+                            {eq name="perId" value="1"} 
                                 <li class="nav-item">
                                     <a class="nav-link " href="{:url('system_controller/index')}">系统管理</a>
                                 </li>
@@ -41,13 +41,13 @@
                                    帐目清单
                                 </li>
                                 <li class="ft-date-begin">
-                                 2023-03-01
+                               {$start_time}
                                 </li>
                                 <li class="ft-date-begin">
                                   &nbsp; ~&nbsp;
                                  </li>
                                 <li class="ft-date-begin">
-                                  2023-03-01
+                              {$end_time}
                                  </li>
                             </ul>
                             <ul class="nav float-right">
