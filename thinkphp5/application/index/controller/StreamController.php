@@ -37,8 +37,15 @@ class StreamController extends Controller
             {              
                 if(!isset($date))
                 {
-                    $date = 'yesterday';
-                } 
+                $date = 'yesterday';
+                }
+                if( $date === 'yesterday'){
+                    $start_time=date('Y-m-d', strtotime('-1 day'));
+                    $end_time=date('Y-m-d', strtotime('-1 day'));
+                }else{
+                    $start_time=date('Y-m-d', strtotime(date('Y-m-d')));
+                    $end_time=date('Y-m-d', strtotime(date('Y-m-d')));
+                }
 
             }
             elseif($tid === 1)
@@ -46,34 +53,74 @@ class StreamController extends Controller
                 if(!isset($date))
                 {
                     $date = 'week';
+                }
+                if($date === 'week'){
+                    $start_time = mktime(0, 0 , 0,date("m"),date("d")-date("w")+1,date("Y"));
+                    $end_time   = mktime(23,59,60,date("m"),date("d")-date("w")+6,date("Y"));
+                    $start_time = date('Y-m-d',$start_time);
+                    $end_time = date('Y-m-d', $end_time);
+                }
+                else{
+                    $start_time = mktime(0, 0 , 0,date("m"),date("d")-date("w")-6,date("Y"));
+                    $end_time   = mktime(23,59,60,date("m"),date("d")-date("w")-1,date("Y"));
+                    $start_time = date('Y-m-d',$start_time);
+                    $end_time = date('Y-m-d', $end_time);      
                 } 
             }
             elseif($tid === 2)
             {
+             
                 if(!isset($date))
                 {
                     $date = 'month';
-                } 
+                  
+                }
+                if($date === 'month'){
+                    $start_time = date('Y-m-1');   
+                    $end_time  = date('Y-m-d',strtotime(date('Y-m-1',strtotime('next month')).'-1 day'));
+                }else
+                {
+                    $start_time = date('Y-m-1',strtotime('last month'));        
+                    $end_time = date('Y-m-d',strtotime(date('Y-m-1').'-1 day'));
+                }
             }
             elseif($tid === 3)
             {
+                
+
                 if(!isset($date))
                 {
+                  
                     $date = 'year';
-                } 
+                }
+                if($date === 'year'){
+                    $start_time = date('Y-m-d',strtotime(date('Y-1-1 00:00:00',time())));
+                    $end_time = date('Y-12-31');
+                }else{
+                    $start_time =date('Y-m-d',strtotime(date('Y-1-1 00:00:00',strtotime('-1 year'))));
+                    $end_time = date('Y-12-31',strtotime(date('Y-1-1 00:00:00',strtotime('-1 year'))));
+                }
             }
 
             $this->assign('tid',$tid);
             $Stream = new Stream;
-            $pageSize = 6; 
+
+            $pageSize = 6;
+            
             $income = $Stream->whereTime('update_time', $date)->where('inandex','=','1')->sum('money');
-            $pay= $Stream->whereTime('update_time', $date)->where('inandex','=','0')->sum('money');             
+
+            $pay= $Stream->whereTime('update_time', $date)->where('inandex','=','0')->sum('money');
+            
+            
             $remark = Request::instance()->get('remark');
             if(!empty($remark))
             {
-                $Stream->whereTime('update_time', $date)->where('remark','like','%' . $remark .'%');   
+
+                $Stream->whereTime('update_time',$date)->where('remark','like','%' . $remark .'%');
+                
             }
-            $Streams = $Stream->whereTime('update_time', $date)->paginate($pageSize,false,[
+
+            $Streams = $Stream->whereTime('update_time',$date)->paginate($pageSize,false,[
                 'query'=>[
                     'remark'=>$remark,
                     'date'=>$date
@@ -83,6 +130,7 @@ class StreamController extends Controller
             $this->assign('pays',  $pay);
             $this->assign('streams', $Streams);
             $this->assign('date', $date);
+
             return $this->fetch();  
         }
         else
@@ -195,4 +243,5 @@ public function add()
         return $this->success('修改失败',url('edit'));
         }
     }
+
 }
