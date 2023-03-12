@@ -11,35 +11,33 @@
 <body>
     <section class="vh-100" style="background-color: #508bfc;">
         <div class="container py-5 h-100">
-          <div class="row d-flex justify-content-center align-items-center ">
-            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-              <div class="card shadow-2-strong" style="border-radius: 1rem;height: 700px;">
-            <!-- return -->
-                <div class="form-row  mt-ms5">   
-                    <a href="{:url('account_controller/index')}" class="btn btn-primary float-left" style="margin-left: 10px;">返回</a>
-                </div>
-                <br>  
-
-                <div class="d-flex align-items-center">
-                    <div class="mx-auto"> 
-                        <h4 >编辑账户</h4>
-                    </div>     
-                  </div>  
-                <br>
-                 <div class="form-mglr"> 
-                    <form action="{:url('update')}" method="post">
-                        <div class="form-group">
-                          <label>账户:</label>
-                          <input type="hidden" name="id" value="{$Account->getData('id')}" />
-                          <input type="text"   class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="name" value="{$Account->getData('name')}" />
+            <div class="row d-flex justify-content-center align-items-center ">
+                <class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card shadow-2-strong" style="border-radius: 1rem;height: 700px;">
+                        <div class="form-row  mt-ms5">   
+                            <a href="{:url('account_controller/index')}" class="btn btn-primary float-left" style="margin-left: 10px;">返回</a>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block">保存</button>
-                      </form>
-                 </div>
+                        <br>  
+                            <div class="d-flex align-items-center">
+                                <div class="mx-auto"> 
+                                    <h4 >编辑账户</h4>
+                                </div>     
+                            </div>  
+                        <br>
+                            <div class="form-mglr"> 
+                                <form action="{:url('update')}" method="post">
+                                    <div class="form-group">
+                                        <label>账户:</label>
+                                            <input type="hidden" name="id" value="{$Account->getData('id')}" />
+                                            <input type="text"   class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="name" value="{$Account->getData('name')}" />
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-block">保存</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
       </section>
 </body>

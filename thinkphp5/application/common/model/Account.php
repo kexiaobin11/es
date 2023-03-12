@@ -2,6 +2,7 @@
 namespace app\common\model;
 use think\Model;
 
-class Account extends Model{
-
+class Account extends Model
+{
+    
 }
