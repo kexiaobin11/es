@@ -7,6 +7,7 @@ class User extends Model
     static public function logOut()
     {
         session('userId',null);
+        sesion('role',null);//清空role 角色
         return true;
     }
 

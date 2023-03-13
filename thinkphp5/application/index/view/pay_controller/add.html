@@ -12,34 +12,33 @@
 <body>
     <section class="vh-100" style="background-color: #508bfc;">
         <div class="container py-5 h-100">
-          <div class="row d-flex justify-content-center align-items-center ">
-            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-              <div class="card shadow-2-strong" style="border-radius: 1rem;height: 700px;">
-                <div class="form-row  mt-ms5">   
-                    <a href="index.html" class="btn btn-primary float-left" style="margin-left: 10px;">返回</a>
-                </div>
-                <br>  
-                <div class="d-flex align-items-center">
-                    <div class="mx-auto"> 
-                        <h4 >增加类型</h4>
-                    </div>     
-                  </div>  
-                <br>
-                <div class="form-mglr"> 
-                <form action="insert" method="post">
-                        <div class="form-group">
-                          <label>类型:</label>
-                          <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                          <input type="hidden" name="create_time" value="{:time()}" /> 
+            <div class="row d-flex justify-content-center align-items-center ">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card shadow-2-strong" style="border-radius: 1rem;height: 700px;">
+                        <div class="form-row  mt-ms5">   
+                            <a href="index.html" class="btn btn-primary float-left" style="margin-left: 10px;">返回</a>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block" >保存</button>
-                      </form>
-                 </div>
+                        <br>  
+                            <div class="d-flex align-items-center">
+                                <div class="mx-auto"> 
+                                    <h4 >增加类型</h4>
+                                </div>     
+                            </div>  
+                        <br>
+                            <div class="form-mglr"> 
+                                <form action="insert" method="post">
+                                    <div class="form-group">
+                                        <label>类型:</label>
+                                        <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                        <input type="hidden" name="create_time" value="{:time()}" /> 
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-block" >保存</button>
+                                </form>
+                            </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </section>
+    </section>
 </body>
 </html>

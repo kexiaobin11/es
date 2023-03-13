@@ -18,46 +18,45 @@
                         <div class="form-row  mt-ms5">   
                             <a href="{:url('index')} " class="btn btn-primary float-left" style="margin-left: 10px;">返回</a>      
                         </div>
-                    <br>   
-                    <div class="d-flex align-items-center">
-                        <div class="mx-auto"> 
-                            <h4 >编辑信息</h4>
-                        </div>     
-                    </div>  
-                    <br>   
-                    <form action="{:url('update')}" method="post">
-                        <div class="form-row"  style="margin-left: 10px; margin-right: 10px;">
-                            <input type="hidden" name="id" value="{$User->getData('id')}"/>
-                                <div class="col-md-6 mb-3">
-                                    <label >姓名</label>
-                                    <input type="text" class="form-control " name ="name" value="{$User->getData('name')}"/>      
-                                </div>                     
-                                <div class="col-md-6">
-                                    <label>权限</label>
-                                    <select name="permissions"  class="form-control" >
-                                        <option value="0">用户</option>
-                                        <option value="1" {eq name="User->getData('permissions')" value="1"}selected="selected"{/eq}>管理员</option>
-                                    </select>  
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="message-text">新密码：</label>
-                                    <input type='password' name="password1" class="form-control" required placeholder="长度为: 6-18">
-                                        <div style="display: inline" id="tip2">
-                                        </div>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="message-text">确认密码：</label>
-                                    <input type='password' name="password2" class="form-control" required placeholder="请再次输入新密码">
-                                    <div style="display: inline" id="tip3"></div>
-                                </div>                
-                            <button class="btn btn-primary btn-lg btn-block" type="submit">修改</button>  
-                        </div>   
-                    </form>   
+                        <br>   
+                        <div class="d-flex align-items-center">
+                            <div class="mx-auto"> 
+                                <h4 >编辑信息</h4>
+                            </div>     
+                        </div>  
+                        <br>   
+                        <form action="{:url('update')}" method="post">
+                            <div class="form-row"  style="margin-left: 10px; margin-right: 10px;">
+                                <input type="hidden" name="id" value="{$User->getData('id')}"/>
+                                    <div class="col-md-6 mb-3">
+                                        <label >姓名</label>
+                                        <input type="text" class="form-control " name ="name" value="{$User->getData('name')}"/>      
+                                    </div>                     
+                                    <div class="col-md-6">
+                                        <label>权限</label>
+                                        <select name="permissions"  class="form-control" >
+                                            <option value="0">用户</option>
+                                            <option value="1" {eq name="User->getData('permissions')" value="1"}selected="selected"{/eq}>管理员</option>
+                                        </select>  
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="message-text">新密码：</label>
+                                        <input type='password' name="password1" class="form-control" required placeholder="长度为: 6-18">
+                                            <div style="display: inline" id="tip2">
+                                            </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="message-text">确认密码：</label>
+                                        <input type='password' name="password2" class="form-control" required placeholder="请再次输入新密码">
+                                        <div style="display: inline" id="tip3"></div>
+                                    </div>                
+                                <button class="btn btn-primary btn-lg btn-block" type="submit">修改</button>  
+                            </div>   
+                        </form>   
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </section>
+    </section>
 </body>
 </html>

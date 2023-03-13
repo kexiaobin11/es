@@ -13,64 +13,58 @@
 <body>
     <section class="vh-100" style="background-color: #508bfc;">
         <div class="container py-5 h-100">
-          <div class="row d-flex justify-content-center align-items-center ">
-            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-              <div class="card shadow-2-strong" style="border-radius: 1rem;height: 700px;">
-            <!-- return -->
-                <div class="form-row  mt-ms5">   
-                    <a href="{:url('system_controller/index')}" class="btn btn-primary float-left" style="margin-left: 10px;">返回</a>
-                    
+            <div class="row d-flex justify-content-center align-items-center ">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card shadow-2-strong" style="border-radius: 1rem;height: 700px;">
+                        <div class="form-row  mt-ms5">   
+                            <a href="{:url('system_controller/index')}" class="btn btn-primary float-left" style="margin-left: 10px;">返回</a>
+                        </div>
+                        <br>   
+                            <div class="d-flex align-items-center">
+                                <div class="mx-auto">   
+                                    <h4 >支出管理</h4>
+                                </div>     
+                            </div>  
+                        <br>   
+                            <nav class="navbar navbar-light bg-light">
+                                <form class="form-inline">
+                                    <div class="form-group  smr-sm-4 ">
+                                        <label class="sr-only" for="name">类型</label>
+                                        <input name="name" class="form-control smr-sm-2" style="width:100px" type="text" placeholder="类型.."  aria-label="Search" value={:input('get.name')} >
+                                    </div>
+                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">查询</button>
+                                </form>
+                                <a href="{:url('pay_controller/add')}" class="btn btn-primary float-right">添加</a>
+                            </nav>
+                            <div class="col mt-4">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">序号</th>
+                                            <th scope="col">类型</th>
+                                            <th scope="col">操作</th>
+                                        </tr>
+                                    </thead>
+                                    {volist name="Pay" id="pay" key="key"}
+                                    <tbody>    
+                                        <tr>
+                                            <td>{$key}</td>
+                                            <td>{$pay->getData('name')}</td>
+                                            <td>
+                                                <a type="button"  class="btn btn-primary" href="{:url('edit?id=' . $pay->getData('id'))}">编辑</a>&nbsp;&nbsp;
+                                                <a  type="button" class="btn btn-danger" href="delete?id={$pay->getData('id')}">删除</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    {/volist}
+                                </table>
+                                {$Pay->render()}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <br>   
-                <div class="d-flex align-items-center">
-                    <div class="mx-auto"> 
-                        <h4 >支出管理</h4>
-                    </div>     
-                  </div>  
-                  <br>   
-                <!-- navAndAdd -->
-                  <nav class="navbar navbar-light bg-light">
-                    <form class="form-inline">
-                      <div class="form-group  smr-sm-4 ">
-                        <label class="sr-only" for="name">类型</label>
-                        <input name="name" class="form-control smr-sm-2" style="width:100px" type="text" placeholder="类型.."  aria-label="Search" value={:input('get.name')} >
-                       
-                      </div>
-                      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">查询</button>
-                    </form>
-                    <a href="{:url('pay_controller/add')}" class="btn btn-primary float-right">添加</a>
-                </nav>
-                <!-- form -->
-                  <div class="col mt-4">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th scope="col">序号</th>
-                            <th scope="col">类型</th>
-                            <th scope="col">操作</th>
-                        </tr>
-                        </thead>
-                        {volist name="Pay" id="pay" key="key"}
-                        <tbody>    
-                        <tr>
-                          <td>{$key}</td>
-                            <td>{$pay->getData('name')}</td>
-                            <td>
-                                <a type="button"  class="btn btn-primary" href="{:url('edit?id=' . $pay->getData('id'))}">编辑</a>&nbsp;&nbsp;
-                                <a  type="button" class="btn btn-danger" href="delete?id={$pay->getData('id')}">删除</a>
-                            </td>
-                            </tr>
-                        </tbody>
-                        {/volist}
-                    </table>
-                    
-                    {$Pay->render()}
-                </div>
-                </div>
-              </div>
             </div>
-          </div>
         </div>
-      </section>
+    </section>
 </body>
 </html>

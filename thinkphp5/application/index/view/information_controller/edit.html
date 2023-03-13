@@ -11,44 +11,41 @@
 <body>
     <section class="vh-100" style="background-color: #508bfc;">
         <div class="container py-5 h-100">
-          <div class="row d-flex justify-content-center align-items-center ">
-            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-              <div class="card shadow-2-strong" style="border-radius: 1rem;height: 700px;">
-            <!-- return -->
-                <div class="form-row  mt-ms5">   
-                    <a href="{:url('homepage_controller/index')}" class="btn btn-primary float-left" style="margin-left: 10px;">返回</a>
-                </div>
-                <br>   
-                <div class="d-flex align-items-center">
-                    <div class="mx-auto"> 
-                        <h4 >编辑信息</h4>
-                    </div>     
-                  </div>  
-                  <br>   
-                  <form action="updata" method="post">
-                    <div class="form-row"  style="margin-left: 10px; margin-right: 10px;">
-                      <input type="hidden" name="id" value="{$user->getData('id')}" />
-                        <div class="col-md-6 mb-3">
-                            <label for="validationServer01">名字</label>
-                            <input type="text" class="form-control " name ="name" id="validationServer01" value="{$user->getData('name')}" >
+            <div class="row d-flex justify-content-center align-items-center ">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card shadow-2-strong" style="border-radius: 1rem;height: 700px;">
+                        <div class="form-row  mt-ms5">   
+                            <a href="{:url('homepage_controller/index')}" class="btn btn-primary float-left" style="margin-left: 10px;">返回</a>
                         </div>
-                        <div class="form-group col-md-4">
-                          <label for="">权限</label>
-                          <select name="permissions"  class="form-control col-8" >
-                            <option value="0">用户</option>
-                            <option value="1" {eq name="user->getData('permissions')" value="1"}selected="selected"{/eq}>管理员</option>
-                        </select>
-                      </div>    
-                        <!-- <input type="button" class="btn btn-primary btn-lg btn-block" onclick="window.open('./information.html')"value="添加"> -->
-                        <button class="btn btn-primary btn-lg btn-block" type="submit">确认</button>
-                        <a href="{:url('updatapassword')}" class="btn btn-primary btn-lg btn-block">修改密码</a>
+                        <br>   
+                            <div class="d-flex align-items-center">
+                                <div class="mx-auto"> 
+                                    <h4 >编辑信息</h4>
+                                </div>     
+                            </div>  
+                        <br>   
+                            <form action="updata" method="post">
+                                <div class="form-row"  style="margin-left: 10px; margin-right: 10px;">
+                                    <input type="hidden" name="id" value="{$user->getData('id')}" />
+                                    <div class="col-md-6 mb-3">
+                                        <label for="validationServer01">名字</label>
+                                        <input type="text" class="form-control " name ="name" id="validationServer01" value="{$user->getData('name')}" >
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="">权限</label>
+                                        <select name="permissions"  class="form-control col-8" >
+                                            <option value="0">用户</option>
+                                            <option value="1" {eq name="user->getData('permissions')" value="1"}selected="selected"{/eq}>管理员</option>
+                                        </select>
+                                    </div>    
+                                    <button class="btn btn-primary btn-lg btn-block" type="submit">确认</button>
+                                    <a href="{:url('updatapassword')}" class="btn btn-primary btn-lg btn-block">修改密码</a>
+                                </div>
+                            </form>   
                     </div>
-                </form>   
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </section>
+    </section>
 </body>
 </html>

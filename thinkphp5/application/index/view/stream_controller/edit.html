@@ -12,77 +12,70 @@
 <body>
     <section class="vh-100" style="background-color: #508bfc;">
         <div class="container py-5 h-100">
-          <div class="row d-flex justify-content-center align-items-center ">
-            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-              <div class="card shadow-2-strong" style="border-radius: 1rem;height:700px">
-                
-                <nav>
-                    <ul class="nav nav-pills">   
-                      <li class="nav-item">
-                        <a class="nav-link" href="{:url('homepage_controller/index')}">主页</a>
-                      </li>
-                  
-                      <li class="nav-item">
-                        <a class="nav-link" href="{:url('information_controller/index')}">个人信息</a>
-                    
-                      <li class="nav-item">
-                        {eq name="perId" value="1"} <li class="nav-item">
-                          <a class="nav-link " href="{:url('system_controller/index')}">系统管理</a>
-                      {/eq}
-                      </li>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link " href="{:url('Login_controller/index')}">退出账户</a>
-                    </li>
-                    </ul>
-                 </nav>    
-               <div>
-               
-             
-                    <form class="form-mglr" action="{:url('stream_controller/save')}" method="post">
-                        <div class="form-row" col-md-4>     
-                            <input type="hidden" name="id" value="{$Stream->getData('id')}"/>
-                            <input type="hidden" name="inandex" value="{$Stream->getData('inandex')}"/>
-                            <div class="form-group col-md-4">     
-                                {eq name="$Stream->getData('inandex')" value="1"}
-                                <select name="income_id"   class="form-control">
-                                    {volist name="Stream->Income->all()" id="Income"}
-                                    <option value="{$Income->id}" {eq name="Income->id" value="$Stream->income_id"}selected="selected"{/eq}>{$Income->name}		
-                                    {/volist}
-                                 </select>
-                                 {else /}
-                                 <select name="pay_id"   class="form-control">
-                                 {volist name="Stream->Pay->all()" id="Pay"}
-                                 <option value="{$Pay->id}" {eq name="Pay->id" value="$Stream->pay_id"}selected="selected"{/eq}>{$Pay->name}		
-                                 {/volist}
-                                </select>
-                                 {/eq}
-                            </div>
-                            <div class="form-group col-md-4">
-                             
-                                <select name="account_id" id="Account"  class="form-control">
-                                    {volist name="Stream->Account->all()" id="Account"}
-                                    <option value="{$Account->id}" {eq name="Account->id" value="$Stream->account_id"}selected="selected"{/eq}>{$Account->name}		
-                                    {/volist}
-                                 </select>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <input type="text" name ="money" class="form-control"  value="{$Stream->getData('money')}">
-                            </div>
-                            <div class="form-group col-md-4">
-                                <input type="text" name ="remark" class="form-control"  value="{$Stream->getData('remark')}">
-                            </div>
+            <div class="row d-flex justify-content-center align-items-center ">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card shadow-2-strong" style="border-radius: 1rem;height:700px">
+                        <nav>
+                            <ul class="nav nav-pills">   
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{:url('homepage_controller/index')}">主页</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{:url('information_controller/index')}">个人信息</a>
+                                <li class="nav-item">
+                                    {eq name="perId" value="1"} 
+                                        <li class="nav-item">
+                                            <a class="nav-link " href="{:url('system_controller/index')}">系统管理</a>
+                                        </li>
+                                    {/eq}
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link " href="{:url('Login_controller/index')}">退出账户</a>
+                                </li>
+                            </ul>
+                        </nav>    
+                        <div>
+                            <form class="form-mglr" action="{:url('stream_controller/save')}" method="post">
+                                <div class="form-row" col-md-4>     
+                                    <input type="hidden" name="id" value="{$Stream->getData('id')}"/>
+                                    <input type="hidden" name="inandex" value="{$Stream->getData('inandex')}"/>
+                                    <div class="form-group col-md-4">     
+                                        {eq name="$Stream->getData('inandex')" value="1"}
+                                            <select name="income_id"   class="form-control">
+                                                {volist name="Stream->Income->all()" id="Income"}
+                                                    <option value="{$Income->id}" {eq name="Income->id" value="$Stream->income_id"}selected="selected"{/eq}>{$Income->name}		
+                                                {/volist}
+                                            </select>
+                                        {else /}
+                                            <select name="pay_id"   class="form-control">
+                                                {volist name="Stream->Pay->all()" id="Pay"}
+                                                    option value="{$Pay->id}" {eq name="Pay->id" value="$Stream->pay_id"}selected="selected"{/eq}>{$Pay->name}		
+                                                {/volist}
+                                            </select>
+                                        {/eq}
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <select name="account_id" id="Account"  class="form-control">
+                                                {volist name="Stream->Account->all()" id="Account"}
+                                                    <option value="{$Account->id}" {eq name="Account->id" value="$Stream->account_id"}selected="selected"{/eq}>{$Account->name}		
+                                                {/volist}
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <input type="text" name ="money" class="form-control"  value="{$Stream->getData('money')}">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <input type="text" name ="remark" class="form-control"  value="{$Stream->getData('remark')}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary btn-block" type="submit">保存</button>
+                            </form>
                         </div>
-                        </div>
-                        <!-- <button type="submit" class="btn btn-primary" >保存</button> -->
-                        <button class="btn btn-primary btn-block" type="submit">保存</button>
-                    </form>
+                    </div>
+                </div>
             </div>
-            
-            </div>
-            </div>
-          </div>
         </div>
-      </section>
+    </section>
 </body>
 </html>
