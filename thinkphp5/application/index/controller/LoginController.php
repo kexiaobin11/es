@@ -15,7 +15,7 @@ class LoginController extends Controller
         $postData = Request::instance()->post();
         $map = array('username' => $postData['username']);
         $User = User::get($map);
-        if(!is_null($User) &&$User->getData('password')===$postData['password'] )
+        if (!is_null($User) &&$User->getData('password')===$postData['password'] )
         {
             session('userId', $User->getData('id'));
             return $this->success('login success',url('homepage_controller/index'));
