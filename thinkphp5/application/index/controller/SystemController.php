@@ -6,7 +6,7 @@ use app\common\model\User;
 class SystemController extends Controller{
     public function index() {
         $role = User:: role(); //role：角色
-        if(User::isLogin()) {
+        if (User::isLogin()) {
             if($role) {//如果是1，则是管理员；0就是用户，不可访问
                 return $this->fetch();
             }

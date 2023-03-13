@@ -11,15 +11,12 @@ class UserController extends Controller{
         try
         {
             $role = User::role(); //role：角色
-            if(User::isLogin())
-            {
-                if($role === 1)
-                {
+            if (User::isLogin()) {
+                if ($role === 1) {
                     $name = Request::instance()->get('name');
                     $pageSize = 5;            
                     $User = new User;            
-                    if(!empty($name))
-                    {
+                    if (!empty($name)) {
                         $User->where('name','like','%' . $name .'%');
                     }
                     $Users = $User->paginate($pageSize,false,[
@@ -28,29 +25,23 @@ class UserController extends Controller{
                         ],
                         ]);
                     $this->assign('Users', $Users);
+
                     return $this->fetch();   
-                }
-                else
-                {
+                } else {
                     return $this->error('你的权限不够',url('homepage_controller/index')); 
                 }
-            }
-            else
-            {
+            } else {
                 return $this->error('请登录后在访问',url('login_controller/index'));      
             }
-        }
-        catch (\think\Exception\HttpResponseException $e)
+        } catch (\think\Exception\HttpResponseException $e)
         {
             throw $e;
         // 获取到正常的异常时，输出异常
-        } 
-        catch (\Exception $e) 
+        }  catch (\Exception $e) 
         {
             return $e->getMessage();
         } 
     }
-
 
     public function add()
     {
