@@ -92,9 +92,18 @@ class StreamController extends Controller{
                     $this->assign('tid',$tid);
                     $Stream = new Stream;
                     //页面数
-                    $pageSize = 6;
+                    $pageSize = 20;
                     $income = $Stream->whereTime('create_time', $date)->where('inandex','=','1')->sum('money');
-                    $pay= $Stream->whereTime('create_time', $date)->where('inandex','=','0')->sum('money');         
+                    $pay = $Stream->whereTime('create_time', $date)->where('inandex','=','0')->sum('money');
+
+                    /**
+                     * 
+                     *
+                     * @var 金额千位分割符
+                     */
+                    $income = number_format( $income, 2, '.', ',');
+                    $pay= number_format( $pay, 2, '.', ',');     
+
                     $remark = Request::instance()->get('remark');
                 if (!empty($remark)) {
                     $Stream->whereTime('create_time',$date)->where('remark','like','%' . $remark .'%');
@@ -105,8 +114,7 @@ class StreamController extends Controller{
                                             'remark' => $remark,
                                             'date' => $date     
                                             ],
-                                   ]);
-
+                                   ]); 
                 $this->assign('incomes', $income);
                 $this->assign('pays',  $pay);
                 $this->assign('streams', $Streams);
@@ -129,6 +137,7 @@ class StreamController extends Controller{
                 $Account = Account::select();
                 $aid = Request::instance()->param('aid/d');
                 $this->assign('aid',  $aid);
+
                 if (!isset($aid) && is_null( $Account)) {
                     $this->error('error', url('homepage_controller/index'));
                 }
@@ -210,6 +219,7 @@ class StreamController extends Controller{
     {
       $id = Request::instance()->post('id/d');
       $Stream = Stream::get($id);
+
       if ($this->saveStream($Stream)) {
         return $this->success('修改成功',url('index'));
       }

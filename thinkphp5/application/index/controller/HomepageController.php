@@ -19,7 +19,18 @@ class HomepageController extends Controller
        $paym = $Stream->whereTime('update_time', 'month')->where('inandex','=','0')->sum('money');
        $incomeyear = $Stream->whereTime('update_time', 'year')->where('inandex','=','1')->sum('money');  
        $payyear = $Stream->whereTime('update_time', 'year')->where('inandex','=','0')->sum('money');
-
+      
+       $income = number_format($income, 2, '.', ',');
+       $pay = number_format($pay, 2, '.', ',');
+       $sum =  number_format( $sum, 2, '.', ',');
+       $incomey =  number_format($incomey, 2, '.', ',');
+       $payy =  number_format($payy, 2, '.', ',');
+       $incomew  =  number_format($incomew , 2, '.', ',');
+       $payw =  number_format($payw, 2, '.', ',');
+       $incomem =  number_format($incomem, 2, '.', ',');
+       $paym =  number_format($paym, 2, '.', ',');
+       $incomeyear = number_format( $incomeyear, 2, '.', ',');
+       $payyear =  number_format($payyear, 2, '.', ',');
        if(User::isLogin())
        {
         $role = User::role();    
@@ -40,4 +51,6 @@ class HomepageController extends Controller
         return $this->error('请登录在访问',url('login_controller/index'));
        }
     }
+
+
 }

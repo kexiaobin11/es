@@ -52,9 +52,15 @@ class UserController extends Controller{
     {
         $User = new User;
         $User->permissions= Request::instance()->post('permissions/d');
-        $User->username = Request::instance()->post('username');
+        $username = Request::instance()->post('username');
+        if ($User->where('username', '=' , $username)->select()) 
+        {
+            $this->error('用户名已存在，请重新输入');
+        }
+        $User->username = $username;
         $User->name = Request::instance()->post('name');
         $User->password='123456';
+
         if($User->validate()->save())
         {
             return $this->success('add succuss',url('index'));
