@@ -19,6 +19,10 @@ class InformationController extends Controller
       if(User::isLogin())
 	    {
         $User = $this->commonSession();
+       
+        if(isset($User)) {
+          $this->error('用户不存在');
+        }
         //表单传值
         $role = User::role();
         $this->assign('role', $role);
@@ -36,7 +40,7 @@ class InformationController extends Controller
           $User = $this->commonSession();
           $this->assign('user', $User);
           return $this->fetch();
-      }
+    }
 
     public function updata()
     {
@@ -54,8 +58,11 @@ class InformationController extends Controller
 
     public function updatapassword()
 	   {
-        $id = session('userId');
-        $User = User::get($id);
+       $User = $this->commonSession();
+
+        if(isset($User)) {
+          $this->error('用户不存在');
+        }
         $this->assign('user', $User);
         return $this->fetch();
     }

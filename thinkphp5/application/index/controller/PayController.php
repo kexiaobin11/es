@@ -70,7 +70,10 @@ class PayController extends Controller{
         $Pay = new Pay();//空对象     
         $Pay->name = $postData['name'];
         $Pay->create_time = $postData['create_time'];
-        $Pay->save();
+
+        if($Pay->validate()->save() === false) {
+            $this->error('添加数据失败');
+        }
         // 反馈结果
         return $this->success('添加成功', url('pay_controller/index'));
     }
@@ -78,15 +81,19 @@ class PayController extends Controller{
     public function edit()
     {
         // 获取传入ID
-        $id = Request::instance()->param('id/d');
-        // 在Income表模型中获取当前记录
-        $Pay = Pay::get($id);
-        // 将数据传给V层
-        $this->assign('Pay', $Pay);
-        // 获取封装好的V层内容
-        $htmls = $this->fetch();
-        // 将封装好的V层内容返回给用户
-        return $htmls;
+          $id = Request::instance()->param('id/d');
+          if (isset($id)) {
+            $this->error('未传入ID');
+          }
+          $Pay = Pay::get($id);
+          if(is_null ($Pay)) {
+              $this->error('不存在ID的值');
+          }
+         $this->assign('Pay', $Pay);
+            // 获取封装好的V层内容
+         $htmls = $this->fetch();
+            // 将封装好的V层内容返回给用户
+         return $htmls;
     }
 
     public function delete()

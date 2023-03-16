@@ -69,8 +69,15 @@ class IncomeController extends Controller
     {
         // 获取传入ID
         $id = Request::instance()->param('id/d');
+
+        if (isset($id)) {
+          $this->error('未传入ID');
+        }
         // 在Income表模型中获取当前记录
         $Income = Income::get($id);
+        if(is_null($Income)) {
+            $this->error('不存在ID的值');
+        }
         // 将数据传给V层
         $this->assign('Income', $Income);
         // 获取封装好的V层内容
@@ -85,7 +92,10 @@ class IncomeController extends Controller
         $Income = new Income();//空对象        
         $Income->name = $postData['name'];
         $Income->create_time = $postData['create_time'];
-        $Income->save();
+
+        if($Income->validate()->save() === false) {
+            $this->error('添加数据失败');
+        }
         // 反馈结果
         return $this->success('添加成功', url('income_controller/index'));
     }
@@ -120,7 +130,7 @@ class IncomeController extends Controller
         // 将数据存入Income表
         $Income = new Income();
         // 依据状态定制提示信息
-        if (false === $Income->validate(true)->isUpdate(true)->save($income))
+        if (false === $Income->validate(true)->save($income))
         {
             return $this->error('更新失败' . $Income->getError());
         }
