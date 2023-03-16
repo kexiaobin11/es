@@ -20,7 +20,7 @@ class InformationController extends Controller
 	    {
         $User = $this->commonSession();
        
-        if(isset($User)) {
+        if(!isset($User)) {
           $this->error('用户不存在');
         }
         //表单传值
