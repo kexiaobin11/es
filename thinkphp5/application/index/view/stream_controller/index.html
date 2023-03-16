@@ -10,11 +10,11 @@
     <title>Document</title>
 </head>
 <body>
-    <section class="vh-100" style="background-color: #508bfc;">
+    <section style="background-color: #508bfc;">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center ">
                 <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-                    <div class="card shadow-2-strong" style="border-radius: 1rem; height: 700px;">
+                    <div class="card shadow-2-strong" style="border-radius: 1rem; height: 1500px;">
                     <!-- 导航 -->
                     <nav>
                         <ul class="nav nav-pills">   
@@ -122,12 +122,20 @@
                              {else /}<span class="green text-center">{$stream->inandex}{/eq}</td>
 
                             <td>{eq name="stream->getData('inandex')" value="1"}
-                              <span class="orange text-center">{$stream->getData('money')}</span>{else /}
-                              <span class="green text-center">{$stream->getData('money')}</span>{/eq}</td>
+                              <span class="orange text-center">  <?php
+                                $money =  $stream->getData('money');
+                                echo number_format($money, 2, '.', ',');;   
+                                ?></span>{else /}
+                              <span class="green text-center">
+                               <?php
+                                    $money =  $stream->getData('money');
+                                    echo number_format($money, 2, '.', ',');;   
+                                    ?>
+                              </span>{/eq}</td>
                             <td>{$stream->getData('remark')}</td>
                             <td>
                               <a class="btn-sm btn-primary" href="{:url('stream_controller/edit?id=' . $stream->getData('id'))}">编辑</a>
-                              <a  class="btn-sm btn-danger" href="{:url('stream_controller/delete?id=' . $stream->getData('id'))}">删除</a>
+                              <a class="btn-sm btn-danger" href="{:url('stream_controller/delete?id=' . $stream->getData('id'))}">删除</a>
                             </td>
                           </tr>
                           {/volist}
