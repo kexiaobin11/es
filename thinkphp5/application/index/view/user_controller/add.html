@@ -5,42 +5,35 @@
 {block name="section"} 
 {/block}
 {block name="content"}
-                        <div class="form-row  mt-ms5">   
-                            <a href="{:url('system_controller/index')} " class="btn btn-primary float-left" style="margin-left: 10px;">返回</a>      
-                        </div>
-                        <br>   
-                            <div class="d-flex align-items-center">
-                                <div class="mx-auto"> 
-                                    <h4 >添加成员</h4>
-                                </div>     
-                            </div>  
-                        <br>   
-                            <form action="{:url('save')}" method="post">
-                                <div class="form-row"  style="margin-left: 10px; margin-right: 10px;">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="validationServer01">名字</label>
-                                        <input type="text" class="form-control " name="name" required>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="validationServer02">用户名</label>
-                                        <input type="text" class="form-control" name="username"  value="" required>  
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="validationServer04">权限</label>
-                                        <select class="custom-select" id="validationServer04" name="permissions" required>
-                                            <option selected  value="0">用户</option>
-                                            <option  value="1">管理员</option>
-                                        </select>
-                                    </div>
-                                    <button class="btn btn-primary btn-lg btn-block" type="submit">添加</button>
-                                </div>
-                            </form>   
-                        </div>
-                    </div>
-                </div>
+    <div class="form-row  mt-ms5">   
+        <a href="{:url('system_controller/index')} " class="btn btn-primary float-left" style="margin-left: 10px;">返回</a>      
+    </div>
+    <br>   
+    <div class="d-flex align-items-center">
+        <div class="mx-auto"> 
+            <h4 >添加成员</h4>
+        </div>     
+    </div>  
+    <br>   
+    <form action="{:url('save')}" method="post">
+        <div class="form-row"  style="margin-left: 10px; margin-right: 10px;">
+            <div class="col-md-6 mb-3">
+                <label for="validationServer01">名字</label>
+                <input type="text" class="form-control " name="name" required>
             </div>
+            <div class="col-md-6 mb-3">
+                <label for="validationServer02">用户名</label>
+                <input type="text" class="form-control" name="username"  value="" required>  
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="validationServer04">权限</label>
+                <select class="custom-select" id="validationServer04" name="permissions" required>
+                    <option selected  value="0">用户</option>
+                    <option  value="1">管理员</option>
+                </select>
+            </div>
+            <button class="btn btn-primary btn-lg btn-block" type="submit">添加</button>
         </div>
-        {/block}
-    </section>
+{/block}
 </body>
 </html>

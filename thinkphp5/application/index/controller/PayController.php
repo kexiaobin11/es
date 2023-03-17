@@ -19,7 +19,7 @@ class PayController extends Controller{
                     // 获取查询信息
                     $name = Request::instance()->get('name');
                   
-                    $pageSize = 3; // 每页显示5条数据
+                    $pageSize = 10; // 每页显示10条数据
                     // 实例化Income
                     $Pay = new Pay; 
                     // 定制查询信息
@@ -81,16 +81,21 @@ class PayController extends Controller{
     
     public function insert()
     {
-        $postData = $this->request->post();//接受传入的数据       
-        $Pay = new Pay();//空对象     
-        $Pay->name = $postData['name'];
-        $Pay->create_time = $postData['create_time'];
-
-        if($Pay->validate()->save() === false) {
-            $this->error('添加数据失败');
+        $Pay = new Pay;
+        $name = Request::instance()->post('name');
+        if ($Pay->where('name', '=' , $name)->select()) 
+        {
+            $this->error('此类型已存在，请重新输入');
         }
-        // 反馈结果
-        return $this->success('添加成功', url('pay_controller/index'));
+        $Pay->name = $name;
+        if($Pay->validate()->save())
+        {
+            return $this->success('add succuss',url('index'));
+        }
+        else
+        {
+            return $this->error('add error',url('add'));
+        }
     }
 
     public function edit()
@@ -146,10 +151,14 @@ class PayController extends Controller{
 
     public function update()
     {
-        // 接收数据
-        $pay = Request::instance()->post();
+        $Pay = new Pay;
+        $name = Request::instance()->post('name');
+        if ($Pay->where('name', '=' , $name)->select()) 
+        {
+            $this->error('此类型已存在，请重新输入');
+        }
         // 将数据存入Pay表
-        $Pay = new Pay();
+        $pay = Request::instance()->post();
         // 依据状态定制提示信息
         if (false === $Pay->validate(true)->isUpdate(true)->save($pay)) {
             return $this->error('更新失败' . $Pay->getError());
