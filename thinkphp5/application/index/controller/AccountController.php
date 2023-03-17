@@ -21,7 +21,7 @@ class AccountController extends Controller
                     // 获取查询信息
                     $name = Request::instance()->get('name');
                     echo $name;
-                    $pageSize = 3; // 每页显示5条数据
+                    $pageSize = 10; // 每页显示10条数据
                     // 实例化Account
                     $Account = new Account; 
                     // 定制查询信息
@@ -97,13 +97,21 @@ class AccountController extends Controller
     
     public function insert()
     {
-        $postData = $this->request->post();//接受传入的数据
-        $Account = new Account();//空对象        
-        $Account->name = $postData['name'];
-        $Account->create_time = $postData['create_time'];
-        $Account->save();
-        // 反馈结果
-        return $this->success('添加成功', url('account_controller/index'));
+        $Account = new Account;
+        $name = Request::instance()->post('name');
+        if ($Account->where('name', '=' , $name)->select()) 
+        {
+            $this->error('此类型已存在，请重新输入');
+        }
+        $Account->name = $name;
+        if($Account->validate()->save())
+        {
+            return $this->success('add succuss',url('index'));
+        }
+        else
+        {
+            return $this->error('add error',url('add'));
+        }
     }
 
     public function delete()
@@ -129,15 +137,20 @@ class AccountController extends Controller
         // 进行跳转
         return $this->success('删除成功', url('index'));
     }
-
+    
+    /**
+     * 更新数据
+     */
     public function update()
     {
-        // 接收数据
-        $income = Request::instance()->post();
-        // 将数据存入Income表
-        $Account = new Account();
-        // 依据状态定制提示信息
-        if (false === $Account->validate(true)->isUpdate(true)->save($income))
+        $Account = new Account;
+        $name = Request::instance()->post('name');//接收数据
+        if ($Account->where('name', '=' , $name)->select()) 
+        {
+            $this->error('此类型已存在，请重新输入');
+        }
+        $account = Request::instance()->post();
+        if (false === $Account->validate(true)->isUpdate(true)->save($account))
         {
             return $this->error('更新失败' . $Account->getError());
         }
