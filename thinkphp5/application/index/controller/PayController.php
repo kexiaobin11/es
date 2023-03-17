@@ -30,7 +30,9 @@ class PayController extends Controller{
                     // 调用分页
                     $pay = $Pay->paginate($pageSize);
                     // 向V层传数据
-                    $this->assign('Pay', $pay);
+                    $this->assign('Pay', $pay); 
+
+                    $this->assign('role',$role);
                     // 取回打包后的数据
                     $htmls = $this->fetch();
 
@@ -61,7 +63,20 @@ class PayController extends Controller{
     
     public function add()
     {  
-        return $this->fetch();
+        $eid = 0; 
+        $Pay = new Pay;
+        $Pay->id = '';
+        $Pay->name = '';
+        $role = User::role();
+
+        if(is_null($eid) && is_null($role)) {
+            $this->error('访问失败');
+        }
+        $this->assign('role',$role);
+        $this->assign('eid',$eid);  
+        $this->assign('Pay',$Pay);
+
+        return $this->fetch('edit');
     }
     
     public function insert()
@@ -82,14 +97,23 @@ class PayController extends Controller{
     {
         // 获取传入ID
           $id = Request::instance()->param('id/d');
-          if (isset($id)) {
+          $role = User::role();
+          $eid = 0;
+          if (!isset($id)) {
             $this->error('未传入ID');
           }
+          if(is_null($eid) && is_null($role)) {
+            $this->error('访问失败');
+        }
           $Pay = Pay::get($id);
+          
           if(is_null ($Pay)) {
               $this->error('不存在ID的值');
           }
+          $this->assign('eid',$eid);
          $this->assign('Pay', $Pay);
+         $this->assign('role',$role);
+         $role = User::role();
             // 获取封装好的V层内容
          $htmls = $this->fetch();
             // 将封装好的V层内容返回给用户

@@ -33,6 +33,7 @@ class AccountController extends Controller
                     $account = $Account->paginate($pageSize);
                     // 向V层传数据
                     $this->assign('Account', $account);
+                    $this->assign('role', $role);
                     // 取回打包后的数据
                     $htmls = $this->fetch();
                     // 将数据返回给用户
@@ -62,17 +63,32 @@ class AccountController extends Controller
 
     public function add()
     {
-        return $this->fetch();      
+        $eid = 1;
+        $role = User:: role();
+        if(is_null($eid) && is_null($role)) {
+            $this->error('访问失败');
+        }
+        $Account = new Account;
+        $Account->id = '';
+        $Account->name = '';
+        $this->assign('role', $role);
+        $this->assign('Account', $Account);
+        $this->assign('eid', $eid);
+        return $this->fetch('edit');      
     }
 
     public function edit()
     {
+        $role = User:: role();
+        $eid = 1;
         // 获取传入ID
         $id = Request::instance()->param('id/d');
         // 在Income表模型中获取当前记录
         $Account = Account::get($id);
         // 将数据传给V层
         $this->assign('Account', $Account);
+        $this->assign('role', $role);
+        $this->assign('eid', $eid);
         // 获取封装好的V层内容
         $htmls = $this->fetch();
         // 将封装好的V层内容返回给用户

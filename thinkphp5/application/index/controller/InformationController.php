@@ -20,7 +20,7 @@ class InformationController extends Controller
 	    {
         $User = $this->commonSession();
        
-        if(isset($User)) {
+        if(!isset($User)) {
           $this->error('用户不存在');
         }
         //表单传值
@@ -37,8 +37,11 @@ class InformationController extends Controller
 
     public function edit()
     {
+         $role = User::role();
+         
           $User = $this->commonSession();
           $this->assign('user', $User);
+          $this->assign('role',  $role);
           return $this->fetch();
     }
 
