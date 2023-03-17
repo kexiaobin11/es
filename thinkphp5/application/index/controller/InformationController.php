@@ -37,8 +37,11 @@ class InformationController extends Controller
 
     public function edit()
     {
+         $role = User::role();
+         
           $User = $this->commonSession();
           $this->assign('user', $User);
+          $this->assign('role',  $role);
           return $this->fetch();
     }
 

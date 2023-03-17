@@ -32,6 +32,7 @@ class IncomeController extends Controller
                     $income = $Income->paginate($pageSize);
                     // 向V层传数据
                     $this->assign('Income', $income);
+                    $this->assign('role', $role);
                     // 取回打包后的数据
                     $htmls = $this->fetch();
                     // 将数据返回给用户
@@ -62,16 +63,32 @@ class IncomeController extends Controller
 
     public function add()
     {
-        return $this->fetch();
+        $Income = new Income;
+        $Income->id = 0;
+        $Income->name = '';
+        $eid = 0;
+        $role = User::role();
+        if(is_null($eid) && is_null($role)) {
+            $this->error('访问失败');
+        }
+        $this->assign('role', $role);
+        $this->assign('eid', $eid);
+        $this->assign('Income',  $Income);
+        return $this->fetch('edit');
     }
 
     public function edit()
     {
+        $eid = 1;
+        $role = User::role();
         // 获取传入ID
         $id = Request::instance()->param('id/d');
 
-        if (isset($id)) {
+        if (!isset($id)) {
           $this->error('未传入ID');
+        }
+        if(is_null($eid) && is_null($role)) {
+            $this->error('访问失败');
         }
         // 在Income表模型中获取当前记录
         $Income = Income::get($id);
@@ -81,6 +98,8 @@ class IncomeController extends Controller
         // 将数据传给V层
         $this->assign('Income', $Income);
         // 获取封装好的V层内容
+        $this->assign('eid', $eid);
+        $this->assign('role', $role);
         $htmls = $this->fetch();
         // 将封装好的V层内容返回给用户
         return $htmls;

@@ -25,6 +25,7 @@ class UserController extends Controller{
                         ],
                         ]);
                     $this->assign('Users', $Users);
+                    $this->assign('role', $role);
 
                     return $this->fetch();   
                 } else {
@@ -44,7 +45,9 @@ class UserController extends Controller{
     }
 
     public function add()
-    {
+    {   
+       $role =  User::role();
+       $this->assign('role',$role);
         return $this->fetch();
     }
 
@@ -74,8 +77,17 @@ class UserController extends Controller{
     public function edit()
     {
         $id = Request::instance()->param('id/d');
+        $role = User::role(); //role：角色
         $User = User::get($id);
+
+        if(!isset($id)) {
+            $this->error('未获得ID信息');
+        }
+        if(!isset($User)) {
+            $this->error('查询的ID不存在');
+        }
         $this->assign('User', $User);
+        $this->assign('role', $role);
         $htmls = $this->fetch(); 
         return $htmls;
     }

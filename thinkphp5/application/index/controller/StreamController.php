@@ -132,8 +132,8 @@ class StreamController extends Controller{
          {
             if (User::isLogin()) {
                 //表单传值
-                $perId = User::role();
-                $this->assign('perId',$perId);
+                $role = User::role();
+                $this->assign('role', $role);
                 $Account = Account::select();
                 $aid = Request::instance()->param('aid/d');
                 $this->assign('aid',  $aid);
