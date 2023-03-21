@@ -18,11 +18,11 @@ class LoginController extends Controller
         if (!is_null($User) &&$User->getData('password')===$postData['password'] )
         {
             session('userId', $User->getData('id'));
-            return $this->success('login success',url('homepage_controller/index'));
+            return $this->success('登录成功',url('homepage_controller/index'));
         }
         else
         {
-            return $this->error('username not exist');
+            return $this->error('用户不存在');
         }
     }
 
@@ -30,7 +30,7 @@ class LoginController extends Controller
     {
         if(User::logOut())
         { 
-            return $this->success('exit success',url('index'));
+            return $this->success('退出登录',url('index'));
         }
     }
 }

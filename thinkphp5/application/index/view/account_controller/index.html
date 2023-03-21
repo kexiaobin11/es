@@ -15,20 +15,17 @@
                                 </div>     
                             </div>  
                         <br>   
-                            <nav class="navbar navbar-light bg-light">
-                                <form class="form-inline">
-                                    <div class="form-group  smr-sm-4 ">
-                                        <label class="sr-only" for="name">类型</label>
-                                        <input name="name" class="form-control smr-sm-2" style="width:100px" type="text" placeholder="类型.."  aria-label="Search" value={:input('get.name')} >
-                                    </div>
-                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">查询</button>
-                                </form>
-                                <a href="{:url('account_controller/add')}" class="btn btn-primary float-right">添加</a>
-                            </nav>
+                        <nav class="navbar navbar-light bg-light">
+                            <form class="form-inline" >
+                                <input name="name" type="text" class="form-control smr-sm-2" style="width:100px"  placeholder="类型..." value="{:input('get.name')}">
+                                <button class="btn btn-outline-success" type="submit">查询</button>
+                            </form>
+                            <a href="{:url('add')}" class="btn btn-primary float-right">添加</a>
+                        </nav>
                             <div class="col mt-4">
                                 <table class="table table-striped">
                                     <thead>
-                                        <tr>
+                                        <tr class="text-center">
                                             <th scope="col">序号</th>
                                             <th scope="col">类型</th>
                                             <th scope="col">操作</th>
@@ -38,10 +35,10 @@
                                         <tbody>    
                                             <tr>
                                                 <td>{$key}</td>
-                                                <td>{$account->getData('name')}</td>
+                                                <td> &nbsp;&nbsp;{$account->getData('name')}</td>
                                                 <td>
-                                                    <a type="button"  class="btn btn-primary" href="{:url('edit?id=' . $account->getData('id'))}">编辑</a>&nbsp;&nbsp;
-                                                    <a  type="button" class="btn btn-danger" href="delete?id={$account->getData('id')}">删除</a>
+                                                    &nbsp;&nbsp; <a type="button"  class="btn-sm btn-primary" href="{:url('edit?id=' . $account->getData('id'))}">编辑</a>
+                                                    <a  type="button" class="btn-sm btn-danger" href="delete?id={$account->getData('id')}">删除</a>
                                                 </td>
                                             </tr>
                                         </tbody>

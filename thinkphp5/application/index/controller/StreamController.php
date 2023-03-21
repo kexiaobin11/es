@@ -92,7 +92,7 @@ class StreamController extends Controller{
                     $this->assign('tid',$tid);
                     $Stream = new Stream;
                     //页面数
-                    $pageSize = 20;
+                    $pageSize = 10;
                     $income = $Stream->whereTime('create_time', $date)->where('inandex','=','1')->sum('money');
                     $pay = $Stream->whereTime('create_time', $date)->where('inandex','=','0')->sum('money');
 

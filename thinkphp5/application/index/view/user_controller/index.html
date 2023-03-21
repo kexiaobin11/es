@@ -18,14 +18,14 @@
                 <nav class="navbar navbar-light bg-light">
                     <form class="form-inline" >
                         <input name="name" type="text" class="form-control smr-sm-2" style="width:100px"  placeholder="姓名..." value="{:input('get.name')}">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        <button class="btn btn-outline-success" type="submit">查询</button>
                     </form>
                     <a href="{:url('add')}" class="btn btn-primary float-right">添加</a>
                 </nav>
                 <div class="col mt-4">
                     <table class="table table-striped">
                         <thead>
-                            <tr>
+                            <tr class="text-center">
                                 <th scope="col">名字</th>
                                 <th scope="col">权限</th>
                                 <th scope="col">操作</th>
@@ -36,20 +36,20 @@
                                 <tr>
                                     <th scope="row">{$user->getData('name')}</th>
                                     <td>
-                                        {eq name="user->getData('permissions')" value="0"}用户{/eq}
+                                        &nbsp;&nbsp;{eq name="user->getData('permissions')" value="0"}用户{/eq}
                                         {eq name="user->getData('permissions')" value="1"}管理员{/eq}
                                     </td>
                                     <td>
-                                        <a type="button"  class="btn btn-primary" href="{:url('edit?id=' . $user->getData('id'))}">编辑</a>&nbsp;&nbsp;
-                                        <a  type="button" class="btn btn-danger" href="{:url('delete?id=' . $user->getData('id'))}">删除</a>
+                                        &nbsp;&nbsp; <a type="button"  class="btn-sm btn-primary" href="{:url('edit?id=' . $user->getData('id'))}">编辑</a>
+                                        <a  type="button" class="btn-sm btn-danger" href="{:url('delete?id=' . $user->getData('id'))}">删除</a>
                                     </td>
                                 </tr>    
                             </tbody>
                         {/volist}
                     </table>
                     <div>
-                        {$Users->render()}
-                    </div>
+                   {$Users->render()}
+                 </div>
                 </div>
 {/block}
 </body>
