@@ -61,11 +61,14 @@ class InformationController extends Controller
 
     public function updatapassword()
 	   {
-       $User = $this->commonSession();
-
-        if(isset($User)) {
+        $User = $this->commonSession();
+        var_dump(isset($User));
+        if(!isset($User)) {
           $this->error('用户不存在');
         }
+        
+        $role = User:: role();
+        $this->assign('role', $role);
         $this->assign('user', $User);
         return $this->fetch();
     }

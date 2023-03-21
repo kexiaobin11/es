@@ -104,7 +104,7 @@
                                     ?>
                               </span>{/eq}</td>
                             <td>{$stream->getData('remark')}</td>
-                            <td>
+                            <td colspan="4">
                               <a class="btn-sm btn-primary" href="{:url('stream_controller/edit?id=' . $stream->getData('id'))}">编辑</a>
                               <a class="btn-sm btn-danger" href="{:url('stream_controller/delete?id=' . $stream->getData('id'))}">删除</a>
                             </td>

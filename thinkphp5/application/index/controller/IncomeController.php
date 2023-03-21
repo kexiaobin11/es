@@ -158,7 +158,7 @@ class IncomeController extends Controller
         // 将数据存入Income表
         $income = Request::instance()->post();
         // 依据状态定制提示信息
-        if (false === $Income->validate(true)->save($income))
+        if (false === $Income->validate(true)->isUpdate(true)->save($income))
         {
             return $this->error('更新失败' . $Income->getError());
         }

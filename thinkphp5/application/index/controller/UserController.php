@@ -14,7 +14,7 @@ class UserController extends Controller{
             if (User::isLogin()) {
                 if ($role === 1) {
                     $name = Request::instance()->get('name');
-                    $pageSize = 5;            
+                    $pageSize = 10;            
                     $User = new User;            
                     if (!empty($name)) {
                         $User->where('name','like','%' . $name .'%');
