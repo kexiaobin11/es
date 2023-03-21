@@ -70,10 +70,11 @@
                             </form>
                         </nav>
                     </div>
-                    <div class="col mt-4">
-                      <table class="table table-striped">
+                
+                      <div class=table-responsive">
+                        <table class="table text-nowrap">
                           <thead>
-                          <tr>
+                          <tr class="text-center">
                             <th scope="col">分类</th>
                             <th scope="col">收 | 支</th>
                             <th scope="col">金额</th>
@@ -83,13 +84,13 @@
                           </thead>
                         
                           {volist name="streams" id="stream" key = "key"}
-                          <tr>
-                           <td>                                
+                          <tr >
+                           <td class="text-center">                                
                             {eq name="stream->getData('inandex')" value="1"}
                               {$stream->Income['name']}{else /}{$stream->Pay['name']}{/eq}
                            </td>
 
-                            <td >{eq name="stream->getData('inandex')" value="1"}<span class="orange text-center">{$stream->inandex}</span>
+                            <td class="text-center">{eq name="stream->getData('inandex')" value="1"}<span class="orange text-center">{$stream->inandex}</span>
                              {else /}<span class="green text-center">{$stream->inandex}{/eq}</td>
 
                             <td>{eq name="stream->getData('inandex')" value="1"}
@@ -104,7 +105,7 @@
                                     ?>
                               </span>{/eq}</td>
                             <td>{$stream->getData('remark')}</td>
-                            <td colspan="4">
+                            <td >
                               <a class="btn-sm btn-primary" href="{:url('stream_controller/edit?id=' . $stream->getData('id'))}">编辑</a>
                               <a class="btn-sm btn-danger" href="{:url('stream_controller/delete?id=' . $stream->getData('id'))}">删除</a>
                             </td>
@@ -112,10 +113,10 @@
                           {/volist}
                         </tbody>
                       </table>
+                      </div>
                     
                       {$streams->render()}
                   </div>
-            </div>
             </div>
           </div>
         </div>
