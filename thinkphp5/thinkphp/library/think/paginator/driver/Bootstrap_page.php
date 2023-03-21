@@ -18,9 +18,9 @@ class Bootstrap_page extends Paginator
     //首页
     protected function home() {
         if ($this->currentPage() > 1) {
-            return "<a href='" . $this->url(1) . "' title='首页'>首页</a>";
+            return "";
         } else {
-            return "<p>首页</p>";
+            return "";
         }
     }
  
@@ -45,9 +45,9 @@ class Bootstrap_page extends Paginator
     //尾页
     protected function last() {
         if ($this->hasMore) {
-            return "<a href='" . $this->url($this->lastPage) . "' title='尾页'>尾页</a>";
+            return "";
         } else {
-            return "<p>尾页</p>";
+            return'';
         }
     }
  
@@ -117,7 +117,7 @@ class Bootstrap_page extends Paginator
                     '%s<div class="pagination">%s %s %s</div>',
                     $this->css(),
                     $this->prev(),
-                    $this->getLinks(),
+                   $this->getLinks(),
                     $this->next()
                 );
             } else {
@@ -144,7 +144,7 @@ class Bootstrap_page extends Paginator
      */
     protected function getAvailablePageWrapper($url, $page)
     {
-        return '<a href="' . htmlentities($url) . '" title="第"'. $page .'"页" >' . $page . '</a>';
+        return '';
     }
  
     /**
