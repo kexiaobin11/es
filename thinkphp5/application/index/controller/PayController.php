@@ -90,11 +90,11 @@ class PayController extends Controller{
         $Pay->name = $name;
         if($Pay->validate()->save())
         {
-            return $this->success('add succuss',url('index'));
+            return $this->success('添加成功',url('index'));
         }
         else
         {
-            return $this->error('add error',url('add'));
+            return $this->error('添加失败',url('add'));
         }
     }
 

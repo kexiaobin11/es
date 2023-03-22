@@ -15,14 +15,14 @@ class LoginController extends Controller
         $postData = Request::instance()->post();
         $map = array('username' => $postData['username']);
         $User = User::get($map);
-        if (!is_null($User) &&$User->getData('password')===$postData['password'] )
+        if (!is_null($User) && $User->getData('password') === $postData['password'] )
         {
             session('userId', $User->getData('id'));
             return $this->success('登录成功',url('homepage_controller/index'));
         }
         else
         {
-            return $this->error('用户不存在');
+            return $this->error('密码错误或用户名错误');
         }
     }
 

@@ -1,5 +1,6 @@
 <?php
 namespace app\index\controller;
+use app\common\validate;
 use think\Controller;
 use app\common\model\User;
 use think\Request;
@@ -52,17 +53,16 @@ class InformationController extends Controller
           $User->name = input('name');
           $User->permissions=input('permissions/d');
         if ($User->validate(true)->save()) {
-          $this->success('updata success', url('index'));
+          $this->success('更新成功', url('index'));
         }
         else  {
-          $this->error('updata error', url('edit'));
+          $this->error('更新失败', url('edit'));
          } 
     }   
 
     public function updatapassword()
 	   {
         $User = $this->commonSession();
-        var_dump(isset($User));
         if(!isset($User)) {
           $this->error('用户不存在');
         }
@@ -80,20 +80,34 @@ class InformationController extends Controller
        $oldpossword = Request::instance()->post('oldpassword');
        $password1 = Request::instance()->post('password1');
        $password2 = Request::instance()->post('password2');
+       
        //判断两次密码输入是否一则
        if ($User->password === $oldpossword) {
-            if ($password2=== $password1)	{
-              $User->password = $password1;
-              $User->validate(true)->save();  
-              $this->success(' password updata success ', url('index'));
+            if ($password2 === $password1) {
+                if (mb_strlen($password1) >=6 && mb_strlen($password1) <= 18) {
+                    $User->password = $password1;
+                    $User->save();
+                    $this->success(' 密码更改成功 ', url('index'));
+               
+                }
+                else  {
+                    $this->success(' 输入的密码不合法,请重新输入 ', url('index'));
+                }
+
+                //   $validate = new \app\common\validate\User();
+                //   var_dump($User->validate($password2 ,'User'));
+                //   var_dump($validate->check($password2));//返回false
+                //   die();
+                //   var_dump($User->validate(true)->save($password2));
+                //   die();
+
             }	
             else {
-                $this->error('twice
-                Different password ', url('updatapassword'));
+                $this->error('两次密码不一致 ', url('updatapassword'));
              }  
        	}
       	else {
-			    $this->error('ord password error ', url('updatapassword'));			        
+			    $this->error('原密码输入错误 ', url('updatapassword'));			        
         }
     }
 }
