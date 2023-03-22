@@ -66,11 +66,11 @@ class UserController extends Controller{
 
         if($User->validate()->save())
         {
-            return $this->success('add succuss',url('index'));
+            return $this->success('添加成功',url('index'));
         }
         else
         {
-            return $this->error('add error',url('add'));
+            return $this->error('添加失败',url('add'));
         }
     }
 
@@ -101,22 +101,37 @@ class UserController extends Controller{
         $password1 =  Request::instance()->post('password1');
         $password2 =  Request::instance()->post('password2');
 
-        if($password1===$password2)
+        if($password1 === $password2)
         {
             $User->password =$password1;
             if($User->validate()->save())
             {
-                return $this->success('updata success', url('index'));
+                return $this->success('密码更新成功', url('index'));
             }
             else
             {
-                return $this->error('updata success', url('edit')); 
+                return $this->error('密码更新成功', url('edit')); 
             }  
         }
         else
         {
-            return $this->error('password error', url('edit')); 
+            return $this->error('密码更新失败', url('edit')); 
         }
+    }
+
+    public function resetpassword() {
+        $id = Request::instance()->param('id/d');
+        $User = User::get($id);
+        $User->password = '123456';//重置默认密码123456
+        if($User->password === '123456') {
+            $User->save();
+            return $this->success('密码重置成功', url('index'));
+        }
+        else {
+            return $this->error('密码重置失败', url('edit')); 
+        }
+        
+
     }
 
     public function delete()

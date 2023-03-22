@@ -139,7 +139,7 @@ class StreamController extends Controller{
                 $this->assign('aid',  $aid);
 
                 if (!isset($aid) && is_null( $Account)) {
-                    $this->error('error', url('homepage_controller/index'));
+                    $this->error('添加失败', url('homepage_controller/index'));
                 }
                 $this->assign('Account', $Account);
                 $this->assign('aid',  $aid);
@@ -147,14 +147,14 @@ class StreamController extends Controller{
                 if($aid === 1) {
                     $Income =Income::select();
                     if (is_null($Income)) {
-                        return $this->error('error', url('homepage_controller/index'));
+                        return $this->error('添加失败', url('homepage_controller/index'));
                     }
                     $this->assign('Income',  $Income);
                   }
                      else {
                           $Pay = Pay::select();
                           if (is_null($Pay)) {
-                             return $this->error('error', url('homepage_controller/index'));
+                             return $this->error('添加失败', url('homepage_controller/index'));
                           }
                           $this->assign('Pay',$Pay);
                       }

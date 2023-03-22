@@ -16,8 +16,7 @@ class AccountController extends Controller
             if(User::isLogin())
             {
                 if($role === 1) //如果是1，则是管理员；0就是用户，不可访问
-                {
-                    
+                {                
                     // 获取查询信息
                     $name = Request::instance()->get('name');
                     echo $name;
@@ -106,11 +105,11 @@ class AccountController extends Controller
         $Account->name = $name;
         if($Account->validate()->save())
         {
-            return $this->success('add succuss',url('index'));
+            return $this->success('添加成功',url('index'));
         }
         else
         {
-            return $this->error('add error',url('add'));
+            return $this->error('添加失败',url('add'));
         }
     }
 
