@@ -5,6 +5,7 @@ use think\Db;
 use app\common\model\Pay;
 use think\Request;
 use app\common\model\User;
+use app\common\model\Stream;
 
 class PayController extends Controller{
     public function index()
@@ -129,6 +130,13 @@ class PayController extends Controller{
     {
         // 获取pathinfo传入的ID值.
         $id = Request::instance()->param('id/d'); // “/d”表示将数值转化为“整形”
+        $Stream = new Stream;
+       
+       if(!is_null($Stream->where('pay_id','=',$id)->select())) {
+          $this->error('删除失败，有支出选择这个类型');
+       }
+
+
         if (is_null($id) || 0 === $id) 
         {
             return $this->error('未获取到ID信息');

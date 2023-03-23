@@ -228,4 +228,216 @@ class StreamController extends Controller{
       } 
     }    
 
+    public function indexpay() {
+        if (User::isLogin()) {
+            //表单传值
+            $perId = User::role();
+            $this->assign('role',$perId);
+            $tid = Request::instance()->param('tid/d');
+            $date = Request::instance()->get('date');
+
+            if (!isset($tid)) {
+                $this->error('error',url('homepage_controller/index'));
+            }
+
+            if($tid === 0) {           
+                if (!isset($date)) {
+                    $date = 'yesterday';
+                }
+                 if ( $date === 'yesterday') {
+                        $start_time=date('Y-m-d', strtotime('-1 day'));
+                        $end_time=date('Y-m-d', strtotime('-1 day'));
+                 }
+                  else {
+                        $start_time=date('Y-m-d', strtotime(date('Y-m-d')));
+                        $end_time=date('Y-m-d', strtotime(date('Y-m-d')));
+                 }
+              } 
+              elseif ($tid === 1) {
+                if(!isset($date)) {
+                    $date = 'week';
+                } 
+                if ($date === 'week') {
+                    $start_time = mktime(0, 0 , 0,date("m"),date("d")-date("w")+1,date("Y"));
+                    $end_time   = mktime(23,59,60,date("m"),date("d")-date("w")+6,date("Y"));
+                    $start_time = date('Y-m-d',$start_time);
+                    $end_time = date('Y-m-d', $end_time);
+                }
+                 else {
+                    $start_time = mktime(0, 0 , 0,date("m"),date("d")-date("w")-6,date("Y"));
+                    $end_time   = mktime(23,59,60,date("m"),date("d")-date("w")-1,date("Y"));
+                    $start_time = date('Y-m-d',$start_time);
+                    $end_time = date('Y-m-d', $end_time);      
+                } 
+            }
+             elseif ($tid === 2) {
+                if(!isset($date)) {
+                        $date = 'month';
+                    }
+                if ($date === 'month') {
+                        $start_time = date('Y-m-1');   
+                        $end_time  = date('Y-m-d',strtotime(date('Y-m-1',strtotime('next month')).'-1 day'));
+                } else {
+                      $start_time = date('Y-m-1',strtotime('last month'));        
+                      $end_time = date('Y-m-d',strtotime(date('Y-m-1').'-1 day'));
+                   }
+              }
+                elseif ($tid === 3) {
+                    if (!isset($date)) {
+                        $date = 'year';
+                    } 
+                    if ($date === 'year') {
+                        $start_time = date('Y-m-d',strtotime(date('Y-1-1 00:00:00',time())));
+                        $end_time = date('Y-12-31');
+                    } 
+                     else {
+                        $start_time =date('Y-m-d',strtotime(date('Y-1-1 00:00:00',strtotime('-1 year'))));
+                        $end_time = date('Y-12-31',strtotime(date('Y-1-1 00:00:00',strtotime('-1 year'))));
+                    }
+                  }
+                  //传入时间的值，是 0 显示当天和昨天、1 显示本周和上周、2 显示本周和上周 3 显示本月和上月  4 显示本年和去年
+                    $this->assign('tid',$tid);
+                    $Stream = new Stream;
+                    //页面数
+                    $pageSize = 10;
+                   
+                    $pay = $Stream->whereTime('create_time', $date)->where('inandex','=','0')->sum('money');
+
+                    /**
+                     * 
+                     *
+                     * @var 金额千位分割符
+                     */
+                    $pay= number_format( $pay, 2, '.', ',');     
+
+                    $remark = Request::instance()->get('remark');
+                if (!empty($remark)) {
+                    $Stream->whereTime('create_time',$date)->where('remark','like','%' . $remark .'%');
+                }
+                $Streams = $Stream->whereTime('create_time',$date)->where('inandex','=','0')
+                             ->paginate($pageSize,false,[   
+                                 'query' => [
+                                            'remark' => $remark,
+                                            'date' => $date     
+                                            ],
+                                   ]); 
+             
+                $this->assign('pays',  $pay);
+                $this->assign('streams', $Streams);
+                $this->assign('date', $date);
+                $this->assign('start_time', $start_time);
+                $this->assign('end_time', $end_time);
+                return $this->fetch();  
+        } 
+        else {
+            return $this->error('请登录后在访问', url('login_controller/index')); 
+        }
+    }
+
+
+    public function indexincome() {
+        if (User::isLogin()) {
+            //表单传值
+            $perId = User::role();
+            $this->assign('role',$perId);
+            $tid = Request::instance()->param('tid/d');
+            $date = Request::instance()->get('date');
+
+            if (!isset($tid)) {
+                $this->error('error',url('homepage_controller/index'));
+            }
+
+            if($tid === 0) {           
+                if (!isset($date)) {
+                    $date = 'yesterday';
+                }
+                 if ( $date === 'yesterday') {
+                        $start_time=date('Y-m-d', strtotime('-1 day'));
+                        $end_time=date('Y-m-d', strtotime('-1 day'));
+                 }
+                  else {
+                        $start_time=date('Y-m-d', strtotime(date('Y-m-d')));
+                        $end_time=date('Y-m-d', strtotime(date('Y-m-d')));
+                 }
+              } 
+              elseif ($tid === 1) {
+                if(!isset($date)) {
+                    $date = 'week';
+                } 
+                if ($date === 'week') {
+                    $start_time = mktime(0, 0 , 0,date("m"),date("d")-date("w")+1,date("Y"));
+                    $end_time   = mktime(23,59,60,date("m"),date("d")-date("w")+6,date("Y"));
+                    $start_time = date('Y-m-d',$start_time);
+                    $end_time = date('Y-m-d', $end_time);
+                }
+                 else {
+                    $start_time = mktime(0, 0 , 0,date("m"),date("d")-date("w")-6,date("Y"));
+                    $end_time   = mktime(23,59,60,date("m"),date("d")-date("w")-1,date("Y"));
+                    $start_time = date('Y-m-d',$start_time);
+                    $end_time = date('Y-m-d', $end_time);      
+                } 
+            }
+             elseif ($tid === 2) {
+                if(!isset($date)) {
+                        $date = 'month';
+                    }
+                if ($date === 'month') {
+                        $start_time = date('Y-m-1');   
+                        $end_time  = date('Y-m-d',strtotime(date('Y-m-1',strtotime('next month')).'-1 day'));
+                } else {
+                      $start_time = date('Y-m-1',strtotime('last month'));        
+                      $end_time = date('Y-m-d',strtotime(date('Y-m-1').'-1 day'));
+                   }
+              }
+                elseif ($tid === 3) {
+                    if (!isset($date)) {
+                        $date = 'year';
+                    } 
+                    if ($date === 'year') {
+                        $start_time = date('Y-m-d',strtotime(date('Y-1-1 00:00:00',time())));
+                        $end_time = date('Y-12-31');
+                    } 
+                     else {
+                        $start_time =date('Y-m-d',strtotime(date('Y-1-1 00:00:00',strtotime('-1 year'))));
+                        $end_time = date('Y-12-31',strtotime(date('Y-1-1 00:00:00',strtotime('-1 year'))));
+                    }
+                  }
+                  //传入时间的值，是 0 显示当天和昨天、1 显示本周和上周、2 显示本周和上周 3 显示本月和上月  4 显示本年和去年
+                    $this->assign('tid',$tid);
+                    $Stream = new Stream;
+                    //页面数
+                    $pageSize = 10;
+                   
+                    $income = $Stream->whereTime('create_time', $date)->where('inandex','=','1')->sum('money');
+                   
+
+                    /**
+                     * 
+                     *
+                     * @var 金额千位分割符
+                     */
+                    $remark = Request::instance()->get('remark');
+                if (!empty($remark)) {
+                    $Stream->whereTime('create_time',$date)->where('remark','like','%' . $remark .'%');
+                }
+                $Streams = $Stream->whereTime('create_time',$date)->where('inandex','=','1')
+                             ->paginate($pageSize,false,[   
+                                 'query' => [
+                                            'remark' => $remark,
+                                            'date' => $date     
+                                            ],
+                                   ]); 
+             
+                $this->assign('incomes',  $income);
+                $this->assign('streams', $Streams);
+                $this->assign('date', $date);
+                $this->assign('start_time', $start_time);
+                $this->assign('end_time', $end_time);
+                return $this->fetch();  
+        } 
+        else {
+            return $this->error('请登录后在访问', url('login_controller/index')); 
+        }
+    }
+
 }

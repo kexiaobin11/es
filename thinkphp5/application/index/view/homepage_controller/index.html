@@ -21,28 +21,28 @@
                                 <div class=table-responsive">
                                     <table class="table text-nowrap">
                                         <thead>
-                                            <tr>
+                                            <tr >
                                                 <th scope="col"></th>
-                                                <th scope="col">昨天</th>
-                                                <th scope="col">本周</th>
-                                                <th scope="col">本月</th>
-                                                <th scope="col">本年</th>
+                                                <th scope="col"><a href="{:url('stream_controller/index?tid=0')}"style="color: black;" >昨天</a></th>
+                                                <th scope="col"><a href="{:url('stream_controller/index?tid=1')}" style="color: black;">本周</a></th>
+                                                <th scope="col"><a href="{:url('stream_controller/index?tid=2')}" style="color: black;" >本月</a></th>
+                                                <th scope="col"><a href="{:url('stream_controller/index?tid=3')}" style="color: black;">本年</a></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <th scope="row">收入</th>
-                                                <td ><a href="{:url('stream_controller/index?tid=0')}" class="colorR">{$incomey}</a></td>
-                                                <td ><a href="{:url('stream_controller/index?tid=1')}" class="colorR">{$incomew}</a></td>
-                                                <td ><a href="{:url('stream_controller/index?tid=2')}" class="colorR">{$incomem}</a></td>
-                                                <td ><a href="{:url('stream_controller/index?tid=3')}" class="colorR">{$incomeyear}</a></td>
+                                                <td ><a href="{:url('stream_controller/indexincome?tid=0')}" class="colorR">{$incomey}</a></td>
+                                                <td ><a href="{:url('stream_controller/indexincome?tid=1')}" class="colorR">{$incomew}</a></td>
+                                                <td ><a href="{:url('stream_controller/indexincome?tid=2')}" class="colorR">{$incomem}</a></td>
+                                                <td ><a href="{:url('stream_controller/indexincome?tid=3')}" class="colorR">{$incomeyear}</a></td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">支出</th> 
-                                                <td ><a href="{:url('stream_controller/index?tid=0')}" class="colorG">{$payy}</a></td>
-                                                <td ><a href="{:url('stream_controller/index?tid=1')}" class="colorG">{$payw}</a></td>
-                                                <td ><a href="{:url('stream_controller/index?tid=2')}" class="colorG">{$paym}</a></td>
-                                                <td ><a href="{:url('stream_controller/index?tid=3')}" class="colorG">{$payyear}</a></td>
+                                                <td ><a href="{:url('stream_controller/indexpay?tid=0')}" class="colorG">{$payy}</a></td>
+                                                <td ><a href="{:url('stream_controller/indexpay?tid=1')}" class="colorG">{$payw}</a></td>
+                                                <td ><a href="{:url('stream_controller/indexpay?tid=2')}" class="colorG">{$paym}</a></td>
+                                                <td ><a href="{:url('stream_controller/indexpay?tid=3')}" class="colorG">{$payyear}</a></td>
                                             </tr>
                                         </tbody>
                                     </table>

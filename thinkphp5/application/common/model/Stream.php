@@ -4,6 +4,10 @@ use think\Model;
 
 class Stream extends Model
 {
+    public function getCreateTimeAttr($value)
+    {
+        return date('Y-m-d', $value);
+    }
     /**
      * 输出性别的属性
      * @return string 0支出，1收入
@@ -22,6 +26,8 @@ class Stream extends Model
             return $status[0];
         }
     }
+
+
 
     // 收入类型
     public function Income()
