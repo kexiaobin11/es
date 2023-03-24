@@ -78,7 +78,7 @@
                           </tr>
                           </thead>
                         
-                          {volist name="streams" id="stream" key = "key"}
+                        {volist name="streams" id="stream" key = "key"}
                           <tr >
                            <td class="text-center">                                
                               {$stream->Income['name']}
@@ -89,12 +89,12 @@
                                <?php
                                     $money =  $stream->getData('money');
                                     echo number_format($money, 2, '.', ',');;   
-                                    ?>
+                                ?>
                               </span></td>
                             <td>{$stream->getData('remark')}</td>
                             <td>{$stream->create_time}</td>
                           </tr>
-                          {/volist}
+                        {/volist}
                         </tbody>
                       </table>
                       </div>    

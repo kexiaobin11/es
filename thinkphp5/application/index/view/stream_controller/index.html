@@ -44,27 +44,26 @@
                               <form action="{:url('index')}" method="get">
                             
                                 <select name="date" class="form-control smr-sm-3" style="width: 100px;">
-                                  {eq name="$tid" value = "0"}
-                                <option value="today" {eq name="$date" value="today"} selected="selected" {/eq}>今天</option>
-                                <option value="yesterday"  {eq name="$date" value="yesterday"} selected="selected" {/eq}>昨天</option>    
-                                {/eq}
+                                    {eq name="$tid" value = "0"}
+                                    <option value="today" {eq name="$date" value="today"} selected="selected" {/eq}>今天</option>
+                                    <option value="yesterday"  {eq name="$date" value="yesterday"} selected="selected" {/eq}>昨天</option>    
+                                    {/eq}
 
-                                {eq name="$tid" value = "1"}
-                                <option value="week" {eq name="$date" value="week"} selected="selected" {/eq}>本周</option>
-                                <option value="last week"  {eq name="$date" value="last week"} selected="selected" {/eq}>上周</option>    
-                                {/eq}
+                                    {eq name="$tid" value = "1"}
+                                    <option value="week" {eq name="$date" value="week"} selected="selected" {/eq}>本周</option>
+                                    <option value="last week"  {eq name="$date" value="last week"} selected="selected" {/eq}>上周</option>    
+                                    {/eq}
 
-                                {eq name="$tid" value = "2"}
-                                <option value="month" {eq name="$date" value="month"} selected="selected" {/eq}>本月</option>
-                                <option value="last month"  {eq name="$date" value="last month"} selected="selected" {/eq}>上个月</option>       
-                                {/eq}
+                                    {eq name="$tid" value = "2"}
+                                    <option value="month" {eq name="$date" value="month"} selected="selected" {/eq}>本月</option>
+                                    <option value="last month"  {eq name="$date" value="last month"} selected="selected" {/eq}>上个月</option>       
+                                    {/eq}
 
-                                {eq name="$tid" value = "3"}
-                                <option value="year" {eq name="$date" value="year"} selected="selected" {/eq}>今年</option>
-                                <option value="last year"  {eq name="$date" value="last year"} selected="selected" {/eq}>去年</option>    
-                                {/eq}
-
-                              </select>
+                                    {eq name="$tid" value = "3"}
+                                    <option value="year" {eq name="$date" value="year"} selected="selected" {/eq}>今年</option>
+                                    <option value="last year"  {eq name="$date" value="last year"} selected="selected" {/eq}>去年</option>    
+                                    {/eq}
+                                </select>
                               <input name="remark" type="text" class="form-control smr-sm-2 w-25 p-3 "  placeholder="备注..." value={:input('get.remark')}>
                               <button class="btn btn-outline-success my-2 my-sm-0" type="submit">查询</button>
                             </form>

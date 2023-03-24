@@ -24,11 +24,11 @@ class StreamController extends Controller{
     {
         if (User::isLogin()) {
             //表单传值
-            $perId = User::role();
-            $this->assign('role',$perId);
+            $role = User::role();
+            $this->assign('role',$role);
             $tid = Request::instance()->param('tid/d');
             $date = Request::instance()->get('date');
-
+            
             if (!isset($tid)) {
                 $this->error('error',url('homepage_controller/index'));
             }
@@ -95,7 +95,7 @@ class StreamController extends Controller{
                     $pageSize = 10;
                     $income = $Stream->whereTime('create_time', $date)->where('inandex','=','1')->sum('money');
                     $pay = $Stream->whereTime('create_time', $date)->where('inandex','=','0')->sum('money');
-
+                 
                     /**
                      * 
                      *
@@ -104,7 +104,7 @@ class StreamController extends Controller{
                     $income = number_format( $income, 2, '.', ',');
                     $pay= number_format( $pay, 2, '.', ',');     
 
-                    $remark = Request::instance()->get('remark');
+                    $remark = Request::instance()->get('remark'); 
                 if (!empty($remark)) {
                     $Stream->whereTime('create_time',$date)->where('remark','like','%' . $remark .'%');
                 }
@@ -120,13 +120,15 @@ class StreamController extends Controller{
                 $this->assign('streams', $Streams);
                 $this->assign('date', $date);
                 $this->assign('start_time', $start_time);
-                $this->assign('end_time', $end_time);
-                return $this->fetch();  
+                $this->assign('end_time', $end_time); 
+                return $this->fetch(); 
         } 
         else {
             return $this->error('请登录后在访问', url('login_controller/index')); 
         }
+       
     }
+
 
         public function add()
          {
@@ -231,8 +233,8 @@ class StreamController extends Controller{
     public function indexpay() {
         if (User::isLogin()) {
             //表单传值
-            $perId = User::role();
-            $this->assign('role',$perId);
+            $role = User::role();
+            $this->assign('role',$role);
             $tid = Request::instance()->param('tid/d');
             $date = Request::instance()->get('date');
 
@@ -338,8 +340,8 @@ class StreamController extends Controller{
     public function indexincome() {
         if (User::isLogin()) {
             //表单传值
-            $perId = User::role();
-            $this->assign('role',$perId);
+            $role = User::role();
+            $this->assign('role',$role);
             $tid = Request::instance()->param('tid/d');
             $date = Request::instance()->get('date');
 
