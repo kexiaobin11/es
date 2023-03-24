@@ -23,13 +23,8 @@
                             </ul>
                             <ul class="nav float-right">
                               <li class="nav-item ">
-                                  <span class="ft-span">总收入</span>
-                                  <span class="green number">-{$pays}</span>
-                                  <span class="line"></span>
-                              </li>
-                              <li class="nav-item">
-                                <span class="ft-span">总支出</span>
-                                  <span class="orange number">+{$incomes}</span>
+                                  <span class="ft-span">收出</span>
+                                  <span class="orange number">{$incomes}</span>
                                   <span class="line"></span>
                               </li>
                             </ul>
@@ -86,32 +81,23 @@
                           {volist name="streams" id="stream" key = "key"}
                           <tr >
                            <td class="text-center">                                
-                            {eq name="stream->getData('inandex')" value="1"}
-                              {$stream->Income['name']}{else /}{$stream->Pay['name']}{/eq}
+                              {$stream->Income['name']}
                            </td>
-
-                            <td class="text-center">{eq name="stream->getData('inandex')" value="1"}<span class="orange text-center">{$stream->inandex}</span>
-                             {else /}<span class="green text-center">{$stream->inandex}{/eq}</td>
-
-                            <td>{eq name="stream->getData('inandex')" value="1"}
-                              <span class="orange text-center">  <?php
-                                $money =  $stream->getData('money');
-                                echo number_format($money, 2, '.', ',');;   
-                                ?></span>{else /}
-                              <span class="green text-center">
+                            <td class="text-center"><span class="orange text-center">{$stream->inandex}</td>
+                            <td>
+                              <span class="orange text-center">
                                <?php
                                     $money =  $stream->getData('money');
                                     echo number_format($money, 2, '.', ',');;   
                                     ?>
-                              </span>{/eq}</td>
+                              </span></td>
                             <td>{$stream->getData('remark')}</td>
                             <td>{$stream->create_time}</td>
                           </tr>
                           {/volist}
                         </tbody>
                       </table>
-                      </div>
-                    
+                      </div>    
                       {$streams->render()}
                   </div>
             </div>

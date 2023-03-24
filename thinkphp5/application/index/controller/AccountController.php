@@ -5,6 +5,7 @@ use think\Db;
 use app\common\model\Account;
 use app\common\model\User;
 use think\Request;
+use app\common\model\Stream;
 
 class AccountController extends Controller
 {
@@ -116,7 +117,13 @@ class AccountController extends Controller
     public function delete()
     {
         // 获取pathinfo传入的ID值.
-        $id = Request::instance()->param('id/d'); // “/d”表示将数值转化为“整形”
+        $id = Request::instance()->param('id/d'); 
+        $Stream = new Stream;
+
+        if(!is_null($Stream->where('account_id','=',$id)->select())) 
+        {
+           $this->error('删除失败，有选择账户的类型');
+        }
         if (is_null($id) || 0 === $id)
         {
             return $this->error('未获取到ID信息');

@@ -19,7 +19,7 @@ class UserController extends Controller{
                     if (!empty($name)) {
                         $User->where('name','like','%' . $name .'%');
                     }
-                    $Users = $User->paginate($pageSize,false,[
+                    $Users = $User->where('permissions', '=' ,'0')->paginate($pageSize,false,[
                         'query'=>[
                         'name'=>$name
                         ],
