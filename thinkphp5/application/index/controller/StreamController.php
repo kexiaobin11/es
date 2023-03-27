@@ -37,7 +37,7 @@ class StreamController extends Controller{
                 if (!isset($date)) {
                     $date = 'yesterday';
                 }
-                 if ( $date === 'yesterday') {
+                if ( $date === 'yesterday') {
                         $start_time=date('Y-m-d', strtotime('-1 day'));
                         $end_time=date('Y-m-d', strtotime('-1 day'));
                  }
@@ -344,7 +344,6 @@ class StreamController extends Controller{
             $this->assign('role',$role);
             $tid = Request::instance()->param('tid/d');
             $date = Request::instance()->get('date');
-
             if (!isset($tid)) {
                 $this->error('error',url('homepage_controller/index'));
             }
@@ -403,7 +402,7 @@ class StreamController extends Controller{
                         $start_time =date('Y-m-d',strtotime(date('Y-1-1 00:00:00',strtotime('-1 year'))));
                         $end_time = date('Y-12-31',strtotime(date('Y-1-1 00:00:00',strtotime('-1 year'))));
                     }
-                  }
+                }
                   //传入时间的值，是 0 显示当天和昨天、1 显示本周和上周、2 显示本周和上周 3 显示本月和上月  4 显示本年和去年
                     $this->assign('tid',$tid);
                     $Stream = new Stream;

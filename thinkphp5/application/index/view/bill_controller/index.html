@@ -4,31 +4,30 @@
 {/block}
 {block name="section"} 
 {/block}
-    {block name="content"} 
+    {block name="content"}
+    
         <div class="filter-tit">
-            <ul class="nav float-left" >
-                <li class="account-list-title ">  
-                帐目清单
+            <ul class="nav float-left">
+                <li class="nav-item ">
+                    <span class="ft-span">今收入</span>
+                    <span class="orange number">{$IncomeToday}</span>
+                    <span class="line"></span>
                 </li>
-                <li class="ft-date-begin">
-            123
+                <li class="nav-item">
+                    <span class="ft-span">今天支出</span>
+                    <span class="green number">{$PayToday}</span>
+                    <span class="line"></span>
                 </li>
-                <li class="ft-date-begin">
-                &nbsp; ~&nbsp;
-                </li>
-                <li class="ft-date-begin">
-            123
-                </li>
-            </ul>
+                </ul>
             <ul class="nav float-right">
             <li class="nav-item ">
                 <span class="ft-span">总收入</span>
-                <span class="green number">123</span>
+                <span class="orange number">{$IncomeSum}</span>
                 <span class="line"></span>
             </li>
             <li class="nav-item">
                 <span class="ft-span">总支出</span>
-                <span class="orange number">123</span>
+                <span class="green number">{$PaySum}</span>
                 <span class="line"></span>
             </li>
             </ul>
@@ -37,8 +36,8 @@
         <form class="form-mglr"  method="get">
             <div class="form-row" col-md-4>
                 <select name="account_id" sid="account"  class="form-control smr-sm-2" style="width: 100px;">
-                    {volist name="Bill" id="account"}
-                        <option selected="selected" style="color: black;">{$account->getData('name')}</option> 
+                    {volist name="Bill" id="account" key="i"} 
+                        <option value="{$i}" {eq name="i" value="$accountId"}selected="selected"{/eq} style="color: black;">{$account->getData('name')}</option> 
                     {/volist}
                 </select>
                 <input name="remark" type="text" class="form-control smr-sm-2 w-25 p-3 "  placeholder="备注..." value={:input('get.remark')} >
@@ -56,8 +55,8 @@
                         <th scope="col">备注</th>
                         <th scope="col">日期</th>
                     </tr>
-                </thead>
-               
+                </thead>                        
+
                 {volist name="streams" id="stream" key="key"}
                     <tr>
                         <td class="text-center">                                
@@ -72,12 +71,10 @@
                             {/eq}
                         </td>
                         <td>{eq name="stream->getData('inandex')" value="1"}
-                            <span class="orange text-center" > 
-                                
-                                    
-                               
+                            <span class="orange text-center" >                              
                             <?php
                                 $money =  $stream->getData('money');
+                               
                                 echo number_format($money, 2, '.', ',');;   
                               ?>
                             </span>
