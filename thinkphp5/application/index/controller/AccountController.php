@@ -104,13 +104,14 @@ class AccountController extends Controller
             $this->error('此类型已存在，请重新输入');
         }
         $Account->name = $name;
-        if($Account->validate()->save())
-        {
+        if($this->validate($Account, 'Account') === true)
+        {   
+            $Account->save();
             return $this->success('添加成功',url('index'));
         }
         else
         {
-            return $this->error('添加失败',url('add'));
+            return $this->error('添加失败,添加的账户不合法',url('add'));
         }
     }
 
@@ -120,7 +121,7 @@ class AccountController extends Controller
         $id = Request::instance()->param('id/d'); 
         $Stream = new Stream;
 
-        if(!is_null($Stream->where('account_id','=',$id)->select())) 
+        if(!empty($Stream->where('account_id','=',$id)->select())) 
         {
            $this->error('删除失败，有选择账户的类型');
         }

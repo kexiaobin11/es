@@ -72,7 +72,12 @@ class InformationController extends Controller
         $this->assign('user', $User);
         return $this->fetch();
     }
-
+    /**
+     * 密码进行更新
+     * @param $oldpossword 原始密码
+     * @param $password1 新密码
+     * @param $password2 新密码（数据校验）
+     */
     public function upsave()
 	  {
        $id = Request::instance()->post('id/d');
@@ -81,30 +86,21 @@ class InformationController extends Controller
        $password1 = Request::instance()->post('password1');
        $password2 = Request::instance()->post('password2');
        
-       //判断两次密码输入是否一则
-       if ($User->password === $oldpossword) {
+        //判断两次密码输入是否一则
+        if ($User->password === $oldpossword) {
             if ($password2 === $password1) {
-                if (mb_strlen($password1) >=6 && mb_strlen($password1) <= 18) {
-                    $User->password = $password1;
+                $User->password = $password1;
+                if ($this->validate($User, 'User') === true) {
                     $User->save();
                     $this->success(' 密码更改成功 ', url('index'));
-               
                 }
-                else  {
-                    $this->success(' 输入的密码不合法,请重新输入 ', url('index'));
+                else {
+                    $this->error(' 输入的密码不合法,请重新输入 ', url('index'));
                 }
-
-                //   $validate = new \app\common\validate\User();
-                //   var_dump($User->validate($password2 ,'User'));
-                //   var_dump($validate->check($password2));//返回false
-                //   die();
-                //   var_dump($User->validate(true)->save($password2));
-                //   die();
-
             }	
             else {
                 $this->error('两次密码不一致 ', url('updatapassword'));
-             }  
+            }  
        	}
       	else {
 			    $this->error('原密码输入错误 ', url('updatapassword'));			        

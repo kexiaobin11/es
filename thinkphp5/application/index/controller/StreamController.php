@@ -24,11 +24,10 @@ class StreamController extends Controller{
     {
         if (User::isLogin()) {
             //表单传值
-            $perId = User::role();
-            $this->assign('role',$perId);
+            $role = User::role();
+            $this->assign('role',$role);
             $tid = Request::instance()->param('tid/d');
-            $date = Request::instance()->get('date');
-
+            $date = Request::instance()->param('date');
             if (!isset($tid)) {
                 $this->error('error',url('homepage_controller/index'));
             }
@@ -95,7 +94,7 @@ class StreamController extends Controller{
                     $pageSize = 10;
                     $income = $Stream->whereTime('create_time', $date)->where('inandex','=','1')->sum('money');
                     $pay = $Stream->whereTime('create_time', $date)->where('inandex','=','0')->sum('money');
-
+                 
                     /**
                      * 
                      *
@@ -104,11 +103,11 @@ class StreamController extends Controller{
                     $income = number_format( $income, 2, '.', ',');
                     $pay= number_format( $pay, 2, '.', ',');     
 
-                    $remark = Request::instance()->get('remark');
+                    $remark = Request::instance()->get('remark'); 
                 if (!empty($remark)) {
                     $Stream->whereTime('create_time',$date)->where('remark','like','%' . $remark .'%');
                 }
-                $Streams = $Stream->whereTime('create_time',$date)
+                $Streams = $Stream->order('id DESC')->whereTime('create_time',$date)
                              ->paginate($pageSize,false,[   
                                  'query' => [
                                             'remark' => $remark,
@@ -120,13 +119,15 @@ class StreamController extends Controller{
                 $this->assign('streams', $Streams);
                 $this->assign('date', $date);
                 $this->assign('start_time', $start_time);
-                $this->assign('end_time', $end_time);
-                return $this->fetch();  
+                $this->assign('end_time', $end_time); 
+                return $this->fetch(); 
         } 
         else {
             return $this->error('请登录后在访问', url('login_controller/index')); 
         }
+       
     }
+
 
         public function add()
          {
@@ -172,72 +173,37 @@ class StreamController extends Controller{
         if (!$this->saveStream($Stream)) {
             return $this->error('数据添加错误：' . $Stream->getError());
         }
-        return $this->success('操作成功', url('homepage_controller/index'));
-    }
-
-    public function delete()
-    {
-        // 获取pathinfo传入的ID值.
-        $id = Request::instance()->param('id/d'); // “/d”表示将数值转化为“整形”
-        if (is_null($id) || 0 === $id) {
-            return $this->error('未获取到ID信息');
-        }
-        // 获取要删除的对象
-        $Stream= Stream::get($id);
-        // 要删除的对象不存在
-        if (is_null($Stream)) {
-            return $this->error('不存在id为' . $id . '的类型，删除失败');
-        }
-
-        // 删除对象
-        if (!$Stream->delete()) {
-            return $this->error('删除失败:' . $Stream->getError());
-        }
-         return $this->success('删除成功');
+        return $this->success('操作成功', url('bill_controller/index'));
     }
 
 
-    public function edit() { 
-        $id = Request::instance()->param('id/d');
-        if (is_null($id)) {
-            $this->error('未获取到Id', url('index'));
-        }
-
-        $Stream = Stream::get($id);  
-
-        if (is_null(User::role()) && isset($Stream)) {
-           $this->error('错误');
-        }
-        $this->assign('role',User::role());
-        $this->assign('Stream',$Stream);
-        return $this->fetch();
-
-    }
-
-
-    public function update()
-    {
-      $id = Request::instance()->post('id/d');
-      $Stream = Stream::get($id);
-
-      if ($this->saveStream($Stream)) {
-        return $this->success('修改成功',url('index'));
-      }
-      else {
-        return $this->success('修改失败',url('edit'));
-      } 
-    }    
-
+    
+    /**
+     * 获取支付的信息
+     * @param tid 周期（天、星期、月、年）
+     * @param date 天（今天、昨天、本周、上周、本月、上月、本年、去年）
+     * @param sid 判断今天还是昨天
+     */
     public function indexpay() {
         if (User::isLogin()) {
             //表单传值
-            $perId = User::role();
-            $this->assign('role',$perId);
+            $role = User::role();
+            $this->assign('role',$role);
             $tid = Request::instance()->param('tid/d');
-            $date = Request::instance()->get('date');
-
+            $date = Request::instance()->param('date');
+            $sid = Request::instance()->param('sid/d');
+            
+            //如果tid没有接收到，后面也就不需要执行了
             if (!isset($tid)) {
-                $this->error('error',url('homepage_controller/index'));
+                $this->error('访问出错',url('homepage_controller/index'));
+            }
+            //判断$date是否有数据,第一次访问不会有数据
+            if(isset($date)) {
+                $sid = 0;
+            }
+            //判断时候是不是从今天收入访问的
+            if($sid === 1 ) {
+              $date = 'today';   
             }
 
             if($tid === 0) {           
@@ -314,7 +280,7 @@ class StreamController extends Controller{
                 if (!empty($remark)) {
                     $Stream->whereTime('create_time',$date)->where('remark','like','%' . $remark .'%');
                 }
-                $Streams = $Stream->whereTime('create_time',$date)->where('inandex','=','0')
+                $Streams = $Stream->order('id DESC')->whereTime('create_time',$date)->where('inandex','=','0')
                              ->paginate($pageSize,false,[   
                                  'query' => [
                                             'remark' => $remark,
@@ -334,21 +300,36 @@ class StreamController extends Controller{
         }
     }
 
-
+    /**
+     * 获取收入信息
+     * @param tid 周期（天、星期、月、年）
+     * @param date 天（今天、昨天、本周、上周、本月、上月、本年、去年）
+     * @param sid 判断今天还是昨天
+     */
     public function indexincome() {
         if (User::isLogin()) {
             //表单传值
-            $perId = User::role();
-            $this->assign('role',$perId);
+            $role = User::role();
+            $this->assign('role',$role);
             $tid = Request::instance()->param('tid/d');
-            $date = Request::instance()->get('date');
+            $sid = Request::instance()->param('sid/d');
+            $date = Request::instance()->param('date');
 
+            //如果tid没有接收到，后面也就不需要执行了
             if (!isset($tid)) {
-                $this->error('error',url('homepage_controller/index'));
+                $this->error('访问出错',url('homepage_controller/index'));
+            }
+            //判断$date是否有数据,第一次访问不会有数据
+            if(isset($date)) {
+                $sid = 0;
+            }
+            //判断时候是不是从今天收入访问的
+            if($sid === 1 ) {
+              $date = 'today';   
             }
 
             if($tid === 0) {           
-                if (!isset($date)) {
+                if (!isset($date) ) {
                     $date = 'yesterday';
                 }
                  if ( $date === 'yesterday') {
@@ -356,6 +337,7 @@ class StreamController extends Controller{
                         $end_time=date('Y-m-d', strtotime('-1 day'));
                  }
                   else {
+                        $date = 'today';  
                         $start_time=date('Y-m-d', strtotime(date('Y-m-d')));
                         $end_time=date('Y-m-d', strtotime(date('Y-m-d')));
                  }
@@ -401,7 +383,7 @@ class StreamController extends Controller{
                         $start_time =date('Y-m-d',strtotime(date('Y-1-1 00:00:00',strtotime('-1 year'))));
                         $end_time = date('Y-12-31',strtotime(date('Y-1-1 00:00:00',strtotime('-1 year'))));
                     }
-                  }
+                }
                   //传入时间的值，是 0 显示当天和昨天、1 显示本周和上周、2 显示本周和上周 3 显示本月和上月  4 显示本年和去年
                     $this->assign('tid',$tid);
                     $Stream = new Stream;
@@ -420,7 +402,7 @@ class StreamController extends Controller{
                 if (!empty($remark)) {
                     $Stream->whereTime('create_time',$date)->where('remark','like','%' . $remark .'%');
                 }
-                $Streams = $Stream->whereTime('create_time',$date)->where('inandex','=','1')
+                $Streams = $Stream->order('id DESC')->whereTime('create_time',$date)->where('inandex','=','1')
                              ->paginate($pageSize,false,[   
                                  'query' => [
                                             'remark' => $remark,
@@ -439,5 +421,4 @@ class StreamController extends Controller{
             return $this->error('请登录后在访问', url('login_controller/index')); 
         }
     }
-
 }

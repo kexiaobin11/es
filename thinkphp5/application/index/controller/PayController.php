@@ -19,7 +19,6 @@ class PayController extends Controller{
                 {
                     // 获取查询信息
                     $name = Request::instance()->get('name');
-                  
                     $pageSize = 10; // 每页显示10条数据
                     // 实例化Income
                     $Pay = new Pay; 
@@ -89,13 +88,14 @@ class PayController extends Controller{
             $this->error('此类型已存在，请重新输入');
         }
         $Pay->name = $name;
-        if($Pay->validate()->save())
+        if($this->validate($Pay, 'Pay') === true)
         {
+            $Pay->save();
             return $this->success('添加成功',url('index'));
         }
         else
         {
-            return $this->error('添加失败',url('add'));
+            return $this->error('添加失败，输入的数据不合法',url('add'));
         }
     }
 
@@ -132,7 +132,7 @@ class PayController extends Controller{
         $id = Request::instance()->param('id/d'); // “/d”表示将数值转化为“整形”
         $Stream = new Stream;
        
-       if(!is_null($Stream->where('pay_id','=',$id)->select())) {
+       if(!empty($Stream->where('pay_id','=',$id)->select())) {
           $this->error('删除失败，有支出选择这个类型');
        }
 
