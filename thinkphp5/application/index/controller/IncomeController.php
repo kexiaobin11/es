@@ -115,23 +115,25 @@ class IncomeController extends Controller
             $this->error('此类型已存在，请重新输入');
         }
         $Income->name = $name;
-        if($Income->validate()->save())
+        if($this->validate($Income, 'Income') === true)
         {
+            $Income->save();
             return $this->success('添加成功',url('index'));
         }
         else
         {
-            return $this->error('添加失败',url('add'));
+            return $this->error('添加失败,输入的类型不合法',url('add'));
         }
     }
 
     public function delete()
     {
         // 获取pathinfo传入的ID值.
-        $id = Request::instance()->param('id/d'); // “/d”表示将数值转化为“整形”
-
+        $id = Request::instance()->param('id/d'); // “/d”表示将数值转化为“整形” 
         $Stream = new Stream;
-        if(!is_null($Stream->where('income_id','=',$id)->select())) 
+        // var_dump();
+        // die();
+        if(!empty($Stream->where('income_id','=',$id)->select())) 
         {
            $this->error('删除失败，有收入选择这个类型');
         }

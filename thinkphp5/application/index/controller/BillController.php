@@ -22,13 +22,20 @@ class BillController extends Controller {
             {  
                 // 获取查询信息
                 $remark = Request::instance()->get('remark');
-                $account_id = Request::instance()->get('account_id/d');
-                $this->assign('accountId', $account_id);         
-               
+                //获取获取select选中的值 
+                $accountTest = Request::instance()->get('accounts');
+                $this->assign('accountTest', $accountTest);   
+                //通过select的值，返回指定行
+                $accounts = $Account->where('name', '=', $accountTest)->select();
+                // 获取指定字段的id,默认值，不管在什么时候后面会用到都account_id
+                $account_id = 0;
+                foreach ($accounts as $row) {
+                    $account_id = $row['id'] ;
+                }
+                          
                 $pageSize = 10; // 每页显示10条数据
                 // 实例化Stream
-                $Stream = new Stream; 
-                $stream = $Stream->select();
+                $Stream = new Stream;   
                 $income = $Stream->where('account_id', '=', $account_id)->where('inandex', '=', 1)->sum('money');
                 $pay = $Stream->where('inandex','=','0')->where('account_id', '=', $account_id)->sum('money');
                 $income = number_format( $income, 2, '.', ',');
@@ -53,13 +60,13 @@ class BillController extends Controller {
                 }
                 
                 // 调用分页
-                $stream = $Stream->paginate($pageSize,false,[
+                $stream = $Stream->order('id DESC')->paginate($pageSize,false,[
                             'query' => [
                                 'remark' => $remark,
                                 'account_id' => $account_id
                             ]
                 ]);
-                // 向V层传数据
+                
                 $this->assign('streams',$stream);
                 $this->assign('account_id',$account_id);
                 // 取回打包后的数据

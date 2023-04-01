@@ -37,7 +37,6 @@
                         <nav class="navbar navbar-light bg-light">
                             <form class="form-inline">
                               <form action="{:url('index')}" method="get">
-                            
                                 <select name="date" class="form-control smr-sm-3" style="width: 100px;">
                                   {eq name="$tid" value = "0"}
                                 <option value="today" {eq name="$date" value="today"} selected="selected" {/eq}>今天</option>
@@ -99,11 +98,7 @@
                       </table>
                       </div>    
                       {$streams->render()}
-                  </div>
-            </div>
-          </div>
-        </div>
-        {/block}
-      </section>
+                  
+{/block}
 </body>
 </html>

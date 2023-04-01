@@ -12,8 +12,22 @@
                             <a href="{:url('bill_controller/index')}" class="col-sm btn btn-info btn-lg smr-sm-3">账户</a>&nbsp;&nbsp;
                         </div>
                         <div class="jumbotron form-mglr" style="border-radius: 20px; background-image:url(/es/thinkphp5/public/static/bootstrap-4.6.2-dist/images/351.jpg);">
-                            <p class="lead" style="color: rgb(32, 49, 52);"><b>净资产</b></p>
-                            <h1 class="display-4 " style="color: rgb(32, 49, 52);" ><b>{$sum}</b></h1>
+                            <p class="lead" style="color: rgb(32, 49, 52);"><h4><b>净资产：{$sum}</b></h4></p>
+                            <h1 class="display-4 " style="color: rgb(32, 49, 52);" >
+                            <b>
+                                <ul class="nav float-left">
+                                    <li class="nav-item ">
+                                        <span class="ft-span">今天收入:</span>
+                                        <span class="orange number"><a href="{:url('stream_controller/indexincome?tid=0&&sid=1')}"style="color: black;" >{$TodayIncomeSum}</a></span>
+                                        <span class="line"></span>
+                                    </li>
+                                    <li class="nav-item">
+                                        <span class="ft-span">今天支出:</span>
+                                        <span class="green number"><a href="{:url('stream_controller/indexpay?tid=0&&sid=1')}"style="color: black;" >{$TodayPaySum}</a></span>
+                                        <span class="line"></span>
+                                    </li>
+                                </ul>
+                            </b></h1>
                         </div>
                         <div style="margin-right: 10px;">                             
                             <div class="form-mglrs">
@@ -49,11 +63,7 @@
                                     </table>
                                 </div>
                             </div>
-                        </div>  
-                    </div>
-                </div>
-            </div>
-        </div>
+                        </div>
         {/block}
     </section>
 </body>

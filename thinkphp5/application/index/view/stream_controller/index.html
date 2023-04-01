@@ -70,53 +70,45 @@
                         </nav>
                     </div>
                 
-                      <div class=table-responsive">
+                    <div class=table-responsive">
                         <table class="table text-nowrap">
-                          <thead>
-                          <tr class="text-center">
-                            <th scope="col">分类</th>
-                            <th scope="col">收 | 支</th>
-                            <th scope="col">金额</th>
-                            <th scope="col">备注</th>
-                            <th scope="col">日期</th>
-                          </tr>
-                          </thead>
-                        
-                          {volist name="streams" id="stream" key = "key"}
-                          <tr >
-                           <td class="text-center">                                
-                            {eq name="stream->getData('inandex')" value="1"}
-                              {$stream->Income['name']}{else /}{$stream->Pay['name']}{/eq}
-                           </td>
+                            <thead>
+                                <tr class="text-center">
+                                    <th scope="col">分类</th>
+                                    <th scope="col">收 | 支</th>
+                                    <th scope="col">金额</th>
+                                    <th scope="col">备注</th>
+                                    <th scope="col">日期</th>
+                                </tr>
+                            </thead>  
+                            {volist name="streams" id="stream" key = "key"}
+                                <tr >
+                                    <td class="text-center">                                
+                                        {eq name="stream->getData('inandex')" value="1"}
+                                        {$stream->Income['name']}{else /}{$stream->Pay['name']}{/eq}
+                                    </td>
+                                    <td class="text-center">{eq name="stream->getData('inandex')" value="1"}<span class="orange text-center">{$stream->inandex}</span>
+                                    {else /}<span class="green text-center">{$stream->inandex}{/eq}</td>
 
-                            <td class="text-center">{eq name="stream->getData('inandex')" value="1"}<span class="orange text-center">{$stream->inandex}</span>
-                             {else /}<span class="green text-center">{$stream->inandex}{/eq}</td>
-
-                            <td>{eq name="stream->getData('inandex')" value="1"}
-                              <span class="orange text-center">  <?php
-                                $money =  $stream->getData('money');
-                                echo number_format($money, 2, '.', ',');;   
-                                ?></span>{else /}
-                              <span class="green text-center">
-                               <?php
-                                    $money =  $stream->getData('money');
-                                    echo number_format($money, 2, '.', ',');;   
-                                    ?>
-                              </span>{/eq}</td>
-                            <td>{$stream->getData('remark')}</td>
-                            <td>{$stream->create_time}</td>
-                          </tr>
-                          {/volist}
+                                    <td>{eq name="stream->getData('inandex')" value="1"}
+                                    <span class="orange text-center">  <?php
+                                        $money =  $stream->getData('money');
+                                        echo number_format($money, 2, '.', ',');;   
+                                        ?></span>{else /}
+                                    <span class="green text-center">
+                                    <?php
+                                            $money =  $stream->getData('money');
+                                            echo number_format($money, 2, '.', ',');;   
+                                            ?>
+                                    </span>{/eq}</td>
+                                    <td>{$stream->getData('remark')}</td>
+                                    <td>{$stream->create_time}</td>
+                                </tr>
+                            {/volist}
                         </tbody>
                       </table>
-                      </div>
-                    
+                    </div>
                       {$streams->render()}
-                  </div>
-            </div>
-          </div>
-        </div>
-        {/block}
-      </section>
+{/block}
 </body>
 </html>
