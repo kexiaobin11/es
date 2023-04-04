@@ -46,6 +46,8 @@ class BillController extends Controller {
                 //获取今天的收入和支出
                 $incomeToday = $Stream->whereTime('create_time', 'today')->where('inandex','=','1')->where('account_id', '=' , $account_id)->sum('money');
                 $payToday = $Stream->whereTime('create_time', 'today')->where('inandex','=','0')->where('account_id', '=' , $account_id)->sum('money');
+                $sumToday = $incomeToday - $payToday;
+                $this->assign('sumToday', $sumToday);
                 $this->assign('IncomeToday', $incomeToday);
                 $this->assign('PayToday', $payToday);
 

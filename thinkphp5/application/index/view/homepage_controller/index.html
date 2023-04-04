@@ -5,12 +5,11 @@
 {block name="section"} 
 {/block}
 {block name="content"}
-                        <div class="row" style="margin-left: 10px;margin-right: 10px;">
-                            &nbsp;&nbsp; 
-                            <a href="{:url('stream_controller/add?aid=1') }" class="col-sm btn btn-primary btn-lg smr-sm-3">收入</a>&nbsp;&nbsp;
-                            <a href="{:url('stream_controller/add?aid=0')}" class="col-sm btn btn-danger btn-lg smr-sm-3">支出</a>&nbsp;&nbsp;
-                            <a href="{:url('bill_controller/index')}" class="col-sm btn btn-info btn-lg smr-sm-3">账户</a>&nbsp;&nbsp;
-                        </div>
+                        <div class="form-row" style="margin-left: 10px; margin-right: 10px;">               
+                            <a href="{:url('stream_controller/add?aid=0')}" class="btn btn-primary btn-lg btn-block">支出</a>
+                            <a href="{:url('stream_controller/add?aid=1') }" class="btn btn-danger btn-lg btn-block">收入</a>
+                            <a href="{:url('bill_controller/index')}" class="btn btn-info btn-lg btn-block">账户</a>
+                        </div>      
                         <div class="jumbotron form-mglr" style="border-radius: 20px; background-image:url(/es/thinkphp5/public/static/bootstrap-4.6.2-dist/images/351.jpg);">
                             <p class="lead" style="color: rgb(32, 49, 52);"><h4><b>净资产：</b></h4></p>
                             <p class="lead" style="color: rgb(32, 49, 52);"><h2><b>{$sum}</b></h></p> 

@@ -15,22 +15,21 @@
                     </div>  
                     <br>   
                     <form action="{:url('update')}" method="post">
-                        <div class="form-row"  style="margin-left: 10px; margin-right: 10px;">
-                            <input type="hidden" name="id" value="{$User->getData('id')}"/>
-                                <div class="col-md-6 mb-3">
-                                    <label >姓名</label>
-                                    <input type="text" class="form-control " name ="name" value="{$User->getData('name')}"/>      
-                                </div>                     
-                                <div class="col-md-6">
-                                    <label>权限</label>
-                                    <select name="permissions"  class="form-control" >
-                                        <option value="0">用户</option>
-                                        <option value="1" {eq name="User->getData('permissions')" value="1"}selected="selected"{/eq}>管理员</option>
-                                    </select>  
-                                </div>
-                            <button class="btn btn-primary btn-lg btn-block" type="submit">修改</button>
-                            <a href="{:url('resetpassword?id=' . $User->getData('id'))}" class="btn btn-primary btn-lg btn-block">重置密码</a>
-                        </div>   
+                        <div style="width: 400px; padding: 10px;">
+                            <label >姓名</label>
+                            <input type="text" class="form-control " name ="name" value="{$User->getData('name')}"/>                                
+                       </div>
+                       <div style="width: 400px; padding: 10px;">
+                            <label>权限</label>
+                            <select name="permissions"  class="form-control" >
+                                <option value="0">用户</option>
+                                <option value="1" {eq name="User->getData('permissions')" value="1"}selected="selected"{/eq}>管理员</option>
+                            </select>  
+                        </div>
+                        <div style="width: 400px; padding: 10px;">              
+                          <button class="btn btn-primary btn-lg btn-block" type="submit">确认</button>
+                          <a href="{:url('updatapassword')}" class="btn btn-primary btn-lg btn-block">修改密码</a>
+                         </div>           
                     </form>   
                 </div>
               </div>
