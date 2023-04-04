@@ -8,6 +8,7 @@ class SystemController extends Controller{
         $role = User:: role(); //role：角色
         if (User::isLogin()) {
             if($role) {//如果是1，则是管理员；0就是用户，不可访问
+                $this->assign('role', $role);
                 return $this->fetch();
             }
             else {

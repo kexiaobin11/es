@@ -3,35 +3,44 @@
 账单
 {/block}
 {block name="section"} 
-{/block}
+{/block}    
     {block name="content"}
-    
-        <div class="filter-tit margin-left: 30px" >
-            <ul class="nav float-left ml-2" >
+        <div class="filter-tit">
+            <ul class="nav float-left ml-2 mr-2" >
                 <li class="nav-item ">
-                    <span class="ft-span">今收入</span>
-                    <span class="orange number">{$IncomeToday}</span>
+                    <span class="ft-span">今收<span class="orange number">{$IncomeToday}</span></span>
                     <span class="line"></span>
                 </li>
                 <li class="nav-item">
-                    <span class="ft-span">今天支出</span>
-                    <span class="green number">{$PayToday}</span>
-                    
-                </li>
+                    <span class="ft-span">今支<span class="green number">{$PayToday}</span></span>
+                    <span class="line"></span>  
+                 </li>
+            <li class="nav-item">
+                <?php
+                if($sumToday < 0) {
+                    echo '<span class="ft-span">今总<span class="green number">'; 
+                    echo $sumToday;
+                    echo '</span></span>';
+                } else {
+                    echo '<span class="ft-span">今总<span class="orange number">'; 
+                    echo $sumToday;
+                    echo '</span></span>';
+                }
+                ?>  
+             </li>
             </ul>
             <ul class="nav float-right mr-2">
             <li class="nav-item ">
-                <span class="ft-span">总收入</span>
-                <span class="orange number">{$IncomeSum}</span>
-                <span class="line"></span>
+                <span class="ft-span">总收 <span class="orange number">{$IncomeSum}</span></span>
             </li>
+            <span class="line"></span>
             <li class="nav-item">
-                <span class="ft-span">总支出</span>
+                <span class="ft-span">总支</span>
                 <span class="green number">{$PaySum}</span>
-                
             </li>
             </ul>
         </div> 
+        <nav class="navbar navbar-light bg-light">
         <form class="form-mglr"  method="get">
             <div class="form-row" col-md-4>
                 <select name="accounts" sid="account"  class="form-control smr-sm-2" style="width: 100px;">
@@ -44,7 +53,7 @@
                 <button class="btn btn-outline-success my-0 my-sm-0" type="submit">查询</button>
             </div>
         </form>  
-
+        </nav>
         <div class=table-responsive">
             <table class="table text-nowrap">
                 <thead>
@@ -59,7 +68,7 @@
 
                 {volist name="streams" id="stream" key="key"}
                     <tr>
-                        <td class="text-center">                                
+                        <td >                                
                             {eq name="stream->getData('inandex')" value="1"}
                                 {$stream->Income['name']}{else /}{$stream->Pay['name']}
                             {/eq}
@@ -71,27 +80,27 @@
                             {/eq}
                         </td>
                         <td>{eq name="stream->getData('inandex')" value="1"}
-                            <span class="orange text-center" >                              
+                            <span class="orange text-right" >                        
                             <?php
                                 $money =  $stream->getData('money');
                                 echo number_format($money, 2, '.', ',');;   
                               ?>
                             </span>
                             {else /}
-                                <span class="green text-center" > 
+                                <span class="green text-right" > 
                                     <?php
                                         $money =  $stream->getData('money');
                                         echo number_format($money, 2, '.', ',');;   
                                     ?>
                                 </span>{/eq}</td>
                         <td>{$stream->getData('remark')}</td>
-                        <td>{$stream->create_time}</td>                      
+                        <td>{$stream->create_time}</td>        
                     </tr>
                 {/volist}
             </table>
-          <div style="margin-left: 20px;">
-            {$streams->render();}
-          </div>
+             <div style="margin-left: 20px;">
+                 {$streams->render();}
+            </div>
         </div>
 {/block}
 </body>

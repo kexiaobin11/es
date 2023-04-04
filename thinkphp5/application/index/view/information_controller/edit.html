@@ -16,25 +16,14 @@
                   </div>  
                   <br>   
                   <form action="updata" method="post">
-                    <div class="form-row"  style="margin-left: 10px; margin-right: 10px;">
-                      <input type="hidden" name="id" value="{$user->getData('id')}" />
-                        <div class="col-md-6 mb-3">
-                            <label for="validationServer01">名字</label>
-                            <input type="text" class="form-control " name ="name" id="validationServer01" value="{$user->getData('name')}" >
-                        </div>
-                       <!-- <div class="form-group col-md-4">
-                                <label for="">权限</label>
-                                <select name="permissions"  class="form-control col-8" >
-                                    <option value="0">用户</option>
-                                    <option value="1" {eq name="user->getData('permissions')" value="1"}selected="selected"{/eq}>管理员</option>
-                                </select>
-                            </div>
-                           
-                        <input type="button" class="btn btn-primary btn-lg btn-block" onclick="window.open('./information.html')"value="添加"> 
-                        --> 
+                      <div style="width: 400px; padding: 10px;">
+                        <label for="validationServer01">名字 :</label>
+                        <input type="text" name ="name" class="form-control " id="validationServer01" value="{$user->getData('name')}">                          
+                    </div>
+                      <div class="form-row"  style="margin-left: 10px; margin-right: 10px;">               
                         <button class="btn btn-primary btn-lg btn-block" type="submit">确认</button>
                         <a href="{:url('updatapassword')}" class="btn btn-primary btn-lg btn-block">修改密码</a>
-                    </div>
+                      </div>           
                 </form>   
                 </div>
               </div>
