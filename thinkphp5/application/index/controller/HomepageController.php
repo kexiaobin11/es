@@ -3,7 +3,7 @@ namespace app\index\controller;
 use think\Controller;
 use app\common\model\Stream;
 use app\common\model\User;
-class HomepageController extends Controller
+class HomepageController extends Controller;
 {
     public function index()
     {
@@ -11,6 +11,7 @@ class HomepageController extends Controller
        $income = $Stream->where('inandex','=','1')->sum('money');//收入
        $pay = $Stream->where('inandex','=','0')->sum('money');//支出
        $sum =  $income - $pay;
+       
        $incomey = $Stream->whereTime('update_time', 'yesterday')->where('inandex','=','1')->sum('money');
        $payy = $Stream->whereTime('update_time', 'yesterday')->where('inandex','=','0')->sum('money');  
        $incomew = $Stream->whereTime('update_time', 'week')->where('inandex','=','1')->sum('money');
@@ -36,8 +37,8 @@ class HomepageController extends Controller
        $paym =  number_format($paym, 2, '.', ',');
        $incomeyear = number_format( $incomeyear, 2, '.', ',');
        $payyear =  number_format($payyear, 2, '.', ',');
-       if(User::isLogin())
-       {
+
+       if(User::isLogin()) {
         $role = User::role();    
         $this->assign('role',$role);
         $this->assign('incomew', $incomew);
@@ -52,12 +53,8 @@ class HomepageController extends Controller
         $this->assign('TodayIncomeSum',$TodayIncomeSum);
         $this->assign('TodayPaySum',$TodayPaySum);
         return $this->fetch();       
-       }
-       else
-       {
+       } else {
         return $this->error('请登录在访问',url('login_controller/index'));
        }
     }
-
-
 }
