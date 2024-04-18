@@ -15,10 +15,8 @@ class InformationController extends Controller
     /**
      * 登录页面
      */
-    public function index()
-	  {
-      if(User::isLogin())
-	    {
+    public function index() {
+      if(User::isLogin()) {
         $User = $this->commonSession();
        
         if(!isset($User)) {
@@ -30,9 +28,8 @@ class InformationController extends Controller
         $this->assign('user', $User);
         return $this->fetch();
       }
-      else
-      {
-          return $this->error('请登录后在访问', url('login_controller/index'));      
+      else {
+        return $this->error('请登录后在访问', url('login_controller/index'));
       }
     }
 

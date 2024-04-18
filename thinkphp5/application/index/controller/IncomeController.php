@@ -14,10 +14,9 @@ class IncomeController extends Controller
         try
         {
             $role = User:: role(); //role：角色
-            if(User::isLogin())
-            {
-                if($role === 1)//如果是1，则是管理员；0就是用户，不可访问
-                {   
+            if(User::isLogin()) {
+                //如果是1，则是管理员；0就是用户，不可访问
+                if($role === 1) {   
                     // 获取查询信息
                     $name = Request::instance()->get('name');
                     echo $name;
@@ -25,8 +24,7 @@ class IncomeController extends Controller
                     // 实例化Income
                     $Income = new Income; 
                     // 定制查询信息
-                    if (!empty($name))
-                    {
+                    if (!empty($name)) {
                         $Income->where('name', 'like', '%' . $name . '%');
                     }
                     // 调用分页
@@ -39,31 +37,19 @@ class IncomeController extends Controller
                     // 将数据返回给用户
                     return $htmls;
                 }
-                else
-                {
-                    return $this->error('你的权限不够', url('homepage_controller/index')); 
-                }
-            }
-            else
-            {
-                return $this->error('请登录后在访问', url('login_controller/index'));      
-            }
-            
+                return $this->error('你的权限不够', url('homepage_controller/index')); 
+            } 
+            return $this->error('请登录后在访问', url('login_controller/index'));     
         // 获取到ThinkPHP的内置异常时，直接向上抛出，交给ThinkPHP处理
-        }
-        catch (\think\Exception\HttpResponseException $e)
-        {
+            } catch (\think\Exception\HttpResponseException $e) {
+              // 获取到正常的异常时，输出异常
             throw $e;
-            // 获取到正常的异常时，输出异常
-        }
-        catch (\Exception $e) 
-        {
+         } catch (\Exception $e) {
             return $e->getMessage();
         } 
     }
 
-    public function add()
-    {
+    public function add() {
         $Income = new Income;
         $Income->id = 0;
         $Income->name = '';
@@ -78,8 +64,7 @@ class IncomeController extends Controller
         return $this->fetch('edit');
     }
 
-    public function edit()
-    {
+    public function edit() {
         $eid = 1;
         $role = User::role();
         // 获取传入ID
@@ -115,37 +100,30 @@ class IncomeController extends Controller
             $this->error('此类型已存在，请重新输入');
         }
         $Income->name = $name;
-        if($this->validate($Income, 'Income') === true)
-        {
+        if($this->validate($Income, 'Income') === true) {
             $Income->save();
             return $this->success('添加成功',url('index'));
-        }
-        else
-        {
+        } else {
             return $this->error('添加失败,输入的类型不合法',url('add'));
         }
     }
 
-    public function delete()
-    {
+    public function delete() {
         // 获取pathinfo传入的ID值.
         $id = Request::instance()->param('id/d'); // “/d”表示将数值转化为“整形” 
         $Stream = new Stream;
         // var_dump();
         // die();
-        if(!empty($Stream->where('income_id','=',$id)->select())) 
-        {
+        if(!empty($Stream->where('income_id','=',$id)->select()))  {
            $this->error('删除失败，有收入选择这个类型');
         }
-        if (is_null($id) || 0 === $id)
-        {
+        if (is_null($id) || 0 === $id) {
             return $this->error('未获取到ID信息');
         }
         // 获取要删除的对象
         $Income = Income::get($id);
         // 要删除的对象不存在
-        if (is_null($Income))
-        {
+        if (is_null($Income)) {
             return $this->error('不存在id为' . $id . '的类型，删除失败');
         }
         // 删除对象
@@ -156,19 +134,17 @@ class IncomeController extends Controller
         return $this->success('删除成功', url('index'));
     }
     
-    public function update()
-    {
+    public function update() {
         $Income = new Income;
         $name = Request::instance()->post('name');
-        if ($Income->where('name', '=' , $name)->select()) 
-        {
+        if ($Income->where('name', '=' , $name)->select())  {
             $this->error('此类型已存在，请重新输入');
         }
         // 将数据存入Income表
         $income = Request::instance()->post();
         // 依据状态定制提示信息
-        if (false === $Income->validate(true)->isUpdate(true)->save($income))
-        {
+        
+        if (false === $Income->validate(true)->isUpdate(true)->save($income))  {
             return $this->error('更新失败' . $Income->getError());
         }
         return $this->success('操作成功', url('index'));

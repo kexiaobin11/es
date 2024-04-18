@@ -34,25 +34,21 @@ class UserController extends Controller{
             } else {
                 return $this->error('请登录后在访问',url('login_controller/index'));      
             }
-        } catch (\think\Exception\HttpResponseException $e)
-        {
+        } catch (\think\Exception\HttpResponseException $e)  {
             throw $e;
         // 获取到正常的异常时，输出异常
-        }  catch (\Exception $e) 
-        {
+        } catch (\Exception $e) {
             return $e->getMessage();
         } 
     }
 
-    public function add()
-    {   
+    public function add() {   
        $role =  User::role();
        $this->assign('role',$role);
         return $this->fetch();
     }
 
-    public function save()
-    {
+    public function save() {
         $User = new User;
         $User->permissions= Request::instance()->post('permissions/d');
         $username = Request::instance()->post('username');
@@ -64,18 +60,14 @@ class UserController extends Controller{
         $User->name = Request::instance()->post('name');
         $User->password='123456';
 
-        if($User->validate()->save())
-        {
+        if($User->validate()->save()) {
             return $this->success('添加成功',url('index'));
-        }
-        else
-        {
+        } else  {
             return $this->error('添加失败',url('add'));
         }
     }
 
-    public function edit()
-    {
+    public function edit() {
         $id = Request::instance()->param('id/d');
         $role = User::role(); //role：角色
         $User = User::get($id);
@@ -92,8 +84,7 @@ class UserController extends Controller{
         return $htmls;
     }
 
-    public function update()
-    {
+    public function update() {
         $id =  Request::instance()->post('id/d');
         $User = User::get($id);
         $User->permissions= Request::instance()->post('permissions/d');
@@ -101,21 +92,15 @@ class UserController extends Controller{
         $password1 =  Request::instance()->post('password1');
         $password2 =  Request::instance()->post('password2');
 
-        if($password1 === $password2)
-        {
+        if($password1 === $password2) {
             $User->password =$password1;
-            if($User->validate()->save())
-            {
+            if($User->validate()->save()) {
                 return $this->success('密码更新成功', url('index'));
-            }
-            else
-            {
-                return $this->error('密码更新成功', url('edit')); 
+            } else  {
+             return $this->error('密码更新成功', url('edit')); 
             }  
-        }
-        else
-        {
-            return $this->error('密码更新失败', url('edit')); 
+        } else {
+         return $this->error('密码更新失败', url('edit')); 
         }
     }
 
@@ -123,35 +108,29 @@ class UserController extends Controller{
         $id = Request::instance()->param('id/d');
         $User = User::get($id);
         $User->password = '123456';//重置默认密码123456
+        
         if($User->password === '123456') {
             $User->save();
             return $this->success('密码重置成功', url('index'));
-        }
-        else {
+        } else {
             return $this->error('密码重置失败', url('edit')); 
         }
-        
-
     }
 
-    public function delete()
-    {
+    public function delete() {
         // 获取pathinfo传入的ID值.
         $id = Request::instance()->param('id/d'); // “/d”表示将数值转化为“整形”
-        if (is_null($id) || 0 === $id)
-        {
+        if (is_null($id) || 0 === $id)  {
             return $this->error('未获取到ID信息');
         }
         // 获取要删除的对象
         $User = User::get($id);
         // 要删除的对象不存在
-        if (is_null($User)) 
-        {
+        if (is_null($User))  {
             return $this->error('不存在id为' . $id . '的类型，删除失败');
         }
         // 删除对象
-        if (!$User->delete()) 
-        {
+        if (!$User->delete()) {
             return $this->error('删除失败:' . $User->getError());
         }
         // 进行跳转

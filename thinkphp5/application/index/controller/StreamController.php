@@ -36,16 +36,14 @@ class StreamController extends Controller{
                 if (!isset($date)) {
                     $date = 'yesterday';
                 }
-                 if ( $date === 'yesterday') {
+                if ( $date === 'yesterday') {
                         $start_time=date('Y-m-d', strtotime('-1 day'));
                         $end_time=date('Y-m-d', strtotime('-1 day'));
+                 } else {
+                    $start_time=date('Y-m-d', strtotime(date('Y-m-d')));
+                    $end_time=date('Y-m-d', strtotime(date('Y-m-d')));
                  }
-                  else {
-                        $start_time=date('Y-m-d', strtotime(date('Y-m-d')));
-                        $end_time=date('Y-m-d', strtotime(date('Y-m-d')));
-                 }
-              } 
-              elseif ($tid === 1) {
+              }  elseif ($tid === 1) {
                 if(!isset($date)) {
                     $date = 'week';
                 } 
@@ -54,25 +52,23 @@ class StreamController extends Controller{
                     $end_time   = mktime(23,59,60,date("m"),date("d")-date("w")+6,date("Y"));
                     $start_time = date('Y-m-d',$start_time);
                     $end_time = date('Y-m-d', $end_time);
-                }
-                 else {
+                } else {
                     $start_time = mktime(0, 0 , 0,date("m"),date("d")-date("w")-6,date("Y"));
                     $end_time   = mktime(23,59,60,date("m"),date("d")-date("w")-1,date("Y"));
                     $start_time = date('Y-m-d',$start_time);
                     $end_time = date('Y-m-d', $end_time);      
                 } 
-            }
-             elseif ($tid === 2) {
+            } elseif ($tid === 2) {
                 if(!isset($date)) {
-                        $date = 'month';
-                    }
+                    $date = 'month';
+                }
                 if ($date === 'month') {
-                        $start_time = date('Y-m-1');   
-                        $end_time  = date('Y-m-d',strtotime(date('Y-m-1',strtotime('next month')).'-1 day'));
+                    $start_time = date('Y-m-1');   
+                    $end_time  = date('Y-m-d',strtotime(date('Y-m-1',strtotime('next month')).'-1 day'));
                 } else {
-                      $start_time = date('Y-m-1',strtotime('last month'));        
-                      $end_time = date('Y-m-d',strtotime(date('Y-m-1').'-1 day'));
-                   }
+                    $start_time = date('Y-m-1',strtotime('last month'));        
+                    $end_time = date('Y-m-d',strtotime(date('Y-m-1').'-1 day'));
+                }
               }
                 elseif ($tid === 3) {
                     if (!isset($date)) {
@@ -103,7 +99,8 @@ class StreamController extends Controller{
                     $income = number_format( $income, 2, '.', ',');
                     $pay= number_format( $pay, 2, '.', ',');     
 
-                    $remark = Request::instance()->get('remark'); 
+                    $remark = Request::instance()->get('remark');
+                     
                 if (!empty($remark)) {
                     $Stream->whereTime('create_time',$date)->where('remark','like','%' . $remark .'%');
                 }
